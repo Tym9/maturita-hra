@@ -2,276 +2,453 @@
 
 [ext_resource type="PackedScene" path="res://player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://spikes.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://enemy.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://zip_block.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://moving_platform.tscn" id="8"]
-
-[sub_resource type="RectangleShape2D" id="floor_start_shape"]
-size = Vector2(220, 40)
-
-[sub_resource type="RectangleShape2D" id="chimney_l_shape"]
-size = Vector2(30, 260)
-
-[sub_resource type="RectangleShape2D" id="chimney_r_shape"]
-size = Vector2(30, 260)
-
-[sub_resource type="RectangleShape2D" id="tower_top_shape"]
-size = Vector2(160, 30)
-
-[sub_resource type="RectangleShape2D" id="guard_patrol_floor_shape"]
-size = Vector2(400, 30)
-
-[sub_resource type="RectangleShape2D" id="inv_reactor_ceiling_shape"]
-size = Vector2(460, 30)
-
-[sub_resource type="RectangleShape2D" id="final_core_platform_shape"]
-size = Vector2(300, 30)
+[ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="3"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="4"]
+[ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="5"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="17"]
 
 [node name="Level3" type="Node2D"]
 
-[node name="Background" type="ColorRect" parent="."]
-z_index = -100
-offset_left = -1000.0
-offset_top = -2500.0
-offset_right = 6000.0
-offset_bottom = 2000.0
-color = Color(0.12, 0.07, 0.03, 1)
+[node name="Backdrops" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(50, -45)
+[node name="Room_0_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 0
+room_y = 0
+room_title = "SEKTOR 0-0: NÁSTUPNÍ KOMORA REAKTORU"
 
-[node name="FloorStart" type="StaticBody2D" parent="."]
-position = Vector2(90, 0)
+[node name="Room_1_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 1
+room_y = 0
+room_title = "SEKTOR 1-0: LASEROVÝ KORIDOR & DRONY"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorStart"]
-shape = SubResource("floor_start_shape")
+[node name="Room_1_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 1
+room_y = 1
+room_title = "SEKTOR 1-1: PARNÍ CHLADICÍ ŠACHTA"
 
-[node name="ColorRect" type="ColorRect" parent="FloorStart"]
-offset_left = -110.0
-offset_top = -20.0
-offset_right = 110.0
-offset_bottom = 20.0
-color = Color(0.48, 0.28, 0.12, 1)
+[node name="Room_2_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 2
+room_y = 1
+room_title = "SEKTOR 2-1: GRAVITAČNÍ AKCELERÁTOR"
 
-[node name="WallChimneyL" type="StaticBody2D" parent="."]
-position = Vector2(140, -130)
+[node name="Room_2_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 2
+room_y = 2
+room_title = "SEKTOR 2-2: BRÁNA JÁDRA REAKTORU"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallChimneyL"]
-shape = SubResource("chimney_l_shape")
+[node name="Room_3_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 3
+room_y = 2
+room_title = "SEKTOR 3-2: PŘEDPOLÍ VELÍNU"
 
-[node name="ColorRect" type="ColorRect" parent="WallChimneyL"]
-offset_left = -15.0
-offset_top = -130.0
-offset_right = 15.0
-offset_bottom = 130.0
-color = Color(0.55, 0.32, 0.15, 1)
+[node name="Platforms" type="Node2D" parent="."]
 
-[node name="WallChimneyR" type="StaticBody2D" parent="."]
-position = Vector2(250, -130)
+[node name="R0_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallChimneyR"]
-shape = SubResource("chimney_r_shape")
+[node name="R0_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 3
 
-[node name="ColorRect" type="ColorRect" parent="WallChimneyR"]
-offset_left = -15.0
-offset_top = -130.0
-offset_right = 15.0
-offset_bottom = 130.0
-color = Color(0.55, 0.32, 0.15, 1)
+[node name="R0_FloorStart" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 160)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 2
+theme = 3
 
-[node name="MovingShaftLift" parent="." instance=ExtResource("8")]
-position = Vector2(195, -20)
-move_offset = Vector2(0, -180)
-duration = 2.0
+[node name="R0_MidPlatform" type="StaticBody2D" parent="Platforms"]
+position = Vector2(144, 120)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 3
 
-[node name="TowerTop" type="StaticBody2D" parent="."]
-position = Vector2(320, -260)
+[node name="R0_Landing" type="StaticBody2D" parent="Platforms"]
+position = Vector2(208, 144)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 2
+theme = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerTop"]
-shape = SubResource("tower_top_shape")
+[node name="R10_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 3
 
-[node name="ColorRect" type="ColorRect" parent="TowerTop"]
-offset_left = -80.0
-offset_top = -15.0
-offset_right = 80.0
-offset_bottom = 15.0
-color = Color(0.5, 0.3, 0.14, 1)
+[node name="R10_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 8
+theme = 3
 
-[node name="ReactorSpikes1" parent="." instance=ExtResource("3")]
-position = Vector2(380, 50)
+[node name="R10_EntranceLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 144)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes2" parent="." instance=ExtResource("3")]
-position = Vector2(420, 50)
+[node name="R10_CrumblingBridge1" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(416, 136)
 
-[node name="ReactorSpikes3" parent="." instance=ExtResource("3")]
-position = Vector2(460, 50)
+[node name="R10_CrumblingBridge2" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(496, 136)
 
-[node name="ReactorSpikes4" parent="." instance=ExtResource("3")]
-position = Vector2(500, 50)
+[node name="R10_SecretLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(544, 48)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes5" parent="." instance=ExtResource("3")]
-position = Vector2(540, 50)
+[node name="R10_Landing" type="StaticBody2D" parent="Platforms"]
+position = Vector2(544, 144)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes6" parent="." instance=ExtResource("3")]
-position = Vector2(580, 50)
+[node name="R11_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 3
 
-[node name="ReactorSpikes7" parent="." instance=ExtResource("3")]
-position = Vector2(620, 50)
+[node name="R11_WallRightUpper" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 6
+theme = 3
 
-[node name="ReactorSpikes8" parent="." instance=ExtResource("3")]
-position = Vector2(660, 50)
+[node name="R11_CatchLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(528, 216)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes9" parent="." instance=ExtResource("3")]
-position = Vector2(700, 50)
+[node name="R11_Perch" type="StaticBody2D" parent="Platforms"]
+position = Vector2(352, 256)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes10" parent="." instance=ExtResource("3")]
-position = Vector2(740, 50)
+[node name="R11_FloorRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(496, 320)
+script = ExtResource("3")
+tiles_x = 8
+tiles_y = 2
+theme = 3
 
-[node name="ReactorSpikes11" parent="." instance=ExtResource("3")]
-position = Vector2(780, 50)
+[node name="R21_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 180)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 3
 
-[node name="ReactorSpikes12" parent="." instance=ExtResource("3")]
-position = Vector2(820, 50)
+[node name="R21_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(944, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 3
 
-[node name="ReactorSpikes13" parent="." instance=ExtResource("3")]
-position = Vector2(860, 50)
+[node name="R21_EntranceLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 320)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorAnchor1" parent="." instance=ExtResource("4")]
-position = Vector2(470, -310)
+[node name="R21_CeilingLedge1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(720, 196)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorAnchor2" parent="." instance=ExtResource("4")]
-position = Vector2(630, -340)
+[node name="R21_CeilingLedge2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(832, 196)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ReactorAnchor3" parent="." instance=ExtResource("4")]
-position = Vector2(780, -300)
+[node name="R21_DropLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(880, 320)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="GuardPatrolFloor" type="StaticBody2D" parent="."]
-position = Vector2(1050, -220)
+[node name="R22_LeftWall" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 360)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GuardPatrolFloor"]
-shape = SubResource("guard_patrol_floor_shape")
+[node name="R22_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 360)
+script = ExtResource("3")
+tiles_x = 16
+tiles_y = 1
+theme = 3
 
-[node name="ColorRect" type="ColorRect" parent="GuardPatrolFloor"]
-offset_left = -200.0
-offset_top = -15.0
-offset_right = 200.0
-offset_bottom = 15.0
-color = Color(0.4, 0.22, 0.15, 1)
+[node name="R22_Landing" type="StaticBody2D" parent="Platforms"]
+position = Vector2(864, 400)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 3
 
-[node name="ReactorGuard1" parent="." instance=ExtResource("6")]
-position = Vector2(950, -250)
+[node name="R22_Crumble" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(800, 430)
 
-[node name="ReactorGuard2" parent="." instance=ExtResource("6")]
-position = Vector2(1080, -250)
+[node name="R22_FloorLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(656, 520)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 1
+theme = 3
 
-[node name="ReactorGuard3" parent="." instance=ExtResource("6")]
-position = Vector2(1200, -250)
+[node name="R22_FloorRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(832, 520)
+script = ExtResource("3")
+tiles_x = 8
+tiles_y = 1
+theme = 3
 
-[node name="GravityAnomalyCoreIn" parent="." instance=ExtResource("5")]
-position = Vector2(1300, -240)
+[node name="R32_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 360)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 3
 
-[node name="InvReactorCeiling" type="StaticBody2D" parent="."]
-position = Vector2(1580, -420)
+[node name="R32_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1264, 360)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InvReactorCeiling"]
-shape = SubResource("inv_reactor_ceiling_shape")
+[node name="R32_Entrance" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 520)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 3
 
-[node name="ColorRect" type="ColorRect" parent="InvReactorCeiling"]
-offset_left = -230.0
-offset_top = -15.0
-offset_right = 230.0
-offset_bottom = 15.0
-color = Color(0.55, 0.25, 0.15, 1)
+[node name="R32_HighPerch" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1104, 392)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 3
 
-[node name="InvAnchor" parent="." instance=ExtResource("4")]
-position = Vector2(1580, -340)
+[node name="R32_BossThreshold" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1168, 496)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 3
 
-[node name="CoreSpikes1" parent="." instance=ExtResource("3")]
-position = Vector2(1420, -140)
+[node name="Hazards" type="Node2D" parent="."]
 
-[node name="CoreSpikes2" parent="." instance=ExtResource("3")]
-position = Vector2(1460, -140)
+[node name="R0_Spikes" type="Area2D" parent="Hazards"]
+position = Vector2(112, 168)
+script = ExtResource("4")
+count = 6
 
-[node name="CoreSpikes3" parent="." instance=ExtResource("3")]
-position = Vector2(1500, -140)
+[node name="R0_SteamVent" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(120, 160)
+blast_direction = Vector2(0, -1)
+blast_length = 50.0
+idle_time = 2.0
+warn_time = 0.4
+blast_time = 0.8
 
-[node name="CoreSpikes4" parent="." instance=ExtResource("3")]
-position = Vector2(1540, -140)
+[node name="R10_ChasmSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(384, 168)
+script = ExtResource("4")
+count = 10
 
-[node name="CoreSpikes5" parent="." instance=ExtResource("3")]
-position = Vector2(1580, -140)
+[node name="R11_FloorSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(336, 350)
+script = ExtResource("4")
+count = 9
 
-[node name="CoreSpikes6" parent="." instance=ExtResource("3")]
-position = Vector2(1620, -140)
+[node name="R11_SteamVentUp" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(400, 340)
+blast_direction = Vector2(0, -1)
+blast_length = 80.0
+idle_time = 1.6
+warn_time = 0.4
+blast_time = 0.8
 
-[node name="CoreSpikes7" parent="." instance=ExtResource("3")]
-position = Vector2(1660, -140)
+[node name="R11_SteamVentRight" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(336, 260)
+blast_direction = Vector2(1, 0)
+blast_length = 60.0
+idle_time = 2.0
+warn_time = 0.4
+blast_time = 0.8
 
-[node name="CoreSpikes8" parent="." instance=ExtResource("3")]
-position = Vector2(1700, -140)
+[node name="R21_FloorSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(704, 350)
+script = ExtResource("4")
+count = 13
 
-[node name="GravityAnomalyCoreOut" parent="." instance=ExtResource("5")]
-position = Vector2(1850, -380)
+[node name="R21_CeilingSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(784, 204)
+script = ExtResource("4")
+count = 3
 
-[node name="FinalZip" parent="." instance=ExtResource("7")]
-position = Vector2(2000, -180)
-move_offset = Vector2(250, 0)
-speed_fast = 0.3
+[node name="R22_Spikes" type="Area2D" parent="Hazards"]
+position = Vector2(768, 528)
+script = ExtResource("4")
+count = 4
 
-[node name="PitFinal1" parent="." instance=ExtResource("3")]
-position = Vector2(2040, -20)
+[node name="R32_CoreSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(1024, 532)
+script = ExtResource("4")
+count = 9
 
-[node name="PitFinal2" parent="." instance=ExtResource("3")]
-position = Vector2(2080, -20)
+[node name="R32_SteamVent1" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(1072, 520)
+blast_direction = Vector2(0, -1)
+blast_length = 70.0
+idle_time = 1.5
+warn_time = 0.4
+blast_time = 0.8
 
-[node name="PitFinal3" parent="." instance=ExtResource("3")]
-position = Vector2(2120, -20)
+[node name="R32_SteamVent2" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(1136, 520)
+blast_direction = Vector2(0, -1)
+blast_length = 70.0
+idle_time = 2.1
+warn_time = 0.4
+blast_time = 0.8
 
-[node name="PitFinal4" parent="." instance=ExtResource("3")]
-position = Vector2(2160, -20)
+[node name="Mechanics" type="Node2D" parent="."]
 
-[node name="PitFinal5" parent="." instance=ExtResource("3")]
-position = Vector2(2200, -20)
+[node name="Chest_R0" parent="Mechanics" instance=ExtResource("13")]
+position = Vector2(50, 153)
+initial_items = ["health_pack", "steam_crystal"]
 
-[node name="FinalCorePlatform" type="StaticBody2D" parent="."]
-position = Vector2(2380, -180)
+[node name="GrapplePoint_R0" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(160, 64)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FinalCorePlatform"]
-shape = SubResource("final_core_platform_shape")
+[node name="GrapplePoint_Chasm1" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(448, 64)
 
-[node name="ColorRect" type="ColorRect" parent="FinalCorePlatform"]
-offset_left = -150.0
-offset_top = -15.0
-offset_right = 150.0
-offset_bottom = 15.0
-color = Color(0.7, 0.45, 0.2, 1)
+[node name="GrapplePoint_Chasm2" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(512, 64)
+
+[node name="HealthPack_R11" parent="Mechanics" instance=ExtResource("8")]
+position = Vector2(400, 240)
+
+[node name="GrapplePoint_R11" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(480, 230)
+
+[node name="GravityAnomaly_Up" parent="Mechanics" instance=ExtResource("7")]
+position = Vector2(710, 290)
+
+[node name="GravityAnomaly_Down" parent="Mechanics" instance=ExtResource("7")]
+position = Vector2(864, 260)
+
+[node name="CelesteKey_Accelerator" parent="Mechanics" instance=ExtResource("14")]
+position = Vector2(808, 240)
+
+[node name="Gate_KeyBlock_Reactor" parent="Mechanics" instance=ExtResource("15")]
+position = Vector2(768, 480)
+block_width = 16.0
+block_height = 48.0
+
+[node name="ReactorChest" parent="Mechanics" instance=ExtResource("13")]
+position = Vector2(672, 504)
+initial_items = ["health_pack", "steam_crystal"]
+
+[node name="GrapplePoint_Final1" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(1056, 420)
+
+[node name="GrapplePoint_Final2" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(1120, 400)
+
+[node name="BossPrepChest" parent="Mechanics" instance=ExtResource("13")]
+position = Vector2(1184, 488)
+initial_items = ["health_pack", "health_pack"]
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="Crystal_10" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(576, 32)
+crystal_id = "crystal_r10"
+
+[node name="Crystal_21" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(900, 210)
+crystal_id = "crystal_r21"
+
+[node name="Crystal_32" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(1128, 376)
+crystal_id = "crystal_r32"
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Drone_R10" parent="Enemies" instance=ExtResource("11")]
+position = Vector2(464, 100)
+
+[node name="Shooter_R11" parent="Enemies" instance=ExtResource("10")]
+position = Vector2(380, 240)
+
+[node name="PatrolGuard_R11" parent="Enemies" instance=ExtResource("9")]
+position = Vector2(540, 304)
+
+[node name="Drone_R22" parent="Enemies" instance=ExtResource("11")]
+position = Vector2(780, 410)
+
+[node name="PatrolGuard_R22" parent="Enemies" instance=ExtResource("9")]
+position = Vector2(720, 504)
+
+[node name="Drone_R32" parent="Enemies" instance=ExtResource("11")]
+position = Vector2(1140, 440)
 
 [node name="LevelEnd" parent="." instance=ExtResource("2")]
-position = Vector2(2480, -230)
-next_level = "res://main_menu.tscn"
+position = Vector2(1230, 470)
+next_level = "res://boss_room.tscn"
 
-[node name="UI" type="Node2D" parent="."]
-
-[node name="LabelTitle" type="Label" parent="UI"]
-offset_left = 20.0
-offset_top = -170.0
-offset_right = 360.0
-offset_bottom = -110.0
-theme_override_colors/font_color = Color(1.0, 0.65, 0.2, 1)
-theme_override_font_sizes/font_size = 15
-text = "KAPITOLA 3: JÁDRO REAKTORU
-Sabotáž korporace · Finální zkouška zručnosti"
-
-[node name="LabelVictory" type="Label" parent="UI"]
-offset_left = 2260.0
-offset_top = -300.0
-offset_right = 2500.0
-offset_bottom = -240.0
-theme_override_colors/font_color = Color(1.0, 0.9, 0.3, 1)
-theme_override_font_sizes/font_size = 14
-text = "REAKTOR SABOTOVÁN!
-Vstup do portálu pro dokončení mise."
-horizontal_alignment = 1
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(40, 140)

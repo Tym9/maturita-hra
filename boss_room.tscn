@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="2"]
+[ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="3"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="4"]
+
+[sub_resource type="GDScript" id="GDScript_boss_room"]
+script/source = "extends Node2D
+
+func _ready():
+	print(\"[BossRoom] Vstoupil jsi do reaktorového sálu. Příprava na finálního bosse!\")
+"
+
+[node name="BossRoom" type="Node2D"]
+script = SubResource("GDScript_boss_room")
+
+[node name="RoomBackdrop" type="Node2D" parent="."]
+script = ExtResource("3")
+room_x = 0
+room_y = 0
+room_title = "SEKTOR 4-0: VELÍN REAKTORU (BOSS ARENA)"
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(0, 0)
+script = ExtResource("2")
+tiles_x = 20
+tiles_y = 1
+theme = 3
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+position = Vector2(0, 0)
+script = ExtResource("2")
+tiles_x = 1
+tiles_y = 11
+theme = 3
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(304, 0)
+script = ExtResource("2")
+tiles_x = 1
+tiles_y = 11
+theme = 3
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 160)
+script = ExtResource("2")
+tiles_x = 20
+tiles_y = 2
+theme = 3
+
+[node name="PlatformL" type="StaticBody2D" parent="."]
+position = Vector2(48, 112)
+script = ExtResource("2")
+tiles_x = 4
+tiles_y = 1
+theme = 3
+
+[node name="PlatformR" type="StaticBody2D" parent="."]
+position = Vector2(208, 112)
+script = ExtResource("2")
+tiles_x = 4
+tiles_y = 1
+theme = 3
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(60, 140)
+
+[node name="WarningLabel" type="Label" parent="."]
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 290.0
+offset_bottom = 80.0
+text = "⚠️ REAKTOROVÉ JÁDRO ⚠️
+PŘÍPRAVA NA FINÁLNÍHO BOSSE"
+horizontal_alignment = 1
