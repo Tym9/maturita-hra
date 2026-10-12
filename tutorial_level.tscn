@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://mhsavrd0matv"]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1_abc"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1000, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(50, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crawl"]
+size = Vector2(200, 50)
+
+[node name="Level" type="Node2D" unique_id=1800699447]
+
+[node name="Player" parent="." unique_id=311078208 instance=ExtResource("1_abc")]
+position = Vector2(50, -50)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=21566614]
+position = Vector2(500, 0)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2112455817]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=1726234930]
+offset_left = -500.0
+offset_top = -25.0
+offset_right = 500.0
+offset_bottom = 25.0
+color = Color(0.2, 0.6, 0.2, 1)
+
+[node name="Wall1" type="StaticBody2D" parent="." unique_id=1876175830]
+position = Vector2(800, -225)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1" unique_id=663269897]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ColorRect" type="ColorRect" parent="Wall1" unique_id=1577846166]
+offset_left = -25.0
+offset_top = -200.0
+offset_right = 25.0
+offset_bottom = 200.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="Wall2" type="StaticBody2D" parent="." unique_id=24818946]
+position = Vector2(950, -325)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2" unique_id=898920136]
+position = Vector2(-1, 89)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="ColorRect" type="ColorRect" parent="Wall2" unique_id=1333004443]
+offset_left = -26.0
+offset_top = -111.0
+offset_right = 24.0
+offset_bottom = 289.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="CrawlSpace" type="StaticBody2D" parent="." unique_id=855933833]
+position = Vector2(300, -62)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrawlSpace" unique_id=2052836144]
+shape = SubResource("RectangleShape2D_crawl")
+
+[node name="ColorRect" type="ColorRect" parent="CrawlSpace" unique_id=176149453]
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="LabelMove" type="Label" parent="." unique_id=1848155704]
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = -77.0
+text = "A / D to Move
+W to Jump
+Space to Dash"
+
+[node name="LabelCrouch" type="Label" parent="." unique_id=1976295102]
+offset_left = 210.0
+offset_top = -110.0
+offset_right = 360.0
+offset_bottom = -87.0
+text = "Hold S to Crouch ->"
+
+[node name="LabelWallJump" type="Label" parent="." unique_id=506875110]
+offset_left = 550.0
+offset_top = -150.0
+offset_right = 750.0
+offset_bottom = -100.0
+text = "Jump onto the wall,
+press A/D against it
+and W to Wall Jump ->"
+
+[node name="LevelEnd" parent="." unique_id=455572698 instance=ExtResource("2")]
+position = Vector2(1001, -125)
+next_level = "res://level1.tscn"

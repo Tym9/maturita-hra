@@ -1,0 +1,391 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="3"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="4"]
+[ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="5"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="12"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="17"]
+
+[node name="Level2" type="Node2D"]
+
+[node name="Backdrops" type="Node2D" parent="."]
+
+[node name="Room_0_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 0
+room_y = 0
+room_title = "SEKTOR 0-0: KRYSTALOVÝ VESTIBUL"
+
+[node name="Room_1_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 1
+room_y = 0
+room_title = "SEKTOR 1-0: KRYSTALOVÁ PROPAST"
+
+[node name="Room_1_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 1
+room_y = 1
+room_title = "SEKTOR 1-1: PARNÍ ŠACHTA"
+
+[node name="Room_2_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 2
+room_y = 1
+room_title = "SEKTOR 2-1: TĚŽEBNÍ KORIDOR"
+
+[node name="Room_2_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 2
+room_y = 2
+room_title = "SEKTOR 2-2: ZAPEČETĚNÁ KRYPTA"
+
+[node name="Room_3_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 3
+room_y = 2
+room_title = "SEKTOR 3-2: VÝTAH DO REAKTORU"
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="R0_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 2
+
+[node name="R0_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 2
+
+[node name="R0_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 160)
+script = ExtResource("3")
+tiles_x = 12
+tiles_y = 2
+theme = 2
+
+[node name="R0_LedgeMid" type="StaticBody2D" parent="Platforms"]
+position = Vector2(96, 112)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 2
+
+[node name="R0_ExitLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(208, 128)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 1
+theme = 2
+
+[node name="R10_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 2
+
+[node name="R10_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 8
+theme = 2
+
+[node name="R10_EntranceLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 128)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 2
+
+[node name="R10_SecretLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(560, 48)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 2
+
+[node name="R10_Landing" type="StaticBody2D" parent="Platforms"]
+position = Vector2(528, 144)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 2
+
+[node name="R11_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 2
+
+[node name="R11_WallRightUpper" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 7
+theme = 2
+
+[node name="R11_CrumblingBridge1" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(400, 230)
+
+[node name="R11_MidLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(464, 280)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 2
+
+[node name="R11_CrumblingBridge2" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(560, 280)
+
+[node name="R11_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(336, 344)
+script = ExtResource("3")
+tiles_x = 18
+tiles_y = 1
+theme = 2
+
+[node name="R21_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 180)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 2
+
+[node name="R21_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(944, 180)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 2
+
+[node name="R21_FloorLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 344)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 1
+theme = 2
+
+[node name="R21_HighBeam" type="StaticBody2D" parent="Platforms"]
+position = Vector2(720, 220)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 2
+
+[node name="R21_SniperPerch" type="StaticBody2D" parent="Platforms"]
+position = Vector2(816, 260)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 1
+theme = 2
+
+[node name="R21_FloorRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(864, 344)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 2
+
+[node name="R22_InvertedCeiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 360)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 2
+
+[node name="R22_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 360)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 2
+
+[node name="R22_FloorLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(656, 524)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 2
+
+[node name="R22_InvertedBlock" type="StaticBody2D" parent="Platforms"]
+position = Vector2(768, 376)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 2
+theme = 2
+
+[node name="R22_FloorRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(864, 524)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 1
+theme = 2
+
+[node name="R32_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 360)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 2
+
+[node name="R32_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1264, 360)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 2
+
+[node name="R32_Entrance" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 524)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+theme = 2
+
+[node name="R32_ElevatorLanding" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1168, 496)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 2
+
+[node name="R32_PitFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1024, 536)
+script = ExtResource("3")
+tiles_x = 9
+tiles_y = 1
+theme = 2
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="R0_Spikes" type="Area2D" parent="Hazards"]
+position = Vector2(192, 168)
+script = ExtResource("4")
+count = 2
+
+[node name="R10_ChasmSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(368, 168)
+script = ExtResource("4")
+count = 10
+
+[node name="R11_SteamVent" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(330, 270)
+blast_direction = Vector2(1, 0)
+blast_length = 50.0
+
+[node name="R21_PitSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(736, 350)
+script = ExtResource("4")
+count = 8
+
+[node name="R22_CeilingSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(704, 376)
+script = ExtResource("4")
+count = 4
+
+[node name="R32_CoreSpikes" type="Area2D" parent="Hazards"]
+position = Vector2(1024, 520)
+script = ExtResource("4")
+count = 9
+
+[node name="R32_SteamVent1" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(1080, 520)
+idle_time = 1.6
+warn_time = 0.4
+blast_time = 0.9
+
+[node name="R32_SteamVent2" parent="Hazards" instance=ExtResource("16")]
+position = Vector2(1130, 520)
+idle_time = 2.0
+warn_time = 0.4
+blast_time = 0.9
+
+[node name="Mechanics" type="Node2D" parent="."]
+
+[node name="MinesChest" parent="Mechanics" instance=ExtResource("13")]
+position = Vector2(65, 153)
+initial_items = ["health_pack", "steam_crystal"]
+
+[node name="GrapplePoint_Chasm1" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(430, 60)
+
+[node name="GrapplePoint_Chasm2" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(500, 75)
+
+[node name="CelesteKey_Corridor" parent="Mechanics" instance=ExtResource("14")]
+position = Vector2(750, 204)
+
+[node name="Gate_KeyBlock" parent="Mechanics" instance=ExtResource("15")]
+position = Vector2(700, 480)
+block_width = 16.0
+block_height = 48.0
+
+[node name="GravityAnomaly_Down" parent="Mechanics" instance=ExtResource("7")]
+position = Vector2(750, 440)
+
+[node name="GravityAnomaly_Up" parent="Mechanics" instance=ExtResource("7")]
+position = Vector2(880, 420)
+
+[node name="GrapplePoint_Shaft" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(1060, 400)
+
+[node name="GrapplePoint_Final" parent="Mechanics" instance=ExtResource("6")]
+position = Vector2(1140, 390)
+
+[node name="HealthPack_Ledge" parent="Mechanics" instance=ExtResource("8")]
+position = Vector2(840, 244)
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="Crystal_10" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(590, 32)
+crystal_id = "crystal_m10"
+
+[node name="Crystal_21" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(880, 244)
+crystal_id = "crystal_m21"
+
+[node name="Crystal_22" parent="Collectibles" instance=ExtResource("12")]
+position = Vector2(768, 410)
+crystal_id = "crystal_m22"
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Drone_Chasm" parent="Enemies" instance=ExtResource("11")]
+position = Vector2(460, 110)
+
+[node name="PatrolGuard_Shaft" parent="Enemies" instance=ExtResource("9")]
+position = Vector2(490, 268)
+
+[node name="Shooter_Tunnel" parent="Enemies" instance=ExtResource("10")]
+position = Vector2(830, 244)
+
+[node name="Drone_Final" parent="Enemies" instance=ExtResource("11")]
+position = Vector2(1100, 430)
+
+[node name="LevelEnd" parent="." instance=ExtResource("2")]
+position = Vector2(1200, 470)
+next_level = "res://level3.tscn"
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(40, 140)

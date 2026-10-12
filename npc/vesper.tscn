@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://npc/npc_base.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/npc/vesper_portrait.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/npc/vesper_sprite.png" id="3"]
+
+[node name="Vesper" instance=ExtResource("1")]
+npc_name = "Vesper"
+npc_title = "Rebelující technička"
+portrait_texture = ExtResource("2")
+sprite_texture = ExtResource("3")
+dialogue_pages = [
+"Konečně jsi tady! Přímo před námi je Velká propast těžebního komplexu. Padá stovky metrů hluboko a podlaha je plná smrtících bodáků.",
+"Běžný skok ani dash tě nepřenesou. V truhle vedle mě máš můj Přitahovací hák (Grapple Hook). Vlož si ho do batohu!",
+"Miř pravým tlačítkem [RMB] na zlaté kotvy a stěny nad propastí. Přitáhne tě bleskovou rychlostí a můžeš kombinovat hák, dash i hasák!"
+]
+repeat_dialogue_pages = [
+"Vezmi si hák z truhly a miř myší na zlaté kotvy [RMB]! Za letu se můžeš odrazit a dashem přeletět k další kotvě."
+]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3")

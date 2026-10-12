@@ -1,0 +1,207 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://spikes.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://enemy.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="9"]
+
+[sub_resource type="RectangleShape2D" id="floor1_shape"]
+size = Vector2(500, 40)
+
+[sub_resource type="RectangleShape2D" id="ledge_shape"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="floor2a_shape"]
+size = Vector2(240, 20)
+
+[sub_resource type="RectangleShape2D" id="floor2b_shape"]
+size = Vector2(200, 20)
+
+[sub_resource type="RectangleShape2D" id="ceiling_shape"]
+size = Vector2(400, 20)
+
+[node name="TestMovement" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -100
+offset_left = -1000.0
+offset_top = -2000.0
+offset_right = 5000.0
+offset_bottom = 2000.0
+color = Color(0.1, 0.07, 0.04, 1)
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(50, -45)
+
+[node name="Floor1" type="StaticBody2D" parent="."]
+position = Vector2(250, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1"]
+shape = SubResource("floor1_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor1"]
+offset_left = -250.0
+offset_top = -20.0
+offset_right = 250.0
+offset_bottom = 20.0
+color = Color(0.75, 0.5, 0.2, 1)
+
+[node name="EnemyTest" parent="." instance=ExtResource("6")]
+position = Vector2(350, -30)
+
+[node name="HealthPackTest" parent="." instance=ExtResource("7")]
+position = Vector2(460, -35)
+
+[node name="LedgeA" type="StaticBody2D" parent="."]
+position = Vector2(560, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LedgeA"]
+shape = SubResource("ledge_shape")
+
+[node name="ColorRect" type="ColorRect" parent="LedgeA"]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.75, 0.5, 0.2, 1)
+
+[node name="ShooterTest" parent="." instance=ExtResource("8")]
+position = Vector2(560, -125)
+
+[node name="DroneTest" parent="." instance=ExtResource("9")]
+position = Vector2(775, -120)
+
+[node name="GrapplePoint1" parent="." instance=ExtResource("4")]
+position = Vector2(700, -170)
+
+[node name="GrapplePoint2" parent="." instance=ExtResource("4")]
+position = Vector2(850, -190)
+
+[node name="GrapplePoint3" parent="." instance=ExtResource("4")]
+position = Vector2(990, -170)
+
+[node name="Floor2a" type="StaticBody2D" parent="."]
+position = Vector2(1130, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2a"]
+shape = SubResource("floor2a_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor2a"]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+color = Color(0.5, 0.35, 0.7, 1)
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(1300, -210)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource("ceiling_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Ceiling"]
+offset_left = -200.0
+offset_top = -10.0
+offset_right = 200.0
+offset_bottom = 10.0
+color = Color(0.5, 0.35, 0.7, 1)
+
+[node name="GravityAnomaly1" parent="." instance=ExtResource("5")]
+position = Vector2(1180, -105)
+
+[node name="GravityAnomaly2" parent="." instance=ExtResource("5")]
+position = Vector2(1440, -185)
+
+[node name="Floor2b" type="StaticBody2D" parent="."]
+position = Vector2(1500, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2b"]
+shape = SubResource("floor2b_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor2b"]
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 10.0
+color = Color(0.5, 0.35, 0.7, 1)
+
+[node name="LevelEnd" parent="." instance=ExtResource("2")]
+position = Vector2(1560, -150)
+next_level = "res://main_menu.tscn"
+
+[node name="SpikesPit1" parent="." instance=ExtResource("3")]
+position = Vector2(660, 100)
+
+[node name="SpikesPit2" parent="." instance=ExtResource("3")]
+position = Vector2(700, 100)
+
+[node name="SpikesPit3" parent="." instance=ExtResource("3")]
+position = Vector2(740, 100)
+
+[node name="SpikesPit4" parent="." instance=ExtResource("3")]
+position = Vector2(780, 100)
+
+[node name="SpikesPit5" parent="." instance=ExtResource("3")]
+position = Vector2(820, 100)
+
+[node name="SpikesPit6" parent="." instance=ExtResource("3")]
+position = Vector2(860, 100)
+
+[node name="SpikesPit7" parent="." instance=ExtResource("3")]
+position = Vector2(900, 100)
+
+[node name="SpikesPit8" parent="." instance=ExtResource("3")]
+position = Vector2(940, 100)
+
+[node name="SpikesPit9" parent="." instance=ExtResource("3")]
+position = Vector2(980, 100)
+
+[node name="SpikesHole1" parent="." instance=ExtResource("3")]
+position = Vector2(1275, 0)
+
+[node name="SpikesHole2" parent="." instance=ExtResource("3")]
+position = Vector2(1315, 0)
+
+[node name="SpikesHole3" parent="." instance=ExtResource("3")]
+position = Vector2(1355, 0)
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="LabelTitle" type="Label" parent="UI"]
+offset_left = 10.0
+offset_top = -190.0
+offset_right = 420.0
+offset_bottom = -130.0
+theme_override_colors/font_color = Color(1, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "Testovací místnost pohybu
+Dvojskok · Přitahovací hák · Gravitace"
+
+[node name="LabelDoubleJump" type="Label" parent="UI"]
+offset_left = 380.0
+offset_top = -150.0
+offset_right = 600.0
+offset_bottom = -110.0
+text = "Dvojskok: stiskni W
+znovu ve vzduchu"
+
+[node name="LabelGrapple" type="Label" parent="UI"]
+offset_left = 640.0
+offset_top = -260.0
+offset_right = 1020.0
+offset_bottom = -210.0
+text = "Kolečko / [1, 2]: Zvolit Hasák nebo Hák | LMB: Úder / Hák | RMB: Hák vždy!
+Sekni hasákem (LMB) nebo přitáhni hákem (RMB) k terči!"
+
+[node name="LabelGravity" type="Label" parent="UI"]
+offset_left = 1050.0
+offset_top = -260.0
+offset_right = 1400.0
+offset_bottom = -220.0
+text = "Fialová anomálie prohodí gravitaci
+- projdi chodbu po stropě"

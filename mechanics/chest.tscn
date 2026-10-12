@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://mechanics/chest.gd" id="1"]
+[ext_resource type="Script" path="res://mechanics/chest_prompt.gd" id="2"]
+[ext_resource type="PackedScene" path="res://ui/chest_window.tscn" id="3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chest"]
+size = Vector2(36, 26)
+
+[node name="Chest" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_chest")
+
+[node name="InteractPrompt" type="Node2D" parent="."]
+position = Vector2(0, -22)
+script = ExtResource("2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="ChestWindow" parent="CanvasLayer" instance=ExtResource("3")]
+visible = false

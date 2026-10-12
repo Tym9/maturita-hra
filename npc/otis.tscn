@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://npc/npc_base.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/npc/otis_portrait.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/npc/otis_sprite.png" id="3"]
+
+[node name="Otis" instance=ExtResource("1")]
+npc_name = "Otis"
+npc_title = "Starý mechanik"
+portrait_texture = ExtResource("2")
+sprite_texture = ExtResource("3")
+dialogue_pages = [
+"Á, tady jsi, Matěji! Jádro korporátního reaktoru v hlubinách šachty se vymklo kontrole a město se hroutí.",
+"Otevři truhlu vedle mě [E] a vezmi si můj těžký Hasák. Budeš s ním moct seknout na blízko [LMB / F] a prorazit bezpečnostní hlídky.",
+"Postupuj opatrně přes povrchové ruiny. Na další výbavu narazíš hlouběji u mých kolegů v šachtě!"
+]
+repeat_dialogue_pages = [
+"Vezmi si hasák z truhly a vyraž přes ruiny. Použij dvojskok a odskoky od zdi!"
+]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3")

@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://test/test_modular_room.gd" id="1"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="2"]
+[ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="3"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="4"]
+[ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="5"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6"]
+
+[node name="TestModularRoom" type="Node2D"]
+script = ExtResource("1")
+
+[node name="RoomBackdrop" type="Node2D" parent="."]
+script = ExtResource("5")
+room_title = "TEST SECTOR 00"
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 148)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 2
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(80, 96)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 1
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(288, 32)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 7
+
+[node name="GridSpikes" type="Area2D" parent="."]
+position = Vector2(160, 132)
+script = ExtResource("4")
+count = 3
+
+[node name="GrapplePoint" parent="." instance=ExtResource("6")]
+position = Vector2(200, 50)
+
+[node name="Player" parent="." instance=ExtResource("2")]
+position = Vector2(40, 120)

@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://qbq77bbn7ef8"]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://spikes.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://zip_block.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://enemy.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="floor_shape"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="tiny_floor_shape"]
+
+[node name="Level14" type="Node2D" unique_id=802324126]
+
+[node name="Background" type="ColorRect" parent="." unique_id=139705138]
+z_index = -100
+offset_left = -1000.0
+offset_top = -2000.0
+offset_right = 5000.0
+offset_bottom = 2000.0
+color = Color(0.05, 0.05, 0.12, 1)
+
+[node name="Player" parent="." unique_id=650284255 instance=ExtResource("1")]
+position = Vector2(50, -40)
+
+[node name="Floor1" type="StaticBody2D" parent="." unique_id=1576579579]
+position = Vector2(50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1" unique_id=1055660753]
+shape = SubResource("floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor1" unique_id=764214232]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.6, 1)
+
+[node name="Spikes1" parent="." unique_id=1946449388 instance=ExtResource("3")]
+position = Vector2(140, 80)
+
+[node name="Spikes2" parent="." unique_id=214844264 instance=ExtResource("3")]
+position = Vector2(180, 80)
+
+[node name="Floor2" type="StaticBody2D" parent="." unique_id=1763755549]
+position = Vector2(220, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=1102336402]
+shape = SubResource("tiny_floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor2" unique_id=1355252665]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.6, 1)
+
+[node name="Enemy1" parent="." unique_id=949055178 instance=ExtResource("5")]
+position = Vector2(220, -40)
+
+[node name="Spikes3" parent="." unique_id=1670150352 instance=ExtResource("3")]
+position = Vector2(260, 80)
+
+[node name="Spikes4" parent="." unique_id=981879605 instance=ExtResource("3")]
+position = Vector2(300, 80)
+
+[node name="Spikes5" parent="." unique_id=1961261192 instance=ExtResource("3")]
+position = Vector2(340, 80)
+
+[node name="Floor3" type="StaticBody2D" parent="." unique_id=1393731333]
+position = Vector2(380, -60)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3" unique_id=3502847]
+shape = SubResource("tiny_floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor3" unique_id=562467266]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.6, 1)
+
+[node name="Enemy2" parent="." unique_id=1231228217 instance=ExtResource("5")]
+position = Vector2(380, -80)
+
+[node name="Spikes6" parent="." unique_id=6151400 instance=ExtResource("3")]
+position = Vector2(420, 80)
+
+[node name="Spikes7" parent="." unique_id=887976990 instance=ExtResource("3")]
+position = Vector2(460, 80)
+
+[node name="Spikes8" parent="." unique_id=1928438010 instance=ExtResource("3")]
+position = Vector2(500, 80)
+
+[node name="ZipBlock1" parent="." unique_id=2031913635 instance=ExtResource("4")]
+position = Vector2(550, -100)
+move_offset = Vector2(160, 0)
+speed_fast = 0.35
+
+[node name="Floor4" type="StaticBody2D" parent="." unique_id=273957854]
+position = Vector2(800, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor4" unique_id=377456725]
+shape = SubResource("floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor4" unique_id=371921579]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.2, 0.25, 0.6, 1)
+
+[node name="LevelEnd" parent="." unique_id=965097224 instance=ExtResource("2")]
+position = Vector2(825, -211)
+next_level = "res://level15.tscn"
+
+[node name="UI" type="Node2D" parent="." unique_id=398758877]
+
+[node name="LabelWelcome" type="Label" parent="UI" unique_id=98743525]
+offset_left = 10.0
+offset_top = -150.0
+offset_right = 310.0
+offset_bottom = -90.0
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Level 14: Dvojitý Odraz
+Dvakrát za sebou stompni
+nepřítele k překonání propasti!"

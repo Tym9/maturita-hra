@@ -1,0 +1,94 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/backpack_window.gd" id="1"]
+[ext_resource type="PackedScene" path="res://ui/grid_inventory_view.tscn" id="2"]
+
+[node name="BackpackWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="BackdropDim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.03, 0.06, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="ColorRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(140, 130)
+layout_mode = 2
+color = Color(0.09, 0.08, 0.13, 0.96)
+
+[node name="Border" type="ReferenceRect" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.85, 0.65, 0.28, 1)
+border_width = 1.5
+editor_only = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_font_sizes/font_size = 8
+text = "BATOH HRÁČE (6x4)"
+
+[node name="BtnClose" type="Button" parent="CenterContainer/Panel/VBoxContainer/Header"]
+custom_minimum_size = Vector2(14, 12)
+layout_mode = 2
+theme_override_font_sizes/font_size = 7
+text = "✕"
+
+[node name="GridInventoryView" parent="CenterContainer/Panel/VBoxContainer" instance=ExtResource("2")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="InfoLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.88, 1)
+theme_override_font_sizes/font_size = 6
+text = "Klikněte na předmět pro zvednutí."
+autowrap_mode = 2
+
+[node name="HintLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.7, 0.35, 1)
+theme_override_font_sizes/font_size = 6
+text = "[R/RMB] Otočit  •  [I/ESC] Zavřít"
+horizontal_alignment = 1

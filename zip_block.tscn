@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://zip_block.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(70, 70)
+
+[node name="ZipBlock" type="AnimatableBody2D"]
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.5, 0.2, 0.7, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("2")

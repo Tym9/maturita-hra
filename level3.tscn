@@ -1,0 +1,277 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://spikes.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://enemy.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://zip_block.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://moving_platform.tscn" id="8"]
+
+[sub_resource type="RectangleShape2D" id="floor_start_shape"]
+size = Vector2(220, 40)
+
+[sub_resource type="RectangleShape2D" id="chimney_l_shape"]
+size = Vector2(30, 260)
+
+[sub_resource type="RectangleShape2D" id="chimney_r_shape"]
+size = Vector2(30, 260)
+
+[sub_resource type="RectangleShape2D" id="tower_top_shape"]
+size = Vector2(160, 30)
+
+[sub_resource type="RectangleShape2D" id="guard_patrol_floor_shape"]
+size = Vector2(400, 30)
+
+[sub_resource type="RectangleShape2D" id="inv_reactor_ceiling_shape"]
+size = Vector2(460, 30)
+
+[sub_resource type="RectangleShape2D" id="final_core_platform_shape"]
+size = Vector2(300, 30)
+
+[node name="Level3" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -100
+offset_left = -1000.0
+offset_top = -2500.0
+offset_right = 6000.0
+offset_bottom = 2000.0
+color = Color(0.12, 0.07, 0.03, 1)
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(50, -45)
+
+[node name="FloorStart" type="StaticBody2D" parent="."]
+position = Vector2(90, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorStart"]
+shape = SubResource("floor_start_shape")
+
+[node name="ColorRect" type="ColorRect" parent="FloorStart"]
+offset_left = -110.0
+offset_top = -20.0
+offset_right = 110.0
+offset_bottom = 20.0
+color = Color(0.48, 0.28, 0.12, 1)
+
+[node name="WallChimneyL" type="StaticBody2D" parent="."]
+position = Vector2(140, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallChimneyL"]
+shape = SubResource("chimney_l_shape")
+
+[node name="ColorRect" type="ColorRect" parent="WallChimneyL"]
+offset_left = -15.0
+offset_top = -130.0
+offset_right = 15.0
+offset_bottom = 130.0
+color = Color(0.55, 0.32, 0.15, 1)
+
+[node name="WallChimneyR" type="StaticBody2D" parent="."]
+position = Vector2(250, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallChimneyR"]
+shape = SubResource("chimney_r_shape")
+
+[node name="ColorRect" type="ColorRect" parent="WallChimneyR"]
+offset_left = -15.0
+offset_top = -130.0
+offset_right = 15.0
+offset_bottom = 130.0
+color = Color(0.55, 0.32, 0.15, 1)
+
+[node name="MovingShaftLift" parent="." instance=ExtResource("8")]
+position = Vector2(195, -20)
+move_offset = Vector2(0, -180)
+duration = 2.0
+
+[node name="TowerTop" type="StaticBody2D" parent="."]
+position = Vector2(320, -260)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TowerTop"]
+shape = SubResource("tower_top_shape")
+
+[node name="ColorRect" type="ColorRect" parent="TowerTop"]
+offset_left = -80.0
+offset_top = -15.0
+offset_right = 80.0
+offset_bottom = 15.0
+color = Color(0.5, 0.3, 0.14, 1)
+
+[node name="ReactorSpikes1" parent="." instance=ExtResource("3")]
+position = Vector2(380, 50)
+
+[node name="ReactorSpikes2" parent="." instance=ExtResource("3")]
+position = Vector2(420, 50)
+
+[node name="ReactorSpikes3" parent="." instance=ExtResource("3")]
+position = Vector2(460, 50)
+
+[node name="ReactorSpikes4" parent="." instance=ExtResource("3")]
+position = Vector2(500, 50)
+
+[node name="ReactorSpikes5" parent="." instance=ExtResource("3")]
+position = Vector2(540, 50)
+
+[node name="ReactorSpikes6" parent="." instance=ExtResource("3")]
+position = Vector2(580, 50)
+
+[node name="ReactorSpikes7" parent="." instance=ExtResource("3")]
+position = Vector2(620, 50)
+
+[node name="ReactorSpikes8" parent="." instance=ExtResource("3")]
+position = Vector2(660, 50)
+
+[node name="ReactorSpikes9" parent="." instance=ExtResource("3")]
+position = Vector2(700, 50)
+
+[node name="ReactorSpikes10" parent="." instance=ExtResource("3")]
+position = Vector2(740, 50)
+
+[node name="ReactorSpikes11" parent="." instance=ExtResource("3")]
+position = Vector2(780, 50)
+
+[node name="ReactorSpikes12" parent="." instance=ExtResource("3")]
+position = Vector2(820, 50)
+
+[node name="ReactorSpikes13" parent="." instance=ExtResource("3")]
+position = Vector2(860, 50)
+
+[node name="ReactorAnchor1" parent="." instance=ExtResource("4")]
+position = Vector2(470, -310)
+
+[node name="ReactorAnchor2" parent="." instance=ExtResource("4")]
+position = Vector2(630, -340)
+
+[node name="ReactorAnchor3" parent="." instance=ExtResource("4")]
+position = Vector2(780, -300)
+
+[node name="GuardPatrolFloor" type="StaticBody2D" parent="."]
+position = Vector2(1050, -220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GuardPatrolFloor"]
+shape = SubResource("guard_patrol_floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="GuardPatrolFloor"]
+offset_left = -200.0
+offset_top = -15.0
+offset_right = 200.0
+offset_bottom = 15.0
+color = Color(0.4, 0.22, 0.15, 1)
+
+[node name="ReactorGuard1" parent="." instance=ExtResource("6")]
+position = Vector2(950, -250)
+
+[node name="ReactorGuard2" parent="." instance=ExtResource("6")]
+position = Vector2(1080, -250)
+
+[node name="ReactorGuard3" parent="." instance=ExtResource("6")]
+position = Vector2(1200, -250)
+
+[node name="GravityAnomalyCoreIn" parent="." instance=ExtResource("5")]
+position = Vector2(1300, -240)
+
+[node name="InvReactorCeiling" type="StaticBody2D" parent="."]
+position = Vector2(1580, -420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvReactorCeiling"]
+shape = SubResource("inv_reactor_ceiling_shape")
+
+[node name="ColorRect" type="ColorRect" parent="InvReactorCeiling"]
+offset_left = -230.0
+offset_top = -15.0
+offset_right = 230.0
+offset_bottom = 15.0
+color = Color(0.55, 0.25, 0.15, 1)
+
+[node name="InvAnchor" parent="." instance=ExtResource("4")]
+position = Vector2(1580, -340)
+
+[node name="CoreSpikes1" parent="." instance=ExtResource("3")]
+position = Vector2(1420, -140)
+
+[node name="CoreSpikes2" parent="." instance=ExtResource("3")]
+position = Vector2(1460, -140)
+
+[node name="CoreSpikes3" parent="." instance=ExtResource("3")]
+position = Vector2(1500, -140)
+
+[node name="CoreSpikes4" parent="." instance=ExtResource("3")]
+position = Vector2(1540, -140)
+
+[node name="CoreSpikes5" parent="." instance=ExtResource("3")]
+position = Vector2(1580, -140)
+
+[node name="CoreSpikes6" parent="." instance=ExtResource("3")]
+position = Vector2(1620, -140)
+
+[node name="CoreSpikes7" parent="." instance=ExtResource("3")]
+position = Vector2(1660, -140)
+
+[node name="CoreSpikes8" parent="." instance=ExtResource("3")]
+position = Vector2(1700, -140)
+
+[node name="GravityAnomalyCoreOut" parent="." instance=ExtResource("5")]
+position = Vector2(1850, -380)
+
+[node name="FinalZip" parent="." instance=ExtResource("7")]
+position = Vector2(2000, -180)
+move_offset = Vector2(250, 0)
+speed_fast = 0.3
+
+[node name="PitFinal1" parent="." instance=ExtResource("3")]
+position = Vector2(2040, -20)
+
+[node name="PitFinal2" parent="." instance=ExtResource("3")]
+position = Vector2(2080, -20)
+
+[node name="PitFinal3" parent="." instance=ExtResource("3")]
+position = Vector2(2120, -20)
+
+[node name="PitFinal4" parent="." instance=ExtResource("3")]
+position = Vector2(2160, -20)
+
+[node name="PitFinal5" parent="." instance=ExtResource("3")]
+position = Vector2(2200, -20)
+
+[node name="FinalCorePlatform" type="StaticBody2D" parent="."]
+position = Vector2(2380, -180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinalCorePlatform"]
+shape = SubResource("final_core_platform_shape")
+
+[node name="ColorRect" type="ColorRect" parent="FinalCorePlatform"]
+offset_left = -150.0
+offset_top = -15.0
+offset_right = 150.0
+offset_bottom = 15.0
+color = Color(0.7, 0.45, 0.2, 1)
+
+[node name="LevelEnd" parent="." instance=ExtResource("2")]
+position = Vector2(2480, -230)
+next_level = "res://main_menu.tscn"
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="LabelTitle" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = -170.0
+offset_right = 360.0
+offset_bottom = -110.0
+theme_override_colors/font_color = Color(1.0, 0.65, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+text = "KAPITOLA 3: JÁDRO REAKTORU
+Sabotáž korporace · Finální zkouška zručnosti"
+
+[node name="LabelVictory" type="Label" parent="UI"]
+offset_left = 2260.0
+offset_top = -300.0
+offset_right = 2500.0
+offset_bottom = -240.0
+theme_override_colors/font_color = Color(1.0, 0.9, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = "REAKTOR SABOTOVÁN!
+Vstup do portálu pro dokončení mise."
+horizontal_alignment = 1

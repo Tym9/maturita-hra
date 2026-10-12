@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://npc/npc_base.gd" id="1"]
+[ext_resource type="Script" path="res://npc/interact_prompt.gd" id="2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
+size = Vector2(12, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_npc_interact"]
+radius = 32.0
+
+[node name="NPCBase" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_npc_interact")
+
+[node name="PromptNode" type="Node2D" parent="."]
+position = Vector2(0, -22)
+script = ExtResource("2")

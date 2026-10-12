@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://npc/npc_base.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/npc/rusty_portrait.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/npc/rusty_sprite.png" id="3"]
+
+[node name="Rusty" instance=ExtResource("1")]
+npc_name = "Rusty"
+npc_title = "Parní horník"
+portrait_texture = ExtResource("2")
+sprite_texture = ExtResource("3")
+dialogue_pages = [
+"Píp... Vítej v šachtě, kamaráde. Dál jsou hluboké propasti a parní trysky, které běžným skokem nepřeletíš.",
+"V téhle truhle vedle mě máš Gravitační cívku (Gravity Coil). Otevři truhlu [E] a vlož si ji do batohu [I]!",
+"Když ji máš u sebe, stiskem [Mezerníku] provedeš bleskový Dash. Prorazí vzduch, překoná drolící se lávky a zraní každého, kdo ti stojí v cestě!"
+]
+repeat_dialogue_pages = [
+"Nezapomeň si dát Gravity Coil do batohu! Pomocí Dashe [Mezerník] překonáš dlouhé propasti."
+]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3")

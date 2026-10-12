@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://cc5yamk3rrjek"]
+
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://spikes.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://zip_block.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://enemy.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="floor_shape"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="small_floor_shape"]
+size = Vector2(40, 20)
+
+[node name="Level12" type="Node2D" unique_id=1631643130]
+
+[node name="Background" type="ColorRect" parent="." unique_id=1354831318]
+z_index = -100
+offset_left = -916.0
+offset_top = -2135.0
+offset_right = 5084.0
+offset_bottom = 1865.0
+color = Color(0.04, 0.08, 0.08, 1)
+
+[node name="Player" parent="." unique_id=420693949 instance=ExtResource("1")]
+position = Vector2(50, -40)
+
+[node name="Floor1" type="StaticBody2D" parent="." unique_id=1523150839]
+position = Vector2(50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor1" unique_id=1045687459]
+shape = SubResource("floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor1" unique_id=1955866061]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.15, 0.6, 0.5, 1)
+
+[node name="ZipBlock1" parent="." unique_id=1888776316 instance=ExtResource("4")]
+position = Vector2(200, -20)
+move_offset = Vector2(160, 0)
+speed_fast = 0.35
+
+[node name="Spikes1" parent="." unique_id=1768032136 instance=ExtResource("3")]
+position = Vector2(180, 80)
+
+[node name="Spikes2" parent="." unique_id=969565058 instance=ExtResource("3")]
+position = Vector2(220, 80)
+
+[node name="Spikes3" parent="." unique_id=2061550950 instance=ExtResource("3")]
+position = Vector2(260, 80)
+
+[node name="Spikes4" parent="." unique_id=1941388308 instance=ExtResource("3")]
+position = Vector2(300, 80)
+
+[node name="Spikes5" parent="." unique_id=781522816 instance=ExtResource("3")]
+position = Vector2(340, 80)
+
+[node name="Floor2" type="StaticBody2D" parent="." unique_id=1762532219]
+position = Vector2(380, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2" unique_id=519017053]
+shape = SubResource("small_floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor2" unique_id=578124001]
+offset_left = -20.0
+offset_top = -10.0
+offset_right = 20.0
+offset_bottom = 10.0
+color = Color(0.15, 0.6, 0.5, 1)
+
+[node name="Enemy1" parent="." unique_id=1931372847 instance=ExtResource("5")]
+position = Vector2(380, -100)
+
+[node name="Spikes6" parent="." unique_id=1508142537 instance=ExtResource("3")]
+position = Vector2(420, 80)
+
+[node name="Spikes7" parent="." unique_id=1448791924 instance=ExtResource("3")]
+position = Vector2(460, 80)
+
+[node name="ZipBlock2" parent="." unique_id=845942783 instance=ExtResource("4")]
+position = Vector2(470, -140)
+move_offset = Vector2(0, -120)
+speed_fast = 0.25
+
+[node name="Floor3" type="StaticBody2D" parent="." unique_id=1538589159]
+position = Vector2(590, -280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor3" unique_id=65539282]
+shape = SubResource("floor_shape")
+
+[node name="ColorRect" type="ColorRect" parent="Floor3" unique_id=2073847486]
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+color = Color(0.15, 0.6, 0.5, 1)
+
+[node name="LevelEnd" parent="." unique_id=2130075203 instance=ExtResource("2")]
+position = Vector2(615, -390)
+next_level = "res://level13.tscn"
+
+[node name="UI" type="Node2D" parent="." unique_id=1449013447]
+
+[node name="LabelWelcome" type="Label" parent="UI" unique_id=1523347489]
+offset_left = 10.0
+offset_top = -150.0
+offset_right = 310.0
+offset_bottom = -90.0
+theme_override_colors/font_color = Color(0.7, 1, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "Level 12: Křížová Cesta
+Vyskoč z jedoucího bloku,
+stompni nepřítele a chytni druhý!"

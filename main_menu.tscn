@@ -1,0 +1,124 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.06, 0.1, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -82.0
+offset_right = 140.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 14
+text = "PPJ 2D: STEAMPUNK ODYSSEY"
+horizontal_alignment = 1
+
+[node name="LabelSub" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 8
+text = "2D přesná plošinovka s příběhem"
+horizontal_alignment = 1
+
+[node name="MainButtons" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="BtnContinue" type="Button" parent="VBoxContainer/MainButtons"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "▶ Pokračovat ve hře"
+
+[node name="BtnNewGame" type="Button" parent="VBoxContainer/MainButtons"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "★ Nová hra"
+
+[node name="BtnChapters" type="Button" parent="VBoxContainer/MainButtons"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "☰ Výběr kapitol"
+
+[node name="BtnQuit" type="Button" parent="VBoxContainer/MainButtons"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "✕ Ukončit"
+
+[node name="ChapterScroll" type="ScrollContainer" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ChapterScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="BtnTutorial" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Tutoriál"
+
+[node name="BtnLevel1" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Sektor 1: Šachta"
+
+[node name="BtnLevel2" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Sektor 2: Doly"
+
+[node name="BtnLevel3" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Sektor 3: Reaktor"
+
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnTutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel1" to="." method="_on_level1_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel2" to="." method="_on_level2_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel3" to="." method="_on_level3_pressed"]
