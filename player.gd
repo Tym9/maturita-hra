@@ -490,6 +490,8 @@ func add_crystal(amount: int = 1, id: String = ""):
 			return
 		collected_crystal_ids.append(id)
 	crystals += amount
+	if Global and Global.has_method("on_crystal_collected"):
+		Global.on_crystal_collected(amount)
 	if crystal_ui and crystal_ui.has_method("set_crystals"):
 		crystal_ui.set_crystals(crystals, max_crystals)
 	_play_crystal_pickup_fx()
