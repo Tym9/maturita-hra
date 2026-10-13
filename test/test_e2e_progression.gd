@@ -91,7 +91,36 @@ func _start_test():
 	assert(lvl2_player.grid_inventory.get_equipped(0) != null, "Hasak musi zustat vybaven v hotbaru!")
 	print("  ✓ PASS: Hrac v Levelu 2 uspesne zdedil hasak ve vyzbroji!")
 	
+	# 7. Nyni otestujeme pruchod z Level 2 do Level 3!
+	print(">>> 5. Hrac v Levelu 2 vstupuje do LevelEnd portalu...")
+	var lvl2_end = current_scene.get_node_or_null("LevelEnd")
+	assert(lvl2_end != null, "LevelEnd v Levelu 2 musi existovat")
+	
+	lvl2_end._on_body_entered(lvl2_player)
+	
+	await process_frame
+	await process_frame
+	await process_frame
+	
+	assert(current_scene != null and current_scene.name == "StageClearScreen", "Musi se nacist StageClearScreen po Levelu 2")
+	print("  ✓ PASS: StageClearScreen po Levelu 2 uspesne zobrazena")
+	
+	current_scene._on_continue_pressed()
+	
+	await process_frame
+	await process_frame
+	await process_frame
+	
+	assert(current_scene != null and current_scene.name == "Level3", "Musi se nacist Level3")
+	print("  ✓ PASS: Level 3 uspesne nacten (", current_scene.name, ")!")
+	
+	var lvl3_player = current_scene.get_node_or_null("Player")
+	assert(lvl3_player != null, "Hrac v Levelu 3 musi existovat")
+	assert(lvl3_player.grid_inventory.has_item("wrench"), "Hrac v Levelu 3 musi mit hasak!")
+	assert(lvl3_player.grid_inventory.get_equipped(0) != null, "Hasak musi zustat vybaven v hotbaru!")
+	print("  ✓ PASS: Hrac v Levelu 3 uspesne zdedil vyzbroj z Levelu 2!")
+	
 	print("==================================================")
-	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP 100% USPESNY!")
+	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP (TUTORIAL -> L1 -> L2 -> L3) 100% USPESNY!")
 	print("==================================================")
 	quit(0)

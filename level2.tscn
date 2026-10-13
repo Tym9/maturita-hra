@@ -129,17 +129,17 @@ tiles_y = 2
 theme = 2
 
 [node name="R10_DashCrumble1" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(400, 150)
+position = Vector2(400, 144)
 
-[node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(480, 150)
-
-[node name="R10_DescentLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(464, 172)
+[node name="R10_LedgeMid" type="StaticBody2D" parent="Platforms"]
+position = Vector2(432, 144)
 script = ExtResource("3")
-tiles_x = 3
+tiles_x = 4
 tiles_y = 1
 theme = 2
+
+[node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(536, 100)
 
 [node name="R10_SecretLedge" type="StaticBody2D" parent="Platforms"]
 position = Vector2(560, 48)
@@ -149,9 +149,9 @@ tiles_y = 1
 theme = 2
 
 [node name="R10_Landing" type="StaticBody2D" parent="Platforms"]
-position = Vector2(528, 144)
+position = Vector2(576, 160)
 script = ExtResource("3")
-tiles_x = 6
+tiles_x = 4
 tiles_y = 2
 theme = 2
 
@@ -191,10 +191,10 @@ tiles_y = 1
 theme = 2
 
 [node name="R20_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(672, 168)
+position = Vector2(640, 160)
 script = ExtResource("3")
-tiles_x = 11
-tiles_y = 1
+tiles_x = 15
+tiles_y = 2
 theme = 2
 
 [node name="R11_WallLeft" type="StaticBody2D" parent="Platforms"]
@@ -222,9 +222,9 @@ theme = 2
 position = Vector2(430, 290)
 
 [node name="R11_LedgeMid2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(520, 270)
+position = Vector2(512, 260)
 script = ExtResource("3")
-tiles_x = 3
+tiles_x = 4
 tiles_y = 1
 theme = 2
 
@@ -373,10 +373,17 @@ tiles_x = 1
 tiles_y = 11
 theme = 2
 
-[node name="R22_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 520)
+[node name="R22_GateLintel" type="StaticBody2D" parent="Platforms"]
+position = Vector2(720, 360)
 script = ExtResource("3")
-tiles_x = 20
+tiles_x = 1
+tiles_y = 7
+theme = 2
+
+[node name="R22_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(720, 520)
+script = ExtResource("3")
+tiles_x = 15
 tiles_y = 2
 theme = 2
 
@@ -409,21 +416,21 @@ tiles_y = 2
 theme = 2
 
 [node name="R23_Ledge1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(700, 600)
+position = Vector2(656, 590)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
 theme = 2
 
 [node name="R23_Ledge2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(800, 640)
+position = Vector2(768, 630)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
 theme = 2
 
 [node name="R23_FinalLanding" type="StaticBody2D" parent="Platforms"]
-position = Vector2(864, 680)
+position = Vector2(864, 670)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 2
@@ -432,12 +439,12 @@ theme = 2
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="R10_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(368, 168)
+position = Vector2(368, 160)
 script = ExtResource("4")
-count = 5
+count = 4
 
 [node name="R20_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(704, 168)
+position = Vector2(704, 160)
 script = ExtResource("4")
 count = 6
 
@@ -468,6 +475,7 @@ blast_time = 0.8
 position = Vector2(704, 376)
 script = ExtResource("4")
 count = 4
+orientation = 1
 
 [node name="R32_CoreSpikes" type="Area2D" parent="Hazards"]
 position = Vector2(1024, 520)
@@ -496,7 +504,7 @@ initial_items = ["gravity_coil", "health_pack"]
 position = Vector2(750, 204)
 
 [node name="Gate_KeyBlock" parent="Mechanics" instance=ExtResource("15")]
-position = Vector2(700, 480)
+position = Vector2(728, 496)
 block_width = 16.0
 block_height = 48.0
 
@@ -537,7 +545,7 @@ position = Vector2(100, 152)
 position = Vector2(460, 110)
 
 [node name="PatrolGuard_Shaft" parent="Enemies" instance=ExtResource("9")]
-position = Vector2(490, 268)
+position = Vector2(450, 320)
 
 [node name="Shooter_Tunnel" parent="Enemies" instance=ExtResource("10")]
 position = Vector2(830, 244)
