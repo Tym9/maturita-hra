@@ -40,25 +40,23 @@ func is_valid_room(room: Vector2i) -> bool:
 
 func _discover_valid_rooms():
 	valid_rooms.clear()
-	var root = get_tree().current_scene
-	if not root or root.find_children("", "RoomBackdrop", true, false).is_empty():
-		var curr = self
-		while curr != null:
-			if not curr.find_children("", "RoomBackdrop", true, false).is_empty():
-				root = curr
-				break
-			curr = curr.get_parent()
-	if root:
-		for b in root.find_children("", "RoomBackdrop", true, false):
-			valid_rooms.append(Vector2i(b.room_x, b.room_y))
-		if valid_rooms.is_empty():
-			for child in root.find_children("*", "", true, false):
-				if child.get("room_x") != null and child.get("room_y") != null:
-					valid_rooms.append(Vector2i(child.room_x, child.room_y))
-	if valid_rooms.is_empty() and is_instance_valid(player):
-		var rx = int(floor(player.global_position.x / ROOM_WIDTH))
-		var ry = int(floor(player.global_position.y / ROOM_HEIGHT))
-		valid_rooms.append(Vector2i(rx, ry))
+	var candidates: Array[Node] = []
+	if get_tree() and get_tree().current_scene:
+		candidates.append(get_tree().current_scene)
+	var curr: Node = self
+	while curr != null:
+		if not candidates.has(curr):
+			candidates.append(curr)
+		curr = curr.get_parent()
+	
+	for root in candidates:
+		for child in root.find_children("*", "", true, false):
+			if child is RoomBackdrop or (child.get("room_x") != null and child.get("room_y") != null):
+				var r = Vector2i(child.room_x, child.room_y)
+				if not valid_rooms.has(r):
+					valid_rooms.append(r)
+		if not valid_rooms.is_empty():
+			break
 
 func _process(delta):
 	if not is_instance_valid(player):

@@ -24,7 +24,7 @@ func _ready():
 func _physics_process(delta):
 	test_step += 1
 	
-	# Krok 1: Teleportujeme hráče do Místnosti [1, 0] (překročení X=320)
+	# Krok 1: Přechod do Místnosti [1, 0]
 	if test_step == 10:
 		player.global_position = Vector2(360, 130)
 	
@@ -33,31 +33,59 @@ func _physics_process(delta):
 		assert(player.spawn_point.x >= 320, "Spawn point updated to Room [1, 0]")
 		print("[PASS] Room [1, 0] transition & checkpoint: OK")
 		
-		# Krok 2: Přechod dolů do vertikální šachty Místnosti [1, 1] (překročení Y=180)
-		player.global_position = Vector2(400, 220)
+		# Krok 2: Přechod doprava do Ventilační věže [2, 0]
+		player.global_position = Vector2(680, 120)
 	
 	if test_step == 20:
-		assert(cam.current_room == Vector2i(1, 1), "Room should update to [1, 1], got: %s" % cam.current_room)
-		assert(player.spawn_point.y >= 180, "Spawn point updated to Room [1, 1]")
-		print("[PASS] Room [1, 1] (downward shaft) transition: OK")
+		assert(cam.current_room == Vector2i(2, 0), "Room should update to [2, 0], got: %s" % cam.current_room)
+		print("[PASS] Room [2, 0] (ventilation tower) transition: OK")
 		
-		# Krok 3: Přechod doprava do Místnosti [2, 1] (překročení X=640)
-		player.global_position = Vector2(680, 320)
+		# Krok 3: Sestup do vertikální šachty [1, 1]
+		player.global_position = Vector2(400, 220)
 	
 	if test_step == 25:
-		assert(cam.current_room == Vector2i(2, 1), "Room should update to [2, 1], got: %s" % cam.current_room)
-		print("[PASS] Room [2, 1] (tunnel with shooter) transition: OK")
+		assert(cam.current_room == Vector2i(1, 1), "Room should update to [1, 1], got: %s" % cam.current_room)
+		print("[PASS] Room [1, 1] (vertical shaft) transition: OK")
 		
-		# Krok 4: Přechod dolů do Místnosti [2, 2] (překročení Y=360)
-		player.global_position = Vector2(700, 400)
+		# Krok 4: Přechod do těžebního tunelu [2, 1]
+		player.global_position = Vector2(680, 320)
 	
 	if test_step == 30:
-		assert(cam.current_room == Vector2i(2, 2), "Room should update to [2, 2], got: %s" % cam.current_room)
-		print("[PASS] Room [2, 2] (reactor core finale) transition: OK")
+		assert(cam.current_room == Vector2i(2, 1), "Room should update to [2, 1], got: %s" % cam.current_room)
+		print("[PASS] Room [2, 1] (mining tunnel) transition: OK")
 		
-		# Krok 5: Dotyk LevelEnd
+		# Krok 5: Přechod do chladicího kanálu [3, 1]
+		player.global_position = Vector2(1000, 280)
+	
+	if test_step == 35:
+		assert(cam.current_room == Vector2i(3, 1), "Room should update to [3, 1], got: %s" % cam.current_room)
+		print("[PASS] Room [3, 1] (cooling channel) transition: OK")
+		
+		# Krok 6: Sestup do přetlakové komory [3, 2]
+		player.global_position = Vector2(1050, 440)
+	
+	if test_step == 40:
+		assert(cam.current_room == Vector2i(3, 2), "Room should update to [3, 2], got: %s" % cam.current_room)
+		print("[PASS] Room [3, 2] (pressure chamber) transition: OK")
+		
+		# Krok 7: Přechod doleva do jádra generátoru [2, 2]
+		player.global_position = Vector2(760, 420)
+	
+	if test_step == 45:
+		assert(cam.current_room == Vector2i(2, 2), "Room should update to [2, 2], got: %s" % cam.current_room)
+		print("[PASS] Room [2, 2] (generator core) transition: OK")
+		
+		# Krok 8: Sestup na finální etáž [2, 3] ke vstupu do dolů
+		player.global_position = Vector2(760, 600)
+	
+	if test_step == 50:
+		assert(cam.current_room == Vector2i(2, 3), "Room should update to [2, 3], got: %s" % cam.current_room)
+		print("[PASS] Room [2, 3] (mines entrance finale) transition: OK")
+		
+		# Krok 9: Dotyk LevelEnd
 		var level_end = level_inst.get_node("LevelEnd")
 		assert(level_end != null, "LevelEnd must exist")
+		assert(level_end.position == Vector2(912, 650), "LevelEnd should be at (912, 650), got: %s" % level_end.position)
 		print("[PASS] LevelEnd verified at: %s" % level_end.position)
-		print("=== ALL LEVEL 1 DOWNWARD FLOW TESTS PASSED (100% OK) ===")
+		print("=== ALL 9 ROOMS IN LEVEL 1 EXPANDED FLOW PASSED (100% OK) ===")
 		get_tree().quit(0)

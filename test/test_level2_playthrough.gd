@@ -42,10 +42,13 @@ func test_level2_initialization():
 	assert_true(backdrops != null, "Backdrops uzel přítomen")
 	assert_true(backdrops.get_node_or_null("Room_0_0") != null, "Sektor 0-0 přítomen")
 	assert_true(backdrops.get_node_or_null("Room_1_0") != null, "Sektor 1-0 přítomen")
+	assert_true(backdrops.get_node_or_null("Room_2_0") != null, "Sektor 2-0 přítomen")
 	assert_true(backdrops.get_node_or_null("Room_1_1") != null, "Sektor 1-1 přítomen")
 	assert_true(backdrops.get_node_or_null("Room_2_1") != null, "Sektor 2-1 přítomen")
-	assert_true(backdrops.get_node_or_null("Room_2_2") != null, "Sektor 2-2 přítomen")
+	assert_true(backdrops.get_node_or_null("Room_3_1") != null, "Sektor 3-1 přítomen")
 	assert_true(backdrops.get_node_or_null("Room_3_2") != null, "Sektor 3-2 přítomen")
+	assert_true(backdrops.get_node_or_null("Room_2_2") != null, "Sektor 2-2 přítomen")
+	assert_true(backdrops.get_node_or_null("Room_2_3") != null, "Sektor 2-3 přítomen")
 	
 	lvl.queue_free()
 
@@ -106,24 +109,39 @@ func test_level2_camera_flow():
 	camera._process(0.1)
 	assert_true(camera.current_room == Vector2i(1, 0), "Kamera v Sektoru [1, 0]")
 	
-	# Sektor [1, 1] (sestup dolů)
+	# Sektor [2, 0] (horní geoda)
+	player.global_position = Vector2(700, 100)
+	camera._process(0.1)
+	assert_true(camera.current_room == Vector2i(2, 0), "Kamera v Sektoru [2, 0] (horní geoda)")
+	
+	# Sektor [1, 1] (sestup do šachty)
 	player.global_position = Vector2(450, 260)
 	camera._process(0.1)
 	assert_true(camera.current_room == Vector2i(1, 1), "Kamera v Sektoru [1, 1] (sestup do šachty)")
 	
-	# Sektor [2, 1] (posun doprava)
+	# Sektor [2, 1] (koridor)
 	player.global_position = Vector2(700, 300)
 	camera._process(0.1)
 	assert_true(camera.current_room == Vector2i(2, 1), "Kamera v Sektoru [2, 1] (koridor)")
 	
-	# Sektor [2, 2] (sestup dolů)
+	# Sektor [3, 1] (větrná lávka)
+	player.global_position = Vector2(1050, 260)
+	camera._process(0.1)
+	assert_true(camera.current_room == Vector2i(3, 1), "Kamera v Sektoru [3, 1] (větrná lávka)")
+	
+	# Sektor [3, 2] (gravitační zlom)
+	player.global_position = Vector2(1150, 480)
+	camera._process(0.1)
+	assert_true(camera.current_room == Vector2i(3, 2), "Kamera v Sektoru [3, 2] (gravitační zlom)")
+	
+	# Sektor [2, 2] (krypta)
 	player.global_position = Vector2(800, 450)
 	camera._process(0.1)
 	assert_true(camera.current_room == Vector2i(2, 2), "Kamera v Sektoru [2, 2] (krypta)")
 	
-	# Sektor [3, 2] (posun k výtahu do reaktoru)
-	player.global_position = Vector2(1150, 480)
+	# Sektor [2, 3] (výtah do reaktoru - finále)
+	player.global_position = Vector2(800, 640)
 	camera._process(0.1)
-	assert_true(camera.current_room == Vector2i(3, 2), "Kamera v Sektoru [3, 2] (finále)")
+	assert_true(camera.current_room == Vector2i(2, 3), "Kamera v Sektoru [2, 3] (výtah do reaktoru)")
 	
 	lvl.queue_free()
