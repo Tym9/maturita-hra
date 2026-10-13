@@ -70,7 +70,7 @@ func _unhandled_input(event):
 		return
 		
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_E:
+		if event.keycode == KEY_X:
 			talk()
 			get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton and event.pressed:

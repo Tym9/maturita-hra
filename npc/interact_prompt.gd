@@ -14,4 +14,4 @@ func _draw():
 	# Text
 	var font = ThemeDB.get_fallback_font()
 	if font:
-		draw_string(font, Vector2(-15.0, 3.0), "[E] Mluvit", HORIZONTAL_ALIGNMENT_CENTER, -1, 7, Color(1.0, 0.9, 0.5))
+		draw_string(font, Vector2(-15.0, 3.0), "[X] Mluvit", HORIZONTAL_ALIGNMENT_CENTER, -1, 7, Color(1.0, 0.9, 0.5))

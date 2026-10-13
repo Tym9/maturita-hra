@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/backpack_window.gd" id="1"]
 [ext_resource type="PackedScene" path="res://ui/grid_inventory_view.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://ui/equip_hotbar_view.tscn" id="3"]
 
 [node name="BackpackWindow" type="Control"]
 layout_mode = 3
@@ -30,7 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="ColorRect" parent="CenterContainer"]
-custom_minimum_size = Vector2(140, 130)
+custom_minimum_size = Vector2(144, 148)
 layout_mode = 2
 color = Color(0.09, 0.08, 0.13, 0.96)
 
@@ -66,13 +67,17 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
 theme_override_font_sizes/font_size = 8
-text = "BATOH HRÁČE (6x4)"
+text = "BATOH A VÝZBROJ"
 
 [node name="BtnClose" type="Button" parent="CenterContainer/Panel/VBoxContainer/Header"]
 custom_minimum_size = Vector2(14, 12)
 layout_mode = 2
 theme_override_font_sizes/font_size = 7
 text = "✕"
+
+[node name="EquipHotbarView" parent="CenterContainer/Panel/VBoxContainer" instance=ExtResource("3")]
+layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="GridInventoryView" parent="CenterContainer/Panel/VBoxContainer" instance=ExtResource("2")]
 layout_mode = 2

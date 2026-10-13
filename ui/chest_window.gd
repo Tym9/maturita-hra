@@ -8,6 +8,7 @@ signal closed
 const ItemData = preload("res://mechanics/item_data.gd")
 
 @onready var player_grid_view = $CenterContainer/Panel/VBoxContainer/SplitHBox/LeftContainer/PlayerGridView
+@onready var player_equip_view = $CenterContainer/Panel/VBoxContainer/SplitHBox/LeftContainer/PlayerEquipView
 @onready var chest_grid_view = $CenterContainer/Panel/VBoxContainer/SplitHBox/RightContainer/ChestGridView
 @onready var info_label = $CenterContainer/Panel/VBoxContainer/InfoLabel
 @onready var btn_close = $CenterContainer/Panel/VBoxContainer/Header/BtnClose
@@ -21,6 +22,8 @@ func _ready():
 		btn_close.pressed.connect(close_window)
 	if player_grid_view:
 		player_grid_view.item_selected.connect(_on_item_selected)
+	if player_equip_view:
+		player_equip_view.item_selected.connect(_on_item_selected)
 	if chest_grid_view:
 		chest_grid_view.item_selected.connect(_on_item_selected)
 
@@ -29,8 +32,11 @@ func open_window(player_node, chest_node):
 	current_chest = chest_node
 	visible = true
 	
-	if current_player and current_player.grid_inventory and player_grid_view:
-		player_grid_view.setup(current_player.grid_inventory, "Batoh")
+	if current_player and current_player.grid_inventory:
+		if player_grid_view:
+			player_grid_view.setup(current_player.grid_inventory, "Batoh")
+		if player_equip_view:
+			player_equip_view.setup(current_player.grid_inventory)
 		
 	if current_chest and current_chest.inventory and chest_grid_view:
 		chest_grid_view.setup(current_chest.inventory, "Truhla")

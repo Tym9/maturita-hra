@@ -7,6 +7,7 @@ const GridInventory = preload("res://mechanics/grid_inventory.gd")
 const ItemData = preload("res://mechanics/item_data.gd")
 
 @onready var grid_view = $CenterContainer/Panel/VBoxContainer/GridInventoryView
+@onready var equip_view = $CenterContainer/Panel/VBoxContainer/EquipHotbarView
 @onready var info_label = $CenterContainer/Panel/VBoxContainer/InfoLabel
 @onready var btn_close = $CenterContainer/Panel/VBoxContainer/Header/BtnClose
 
@@ -18,16 +19,23 @@ func _ready():
 		btn_close.pressed.connect(close_backpack)
 	if grid_view:
 		grid_view.item_selected.connect(_on_item_selected)
+	if equip_view:
+		equip_view.item_selected.connect(_on_item_selected)
 
 func setup(inv: GridInventory):
 	player_inventory = inv
 	if grid_view:
 		grid_view.setup(player_inventory, "Batoh")
+	if equip_view:
+		equip_view.setup(player_inventory)
 
 func open_backpack():
 	visible = true
-	if grid_view and player_inventory:
-		grid_view.setup(player_inventory, "Batoh")
+	if player_inventory:
+		if grid_view:
+			grid_view.setup(player_inventory, "Batoh")
+		if equip_view:
+			equip_view.setup(player_inventory)
 	if info_label:
 		info_label.text = "Vyberte předmět pro zobrazení detailů."
 

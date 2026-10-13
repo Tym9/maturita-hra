@@ -76,8 +76,21 @@ func _ready():
 	assert(DialogueManager.is_active == true, "EventTrigger spustil dialog")
 	assert(DialogueManager.dialogue_box.name_label.text.begins_with("Pohled do propasti"), "Správný název triggeru")
 	DialogueManager.close_dialogue()
-	assert(DialogueManager.is_active == false, "EventTrigger dialog ukončen")
-	print("[PASS] TEST 6: EventTrigger automatický dialog funkční")
+	# Test 7: Ověření, že NPC reaguje na klávesu X a ignoruje klávesu E (zamezení kolize s truhlou)
+	var ev_e = InputEventKey.new()
+	ev_e.pressed = true
+	ev_e.keycode = KEY_E
+	otis.is_player_nearby = true
+	otis._unhandled_input(ev_e)
+	assert(not DialogueManager.is_active, "Klávesa E NESMÍ spustit dialog NPC (vyhrazena pro truhlu)")
+	
+	var ev_x = InputEventKey.new()
+	ev_x.pressed = true
+	ev_x.keycode = KEY_X
+	otis._unhandled_input(ev_x)
+	assert(DialogueManager.is_active, "Klávesa X úspěšně spouští dialog NPC")
+	DialogueManager.close_dialogue()
+	print("[PASS] TEST 7: Klávesa [X] pro dialog vs [E] pro truhlu bez kolizí OK")
 	
 	print("=== VŠECHNY TESTY NPC A DIALOGŮ ÚSPĚŠNĚ PROŠLY (100% OK) ===")
 	get_tree().quit(0)

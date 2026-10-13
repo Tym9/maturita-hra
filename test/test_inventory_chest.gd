@@ -17,6 +17,7 @@ func _ready():
 	test_player_ability_restrictions()
 	test_gravity_coil_dash_damage()
 	test_inventory_save_load()
+	test_equip_hotbar_slots_and_hook_range()
 	
 	print("==================================================")
 	if failed:
@@ -178,3 +179,54 @@ func test_inventory_save_load():
 	
 	player1.queue_free()
 	player2.queue_free()
+
+func test_equip_hotbar_slots_and_hook_range():
+	print("\n--- 6. Test Equip Slotů (Hotbar ve výzbroji) a dosahu háku ---")
+	var player_scene = preload("res://player.tscn")
+	var player = player_scene.instantiate()
+	add_child(player)
+	player.grid_inventory.clear()
+	
+	# Test 6A: Zkrácení dosahu háku na 1/3 (88.0 px)
+	assert_true(player.GRAPPLE_RANGE == 88.0, "Dosah háku (GRAPPLE_RANGE) je zkrácen na 88.0 px (1/3 z původních 260)")
+	
+	# Test 6B: Vybavení zbraní do Equip slotů v GridInventory
+	var wrench = ItemData.create("wrench")
+	var hook = ItemData.create("grapple_hook")
+	var coil = ItemData.create("gravity_coil")
+	
+	player.grid_inventory.equip_item(wrench, 0)
+	player.grid_inventory.equip_item(hook, 1)
+	player.grid_inventory.equip_item(coil, 2)
+	
+	assert_true(player.grid_inventory.is_equipped("wrench"), "Hasák je vybaven v Hotbaru (Slot 1)")
+	assert_true(player.grid_inventory.is_equipped("grapple_hook"), "Hák je vybaven v Hotbaru (Slot 2)")
+	assert_true(player.grid_inventory.is_equipped("gravity_coil"), "Gravity Coil je vybavena v Hotbaru (Slot 3)")
+	assert_true(player.grid_inventory.has_item("wrench"), "has_item('wrench') vrací true i pro vybavené sloty")
+	
+	# Test 6C: Útok funguje s vybaveným hasákem
+	player.melee_cooldown = 0.0
+	player.perform_melee_attack()
+	assert_true(player.melee_cooldown > 0.0, "Útok hasákem úspěšně proběhl")
+	
+	# Test 6D: Sundání hasáku z equip slotu
+	var unequipped = player.grid_inventory.unequip_item(0)
+	assert_true(unequipped != null and unequipped.id == "wrench", "Hasák byl úspěšně sundán z equip slotu")
+	assert_true(not player.grid_inventory.is_equipped("wrench"), "Hasák již NENÍ vybaven")
+	
+	# Útok se sundaným hasákem musí být zablokován
+	player.melee_cooldown = 0.0
+	player.perform_melee_attack()
+	assert_true(player.melee_cooldown == 0.0, "Útok se sundaným hasákem je zablokován (vyžaduje equip v hotbaru)")
+	
+	# Test 6E: Opětovné nasazení hasáku
+	player.grid_inventory.equip_item(unequipped, 0)
+	assert_true(player.grid_inventory.is_equipped("wrench"), "Hasák je znovu vybaven v Hotbaru")
+	player.perform_melee_attack()
+	assert_true(player.melee_cooldown > 0.0, "Po opětovném nasazení hasák znovu funguje")
+	
+	# Test 6F: Ověření přítomnosti komponenty EquipHotbarView v BackpackWindow
+	assert_true(player.backpack_window != null, "BackpackWindow přítomno")
+	assert_true(player.backpack_window.equip_view != null, "EquipHotbarView nalezeno v BackpackWindow")
+	
+	player.queue_free()

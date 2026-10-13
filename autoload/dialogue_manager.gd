@@ -45,7 +45,7 @@ func _unhandled_input(event):
 		
 	# Postup v dialogu: Klávesa E, Mezerník, Enter nebo levé tlačítko myši
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode in [KEY_E, KEY_SPACE, KEY_ENTER]:
+		if event.keycode in [KEY_X, KEY_SPACE, KEY_ENTER, KEY_E]:
 			dialogue_box.handle_input()
 			get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton and event.pressed:

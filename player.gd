@@ -18,8 +18,8 @@ const DASH_DURATION = 0.2
 # Dvojskok: kolik skoků navíc má hráč ve vzduchu
 const MAX_AIR_JUMPS = 1
 
-# Přitahovací hák (grappling hook)
-const GRAPPLE_RANGE = 260.0
+# Přitahovací hák (grappling hook) - vyvážený dosah (1/3 původního)
+const GRAPPLE_RANGE = 88.0
 const GRAPPLE_PULL_SPEED = 380.0
 const GRAPPLE_ARRIVE_DISTANCE = 16.0
 const GRAPPLE_MAX_TIME = 1.6
@@ -90,10 +90,11 @@ var is_talking: bool = false
 
 const GridInventory = preload("res://mechanics/grid_inventory.gd")
 const ItemData = preload("res://mechanics/item_data.gd")
-var grid_inventory = GridInventory.new(6, 4)
+var grid_inventory = GridInventory.new(6, 4, true)
 
 func _ready():
 	add_to_group("player")
+	grid_inventory.has_equip_slots = true
 	spawn_point = global_position
 	if collision_shape and collision_shape.shape is RectangleShape2D:
 		collision_shape.shape = collision_shape.shape.duplicate()
@@ -129,6 +130,8 @@ func _unhandled_input(event):
 				perform_melee_attack()
 			elif active_slot == 1:
 				fire_hook()
+			elif active_slot == 2:
+				perform_dash()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			# Pravé tlačítko myši vždy vystřelí přitahovací hák
 			fire_hook()
@@ -147,10 +150,10 @@ func _unhandled_input(event):
 				get_viewport().set_input_as_handled()
 
 func cycle_hotbar(delta_idx: int):
-	# Přepínání mezi dostupnými předměty: 0 (Hasák) a 1 (Hák)
-	var next_slot = (active_slot + delta_idx) % 2
+	# Přepínání mezi dostupnými předměty: 0 (Hasák), 1 (Hák), 2 (Cívka)
+	var next_slot = (active_slot + delta_idx) % 3
 	if next_slot < 0:
-		next_slot += 2
+		next_slot += 3
 	select_hotbar_slot(next_slot)
 
 func select_hotbar_slot(idx: int):
@@ -162,6 +165,24 @@ func select_hotbar_slot(idx: int):
 		_end_grapple(false)
 	if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
 		inventory_ui.update_ui()
+
+func is_item_ready(item_id: String, default_slot: int = -1) -> bool:
+	if not grid_inventory:
+		return false
+	if grid_inventory.is_equipped(item_id):
+		return true
+	# Pokud hráč item vlastní v batohu a hotbar slot je volný, automaticky se nasadí
+	if grid_inventory.has_item(item_id):
+		var target_slot = default_slot if default_slot >= 0 else grid_inventory.get_default_slot_for(item_id)
+		if target_slot >= 0 and grid_inventory.get_equipped(target_slot) == null:
+			for item in grid_inventory.items:
+				if item["data"].id == item_id:
+					grid_inventory.equip_item(item["data"], target_slot)
+					grid_inventory.remove_item(item)
+					if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
+						inventory_ui.update_ui()
+					return true
+	return false
 
 func toggle_hook_equip():
 	if active_slot == 1:
@@ -178,6 +199,9 @@ func set_hook_equipped(value: bool):
 func perform_melee_attack():
 	if not grid_inventory.has_item("wrench"):
 		_show_missing_item_popup("Chybí Hasák!")
+		return
+	if not is_item_ready("wrench", 0):
+		_show_missing_item_popup("Hasák není vybaven v Hotbaru [1]!")
 		return
 	if melee_cooldown > 0:
 		return
@@ -376,28 +400,7 @@ func _physics_process(delta):
 
 	# Dash (Gravity Coil jako zbraň a pohon)
 	if Input.is_action_just_pressed("dash"):
-		if not grid_inventory.has_item("gravity_coil"):
-			_show_missing_item_popup("Chybí Gravity Coil!")
-		elif can_dash and dash_cooldown <= 0 and not is_crouching:
-			is_dashing = true
-			can_dash = false
-			dash_timer = DASH_DURATION
-			dash_cooldown = 0.4
-			dash_hit_enemies.clear()
-			
-			if sprite:
-				sprite.modulate = Color(1.8, 0.6, 2.5, 0.95)
-			
-			var dash_dir_x = Input.get_axis("move_left", "move_right")
-			var dash_dir_y = Input.get_axis("jump", "crouch")
-			var dash_vec = Vector2(dash_dir_x, dash_dir_y)
-			
-			if dash_vec == Vector2.ZERO:
-				dash_vec = Vector2(-1.0 if sprite.flip_h else 1.0, 0.0)
-			else:
-				dash_vec = dash_vec.normalized()
-				
-			velocity = dash_vec * DASH_SPEED
+		perform_dash()
 
 	# Aktualizace animací
 	if sprite is AnimatedSprite2D:
@@ -437,6 +440,34 @@ func _physics_process(delta):
 			die()
 	elif global_position.y > 600 or global_position.y < -400:
 		die()
+
+func perform_dash():
+	if not grid_inventory.has_item("gravity_coil"):
+		_show_missing_item_popup("Chybí Gravity Coil!")
+		return
+	if not is_item_ready("gravity_coil", 2):
+		_show_missing_item_popup("Gravity Coil není vybavena v Hotbaru [3]!")
+		return
+	if can_dash and dash_cooldown <= 0 and not is_crouching:
+		is_dashing = true
+		can_dash = false
+		dash_timer = DASH_DURATION
+		dash_cooldown = 0.4
+		dash_hit_enemies.clear()
+		
+		if sprite:
+			sprite.modulate = Color(1.8, 0.6, 2.5, 0.95)
+		
+		var dash_dir_x = Input.get_axis("move_left", "move_right")
+		var dash_dir_y = Input.get_axis("jump", "crouch")
+		var dash_vec = Vector2(dash_dir_x, dash_dir_y)
+		
+		if dash_vec == Vector2.ZERO:
+			dash_vec = Vector2(-1.0 if (sprite and sprite.flip_h) else 1.0, 0.0)
+		else:
+			dash_vec = dash_vec.normalized()
+			
+		velocity = dash_vec * DASH_SPEED
 
 func die():
 	Global.death_count += 1
@@ -567,6 +598,8 @@ func load_inventory_save_data(data: Array):
 		grid_inventory.load_save_data(data)
 		if is_instance_valid(backpack_window) and backpack_window.has_method("setup"):
 			backpack_window.setup(grid_inventory)
+		if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
+			inventory_ui.update_ui()
 
 func set_gravity_dir(new_dir: float):
 	if new_dir == gravity_dir:
@@ -625,6 +658,9 @@ func fire_hook():
 		return
 	if not grid_inventory.has_item("grapple_hook"):
 		_show_missing_item_popup("Chybí Hák!")
+		return
+	if not is_item_ready("grapple_hook", 1):
+		_show_missing_item_popup("Hák není vybaven v Hotbaru [2]!")
 		return
 		
 	var info = get_hook_aim_info()
