@@ -24,7 +24,7 @@ func _ready():
 	call_deferred("_init_room")
 
 func _init_room():
-	if not is_instance_valid(player):
+	if not is_inside_tree() or not is_instance_valid(player):
 		return
 	_discover_valid_rooms()
 	var rx = int(floor(player.global_position.x / ROOM_WIDTH))
@@ -40,6 +40,8 @@ func is_valid_room(room: Vector2i) -> bool:
 
 func _discover_valid_rooms():
 	valid_rooms.clear()
+	if not is_inside_tree():
+		return
 	var candidates: Array[Node] = []
 	if get_tree() and get_tree().current_scene:
 		candidates.append(get_tree().current_scene)

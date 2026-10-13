@@ -23,7 +23,7 @@ var persistent_player_inventory: Array = []
 var persistent_player_health: int = 3
 var persistent_player_max_health: int = 3
 var persistent_player_crystals: int = 0
-var persistent_collected_crystal_ids: Array = []
+var persistent_collected_crystal_ids: Array[String] = []
 var has_persistent_player: bool = false
 
 # Statistika aktuální probíhající etapy
@@ -130,7 +130,9 @@ func save_player_state(player: CharacterBody2D):
 	persistent_player_health = player.health
 	persistent_player_max_health = player.max_health
 	persistent_player_crystals = player.crystals
-	persistent_collected_crystal_ids = player.collected_crystal_ids.duplicate()
+	persistent_collected_crystal_ids.clear()
+	for cid in player.collected_crystal_ids:
+		persistent_collected_crystal_ids.append(str(cid))
 	has_persistent_player = true
 	print("[Global] Stav hráče uložen pro přenos do další kapitoly (položek v inventáři: ", persistent_player_inventory.size(), ").")
 
@@ -142,7 +144,9 @@ func load_player_state(player: CharacterBody2D):
 	player.health = persistent_player_health
 	player.max_health = persistent_player_max_health
 	player.crystals = persistent_player_crystals
-	player.collected_crystal_ids = persistent_collected_crystal_ids.duplicate()
+	player.collected_crystal_ids.clear()
+	for cid in persistent_collected_crystal_ids:
+		player.collected_crystal_ids.append(str(cid))
 	if player.has_method("_init_ui"):
 		player._init_ui()
 	print("[Global] Stav hráče úspěšně načten z předchozí kapitoly.")

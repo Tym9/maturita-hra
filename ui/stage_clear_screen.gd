@@ -67,8 +67,13 @@ func _unhandled_input(event):
 		_on_continue_pressed()
 		get_viewport().set_input_as_handled()
 
+var is_continuing: bool = false
+
 func _on_continue_pressed():
+	if is_continuing:
+		return
+	is_continuing = true
 	var next_scene = Global.pending_next_scene
-	if next_scene.is_empty():
+	if next_scene.is_empty() or not ResourceLoader.exists(next_scene):
 		next_scene = "res://main_menu.tscn"
 	get_tree().change_scene_to_file(next_scene)
