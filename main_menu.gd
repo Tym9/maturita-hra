@@ -25,7 +25,7 @@ func _on_new_game_pressed():
 	Global.reset_all_stats()
 	SaveManager.pending_load = false
 	SaveManager.delete_save()
-	_start_level("res://level1.tscn")
+	_start_level("res://tutorial_level.tscn")
 
 func _on_continue_pressed():
 	SaveManager.continue_game()

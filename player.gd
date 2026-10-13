@@ -612,8 +612,8 @@ func set_gravity_dir(new_dir: float):
 
 # --- PŘITAHOVACÍ HÁK (GRAPPLING HOOK) S MÍŘENÍM MYŠÍ A POŠKOZENÍM ---
 
-func get_hook_aim_info() -> Dictionary:
-	var mouse_pos = get_global_mouse_position()
+func get_hook_aim_info(custom_target_pos: Vector2 = Vector2.INF) -> Dictionary:
+	var mouse_pos = custom_target_pos if custom_target_pos != Vector2.INF else get_global_mouse_position()
 	var to_mouse = mouse_pos - global_position
 	var aim_dir = to_mouse.normalized()
 	if aim_dir == Vector2.ZERO:
@@ -623,17 +623,44 @@ func get_hook_aim_info() -> Dictionary:
 	
 	var space_state = get_world_2d().direct_space_state
 	# Maska 3 = vrstva 1 (zem/zdi) + vrstva 2 (nepřátelé)
-	var query = PhysicsRayQueryParameters2D.create(global_position, target_pos, 3, [get_rid()])
-	query.collide_with_areas = true
-	var result = space_state.intersect_ray(query)
+	var exclude_list = [get_rid()]
+	var hit_enemy = null
+	var hit_pos = Vector2.ZERO
+	var hit_collider = null
 	
-	if not result.is_empty():
+	while true:
+		var query = PhysicsRayQueryParameters2D.create(global_position, target_pos, 3, exclude_list)
+		query.collide_with_areas = true
+		var result = space_state.intersect_ray(query)
+		if result.is_empty():
+			break
 		var collider = result.collider
-		var hit_pos = result.position
+		hit_pos = result.position
+		
+		# Kontrola, zda je kolidující objekt nepřítel nebo komponenta nepřítele (HurtArea/StompArea)
+		var enemy_candidate = null
 		if collider.is_in_group("enemies") or collider.has_method("take_damage") or collider.name.begins_with("Enemy"):
-			return {"type": "enemy", "target": collider, "pos": hit_pos, "in_range": true}
-		else:
-			return {"type": "world", "target": collider, "pos": hit_pos, "in_range": true}
+			enemy_candidate = collider
+		elif collider.get_parent() and (collider.get_parent().is_in_group("enemies") or collider.get_parent().has_method("take_damage") or collider.get_parent().name.begins_with("Enemy")):
+			enemy_candidate = collider.get_parent()
+			
+		if enemy_candidate != null:
+			hit_enemy = enemy_candidate
+			break
+			
+		# Pokud je to Area2D, která není nepřítel (spouštěcí zóna apod.), ignorujeme ji a hledáme dál
+		if collider is Area2D:
+			exclude_list.append(result.rid)
+			continue
+			
+		# Pevné těleso (svět, stěna, plošina)
+		hit_collider = collider
+		break
+	
+	if hit_enemy != null:
+		return {"type": "enemy", "target": hit_enemy, "pos": hit_pos, "in_range": true}
+	elif hit_collider != null:
+		return {"type": "world", "target": hit_collider, "pos": hit_pos, "in_range": true}
 			
 	# Kontrola kotev (GrapplePoints)
 	var best_anchor = null
@@ -653,7 +680,7 @@ func get_hook_aim_info() -> Dictionary:
 		
 	return {"type": "none", "target": null, "pos": target_pos, "in_range": false}
 
-func fire_hook():
+func fire_hook(custom_target_pos: Vector2 = Vector2.INF):
 	if not grapple_enabled:
 		return
 	if not grid_inventory.has_item("grapple_hook"):
@@ -663,8 +690,8 @@ func fire_hook():
 		_show_missing_item_popup("Hák není vybaven v Hotbaru [2]!")
 		return
 		
-	var info = get_hook_aim_info()
-	var mouse_pos = get_global_mouse_position()
+	var info = get_hook_aim_info(custom_target_pos)
+	var mouse_pos = custom_target_pos if custom_target_pos != Vector2.INF else get_global_mouse_position()
 	if sprite:
 		sprite.flip_h = (mouse_pos.x < global_position.x)
 		

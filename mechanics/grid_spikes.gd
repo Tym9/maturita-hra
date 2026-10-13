@@ -43,6 +43,8 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.name == "Player" or body.is_in_group("player"):
+		if body.has_method("take_damage"):
+			body.take_damage(1, global_position)
 		if body.has_method("die"):
 			body.die()
 
@@ -60,20 +62,19 @@ func _update_collision():
 		rect_shape = RectangleShape2D.new()
 		col_shape.shape = rect_shape
 	
-	# Férový hitbox: mírně zmenšený oproti vizuálu, aby trestal jen reálný náraz
 	match orientation:
 		ORIENTATION_UP:
-			rect_shape.size = Vector2(count * cell_size - 4.0, 10.0)
-			col_shape.position = Vector2(count * cell_size * 0.5, cell_size - 5.0)
+			rect_shape.size = Vector2(count * cell_size - 4.0, cell_size + 8.0)
+			col_shape.position = Vector2(count * cell_size * 0.5, -cell_size * 0.5 + 2.0)
 		ORIENTATION_DOWN:
-			rect_shape.size = Vector2(count * cell_size - 4.0, 10.0)
-			col_shape.position = Vector2(count * cell_size * 0.5, 5.0)
+			rect_shape.size = Vector2(count * cell_size - 4.0, cell_size + 8.0)
+			col_shape.position = Vector2(count * cell_size * 0.5, cell_size * 0.5 - 2.0)
 		ORIENTATION_LEFT:
-			rect_shape.size = Vector2(10.0, count * cell_size - 4.0)
-			col_shape.position = Vector2(cell_size - 5.0, count * cell_size * 0.5)
+			rect_shape.size = Vector2(cell_size + 8.0, count * cell_size - 4.0)
+			col_shape.position = Vector2(-cell_size * 0.5 + 2.0, count * cell_size * 0.5)
 		ORIENTATION_RIGHT:
-			rect_shape.size = Vector2(10.0, count * cell_size - 4.0)
-			col_shape.position = Vector2(5.0, count * cell_size * 0.5)
+			rect_shape.size = Vector2(cell_size + 8.0, count * cell_size - 4.0)
+			col_shape.position = Vector2(cell_size * 0.5 - 2.0, count * cell_size * 0.5)
 
 func _draw():
 	var tooth_w = cell_size / 2.0
@@ -87,17 +88,17 @@ func _draw():
 		
 		match orientation:
 			ORIENTATION_UP:
-				p1 = Vector2(offset, cell_size)
-				p2 = Vector2(offset + tooth_w, cell_size)
-				p_tip = Vector2(offset + tooth_w * 0.5, 2.0)
+				p1 = Vector2(offset, 0.0)
+				p2 = Vector2(offset + tooth_w, 0.0)
+				p_tip = Vector2(offset + tooth_w * 0.5, -cell_size + 2.0)
 			ORIENTATION_DOWN:
 				p1 = Vector2(offset, 0.0)
 				p2 = Vector2(offset + tooth_w, 0.0)
 				p_tip = Vector2(offset + tooth_w * 0.5, cell_size - 2.0)
 			ORIENTATION_LEFT:
-				p1 = Vector2(cell_size, offset)
-				p2 = Vector2(cell_size, offset + tooth_w)
-				p_tip = Vector2(2.0, offset + tooth_w * 0.5)
+				p1 = Vector2(0.0, offset)
+				p2 = Vector2(0.0, offset + tooth_w)
+				p_tip = Vector2(-cell_size + 2.0, offset + tooth_w * 0.5)
 			ORIENTATION_RIGHT:
 				p1 = Vector2(0.0, offset)
 				p2 = Vector2(0.0, offset + tooth_w)

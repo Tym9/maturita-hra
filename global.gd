@@ -63,6 +63,8 @@ func _process(delta):
 
 func _on_scene_changed(path: String):
 	match path:
+		"res://tutorial_level.tscn":
+			start_stage(0, "PROLOG: NA POVRCHU", 3)
 		"res://level1.tscn":
 			start_stage(1, "ETAPA 1: STARÉ DÍLNY", 5)
 		"res://level2.tscn":
@@ -89,6 +91,13 @@ func start_stage(stage_idx: int, title: String = "", max_crystals: int = 5):
 func finish_stage(title: String, max_crystals: int, next_scene: String):
 	stage_active = false
 	pending_next_scene = next_scene
+
+	# Bezpečnostní pojistka: pokud stav ještě nebyl uložen, uložíme hráče ze scény
+	if not has_persistent_player:
+		var players = get_tree().get_nodes_in_group("player")
+		if players.size() > 0:
+			save_player_state(players[0])
+
 	var result = {
 		"stage_index": current_stage_index,
 		"title": title if not title.is_empty() else current_stage_title,

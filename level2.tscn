@@ -134,6 +134,13 @@ position = Vector2(400, 150)
 [node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
 position = Vector2(480, 150)
 
+[node name="R10_DescentLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(464, 172)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 2
+
 [node name="R10_SecretLedge" type="StaticBody2D" parent="Platforms"]
 position = Vector2(560, 48)
 script = ExtResource("3")
@@ -186,7 +193,7 @@ theme = 2
 [node name="R20_Floor" type="StaticBody2D" parent="Platforms"]
 position = Vector2(672, 168)
 script = ExtResource("3")
-tiles_x = 17
+tiles_x = 11
 tiles_y = 1
 theme = 2
 
@@ -234,7 +241,7 @@ theme = 2
 [node name="R21_Ceiling" type="StaticBody2D" parent="Platforms"]
 position = Vector2(640, 180)
 script = ExtResource("3")
-tiles_x = 20
+tiles_x = 13
 tiles_y = 1
 theme = 2
 
@@ -427,10 +434,10 @@ theme = 2
 [node name="R10_PitSpikes" type="Area2D" parent="Hazards"]
 position = Vector2(368, 168)
 script = ExtResource("4")
-count = 10
+count = 5
 
 [node name="R20_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(720, 164)
+position = Vector2(704, 168)
 script = ExtResource("4")
 count = 6
 
@@ -440,12 +447,12 @@ blast_direction = Vector2(1, 0)
 blast_length = 50.0
 
 [node name="R21_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(736, 350)
+position = Vector2(736, 360)
 script = ExtResource("4")
 count = 8
 
 [node name="R31_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(1024, 350)
+position = Vector2(1024, 360)
 script = ExtResource("4")
 count = 10
 

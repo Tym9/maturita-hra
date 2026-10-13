@@ -1,101 +1,452 @@
-[gd_scene format=3 uid="uid://mhsavrd0matv"]
+[gd_scene load_steps=9 format=3]
 
-[ext_resource type="PackedScene" path="res://player.tscn" id="1_abc"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
+[ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="3"]
+[ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="4"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
-size = Vector2(1000, 50)
+[node name="TutorialLevel" type="Node2D"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
-size = Vector2(50, 400)
+[node name="Backdrops" type="Node2D" parent="."]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_crawl"]
-size = Vector2(200, 50)
+[node name="Room_0_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 0
+room_y = 0
+room_title = "PROLOG 0-0: STARÁ HORSKÁ CESTA"
 
-[node name="Level" type="Node2D" unique_id=1800699447]
+[node name="Room_1_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 1
+room_y = 0
+room_title = "PROLOG 1-0: ZAROSTLÝ PODJEZD"
 
-[node name="Player" parent="." unique_id=311078208 instance=ExtResource("1_abc")]
-position = Vector2(50, -50)
+[node name="Room_2_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 2
+room_y = 0
+room_title = "PROLOG 2-0: LESNÍ PRŮRVA"
 
-[node name="Floor" type="StaticBody2D" parent="." unique_id=21566614]
-position = Vector2(500, 0)
-metadata/_edit_group_ = true
+[node name="Room_3_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 3
+room_y = 0
+room_title = "PROLOG 3-0: SKALNÍ ÚBOČÍ"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=2112455817]
-shape = SubResource("RectangleShape2D_floor")
+[node name="Room_4_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 4
+room_y = 0
+room_title = "PROLOG 4-0: KAMENNÁ PRŮRVA"
 
-[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=1726234930]
-offset_left = -500.0
-offset_top = -25.0
-offset_right = 500.0
-offset_bottom = 25.0
-color = Color(0.2, 0.6, 0.2, 1)
+[node name="Room_5_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 5
+room_y = 0
+room_title = "PROLOG 5-0: ZCHÁTRALÝ DŘEVĚNÝ MOST"
 
-[node name="Wall1" type="StaticBody2D" parent="." unique_id=1876175830]
-position = Vector2(800, -225)
+[node name="Room_6_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 6
+room_y = 0
+room_title = "PROLOG 6-0: SKRÝŠ PRŮZKUMNÍKA"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1" unique_id=663269897]
-shape = SubResource("RectangleShape2D_wall")
+[node name="Room_7_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 7
+room_y = 0
+room_title = "PROLOG 7-0: VSTUP DO DÍLEN A ŠACHTY"
 
-[node name="ColorRect" type="ColorRect" parent="Wall1" unique_id=1577846166]
-offset_left = -25.0
-offset_top = -200.0
-offset_right = 25.0
-offset_bottom = 200.0
-color = Color(0.4, 0.4, 0.4, 1)
+[node name="Platforms" type="Node2D" parent="."]
 
-[node name="Wall2" type="StaticBody2D" parent="." unique_id=24818946]
-position = Vector2(950, -325)
+[node name="R0_WallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2" unique_id=898920136]
-position = Vector2(-1, 89)
-shape = SubResource("RectangleShape2D_wall")
+[node name="R0_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
 
-[node name="ColorRect" type="ColorRect" parent="Wall2" unique_id=1333004443]
-offset_left = -26.0
-offset_top = -111.0
-offset_right = 24.0
-offset_bottom = 289.0
-color = Color(0.4, 0.4, 0.4, 1)
+[node name="R0_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 160)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 2
+theme = 0
 
-[node name="CrawlSpace" type="StaticBody2D" parent="." unique_id=855933833]
-position = Vector2(300, -62)
+[node name="R0_Rock1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(128, 144)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CrawlSpace" unique_id=2052836144]
-shape = SubResource("RectangleShape2D_crawl")
+[node name="R0_Rock2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(208, 128)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 0
 
-[node name="ColorRect" type="ColorRect" parent="CrawlSpace" unique_id=176149453]
-offset_left = -100.0
-offset_top = -25.0
-offset_right = 100.0
-offset_bottom = 25.0
-color = Color(0.4, 0.4, 0.4, 1)
+[node name="R1_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
 
-[node name="LabelMove" type="Label" parent="." unique_id=1848155704]
-offset_left = 20.0
-offset_top = -120.0
-offset_right = 160.0
-offset_bottom = -77.0
-text = "A / D to Move
-W to Jump
-Space to Dash"
+[node name="R1_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(320, 160)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 2
+theme = 0
 
-[node name="LabelCrouch" type="Label" parent="." unique_id=1976295102]
-offset_left = 210.0
-offset_top = -110.0
-offset_right = 360.0
-offset_bottom = -87.0
-text = "Hold S to Crouch ->"
+[node name="R1_Overhang" type="StaticBody2D" parent="Platforms"]
+position = Vector2(400, 136)
+script = ExtResource("3")
+tiles_x = 8
+tiles_y = 2
+theme = 0
 
-[node name="LabelWallJump" type="Label" parent="." unique_id=506875110]
-offset_left = 550.0
-offset_top = -150.0
-offset_right = 750.0
-offset_bottom = -100.0
-text = "Jump onto the wall,
-press A/D against it
-and W to Wall Jump ->"
+[node name="R1_Ledge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(560, 128)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 2
+theme = 0
 
-[node name="LevelEnd" parent="." unique_id=455572698 instance=ExtResource("2")]
-position = Vector2(1001, -125)
+[node name="R2_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R2_EntryLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 128)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 0
+
+[node name="R2_PitFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(704, 168)
+script = ExtResource("3")
+tiles_x = 10
+tiles_y = 1
+theme = 0
+
+[node name="R2_ReturnStep" type="StaticBody2D" parent="Platforms"]
+position = Vector2(832, 148)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 1
+theme = 0
+
+[node name="R2_ExitLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(864, 128)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 0
+
+[node name="R3_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R3_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 160)
+script = ExtResource("3")
+tiles_x = 8
+tiles_y = 2
+theme = 0
+
+[node name="R3_CliffWall" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1088, 48)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 7
+theme = 0
+
+[node name="R3_RestLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1056, 104)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 1
+theme = 0
+
+[node name="R3_UpperLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1120, 48)
+script = ExtResource("3")
+tiles_x = 10
+tiles_y = 2
+theme = 0
+
+[node name="R4_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1280, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R4_EntryLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1280, 48)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 0
+
+[node name="R4_DropFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1344, 160)
+script = ExtResource("3")
+tiles_x = 16
+tiles_y = 2
+theme = 0
+
+[node name="R4_ChimneyWallLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1400, 32)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 7
+theme = 0
+
+[node name="R4_ChimneyWallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1460, 16)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 7
+theme = 0
+
+[node name="R4_ExitLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1476, 48)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 2
+theme = 0
+
+[node name="R5_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1600, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R5_EntryLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1600, 48)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 0
+
+[node name="R5_Crumble1" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(1690, 70)
+
+[node name="R5_Crumble2" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(1750, 90)
+
+[node name="R5_Crumble3" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(1810, 110)
+
+[node name="R5_ExitLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1860, 128)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 0
+
+[node name="R5_PitFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1664, 168)
+script = ExtResource("3")
+tiles_x = 14
+tiles_y = 1
+theme = 0
+
+[node name="R5_ReturnLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1824, 148)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 1
+theme = 0
+
+[node name="R6_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1920, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R6_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1920, 144)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 2
+theme = 0
+
+[node name="R6_MidLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2060, 100)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 0
+
+[node name="R6_SecretLedge" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2120, 56)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 0
+
+[node name="R7_Ceiling" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2240, 0)
+script = ExtResource("3")
+tiles_x = 20
+tiles_y = 1
+theme = 0
+
+[node name="R7_Floor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2240, 144)
+script = ExtResource("3")
+tiles_x = 12
+tiles_y = 2
+theme = 0
+
+[node name="R7_WallRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2544, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 11
+theme = 0
+
+[node name="R7_ShaftFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2432, 168)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 1
+theme = 0
+
+[node name="Mechanics" type="Node2D" parent="."]
+
+[node name="StarterChest" parent="Mechanics" instance=ExtResource("7")]
+position = Vector2(2000, 137)
+initial_items = ["health_pack"]
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="Crystal_Tut1" parent="Collectibles" instance=ExtResource("6")]
+position = Vector2(784, 90)
+crystal_id = "crystal_tut_1"
+
+[node name="Crystal_Tut2" parent="Collectibles" instance=ExtResource("6")]
+position = Vector2(1750, 60)
+crystal_id = "crystal_tut_2"
+
+[node name="Crystal_Tut3" parent="Collectibles" instance=ExtResource("6")]
+position = Vector2(2160, 36)
+crystal_id = "crystal_tut_3"
+
+[node name="TutorialSigns" type="Node2D" parent="."]
+
+[node name="Sign_R0" type="Label" parent="TutorialSigns"]
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 220.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 9
+text = "A / D : Běh
+MEZERNÍK : Skok"
+
+[node name="Sign_R1" type="Label" parent="TutorialSigns"]
+offset_left = 370.0
+offset_top = 80.0
+offset_right = 540.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "[S] : Skrčení a plazení
+pod nízkými překážkami"
+
+[node name="Sign_R2" type="Label" parent="TutorialSigns"]
+offset_left = 680.0
+offset_top = 60.0
+offset_right = 860.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "DVOJSKOK:
+Stiskni MEZERNÍK znovu ve vzduchu!"
+
+[node name="Sign_R3" type="Label" parent="TutorialSigns"]
+offset_left = 980.0
+offset_top = 70.0
+offset_right = 1160.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "ŠPLHÁNÍ PO STĚNĚ:
+Drž směr ke stěně a MEZERNÍK
+(Sleduj ukazatel staminy!)"
+
+[node name="Sign_R4" type="Label" parent="TutorialSigns"]
+offset_left = 1300.0
+offset_top = 80.0
+offset_right = 1480.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "ODRAZ OD STĚNY (WALL-JUMP):
+Skákej střídavě ze stěny na stěnu!"
+
+[node name="Sign_R5" type="Label" parent="TutorialSigns"]
+offset_left = 1630.0
+offset_top = 20.0
+offset_right = 1850.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "ZCHÁTRALÝ MOST:
+Drolící se bloky se po došlapu rozpadnou!"
+
+[node name="Sign_R6" type="Label" parent="TutorialSigns"]
+offset_left = 1950.0
+offset_top = 70.0
+offset_right = 2150.0
+offset_bottom = 110.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "[E] : Prohledat truhlu
+[I] / [TAB] : Batoh a inventář"
+
+[node name="Sign_R7" type="Label" parent="TutorialSigns"]
+offset_left = 2260.0
+offset_top = 60.0
+offset_right = 2480.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "VSTUP DO STARÝCH DÍLEN
+Sestup do hlubin reaktoru!"
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(40, 140)
+
+[node name="LevelEnd" parent="." instance=ExtResource("2")]
+position = Vector2(2480, 150)
 next_level = "res://level1.tscn"
+stage_title = "PROLOG: NA POVRCHU"
+stage_index = 0
+max_stage_crystals = 3

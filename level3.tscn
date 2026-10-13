@@ -460,7 +460,7 @@ script = ExtResource("4")
 count = 10
 
 [node name="R20_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(736, 164)
+position = Vector2(736, 168)
 script = ExtResource("4")
 count = 6
 

@@ -385,7 +385,7 @@ tiles_y = 2
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="R20_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(720, 164)
+position = Vector2(720, 168)
 script = ExtResource("4")
 count = 3
 
@@ -419,12 +419,12 @@ warn_time = 0.4
 blast_time = 0.9
 
 [node name="R32_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(1072, 516)
+position = Vector2(1072, 520)
 script = ExtResource("4")
 count = 5
 
 [node name="R22_ReactorSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(656, 508)
+position = Vector2(656, 524)
 script = ExtResource("4")
 count = 7
 
