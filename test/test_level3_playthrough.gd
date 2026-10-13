@@ -56,9 +56,11 @@ func test_level3_components_and_hazards():
 	var lvl = lvl_scene.instantiate()
 	add_child(lvl)
 	
+	var npcs = lvl.get_node_or_null("NPCs")
+	assert_true(npcs != null and npcs.get_node_or_null("Vesper") != null, "NPC Vesper přítomna v Levelu 3")
 	var mechanics = lvl.get_node_or_null("Mechanics")
 	assert_true(mechanics != null, "Mechanics uzel přítomen")
-	assert_true(mechanics.get_node_or_null("Chest_R0") != null, "Úvodní truhla se zásobami nalezena")
+	assert_true(mechanics.get_node_or_null("VesperChest") != null, "VesperChest s hákem nalezena")
 	assert_true(mechanics.get_node_or_null("BossPrepChest") != null, "Finální truhla před bossem nalezena")
 	assert_true(mechanics.get_node_or_null("GrapplePoint_R0") != null, "Kotva pro hák v Sektoru 0-0 nalezena")
 	assert_true(mechanics.get_node_or_null("GrapplePoint_Final1") != null, "Finální kotva 1 pro hák nalezena")

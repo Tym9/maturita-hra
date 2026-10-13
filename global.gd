@@ -18,6 +18,14 @@ var kill_count: int = 0:
 var total_time: float = 0.0
 var total_crystals: int = 0
 
+# Přenášení stavu hráče a inventáře mezi kapitolami
+var persistent_player_inventory: Array = []
+var persistent_player_health: int = 3
+var persistent_player_max_health: int = 3
+var persistent_player_crystals: int = 0
+var persistent_collected_crystal_ids: Array = []
+var has_persistent_player: bool = false
+
 # Statistika aktuální probíhající etapy
 var current_stage_index: int = 1
 var current_stage_title: String = "ETAPA 1: STARÉ DÍLNY"
@@ -62,7 +70,6 @@ func _on_scene_changed(path: String):
 		"res://level3.tscn":
 			start_stage(3, "ETAPA 3: PŘEDPOLÍ REAKTORU", 3)
 		"res://boss_room.tscn":
-			# Pozastavíme časování etapy při vstupu do předsíně bosse
 			stage_active = false
 		"res://ui/stage_clear_screen.tscn":
 			stage_active = false
@@ -106,6 +113,31 @@ func finish_stage(title: String, max_crystals: int, next_scene: String):
 	
 	print("[Global] Etapa dokončena: ", result["title"], " | Čas: ", format_time(result["time"]), " | Krystaly: ", result["crystals"], "/", result["max_crystals"], " | Smrti: ", result["deaths"])
 
+func save_player_state(player: CharacterBody2D):
+	if not is_instance_valid(player):
+		return
+	if player.has_method("get_inventory_save_data"):
+		persistent_player_inventory = player.get_inventory_save_data()
+	persistent_player_health = player.health
+	persistent_player_max_health = player.max_health
+	persistent_player_crystals = player.crystals
+	persistent_collected_crystal_ids = player.collected_crystal_ids.duplicate()
+	has_persistent_player = true
+	print("[Global] Stav hráče uložen pro přenos do další kapitoly (položek v inventáři: ", persistent_player_inventory.size(), ").")
+
+func load_player_state(player: CharacterBody2D):
+	if not has_persistent_player:
+		return
+	if player.has_method("load_inventory_save_data"):
+		player.load_inventory_save_data(persistent_player_inventory)
+	player.health = persistent_player_health
+	player.max_health = persistent_player_max_health
+	player.crystals = persistent_player_crystals
+	player.collected_crystal_ids = persistent_collected_crystal_ids.duplicate()
+	if player.has_method("_init_ui"):
+		player._init_ui()
+	print("[Global] Stav hráče úspěšně načten z předchozí kapitoly.")
+
 func on_player_died():
 	death_count += 1
 
@@ -140,3 +172,9 @@ func reset_all_stats():
 	last_detected_scene_path = ""
 	last_stage_result.clear()
 	completed_stages.clear()
+	persistent_player_inventory.clear()
+	persistent_player_health = 3
+	persistent_player_max_health = 3
+	persistent_player_crystals = 0
+	persistent_collected_crystal_ids.clear()
+	has_persistent_player = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="PackedScene" path="res://player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="15"]
 [ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="16"]
 [ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="17"]
+[ext_resource type="PackedScene" path="res://npc/vesper.tscn" id="18"]
 
 [node name="Level3" type="Node2D"]
 
@@ -106,7 +107,7 @@ theme = 3
 position = Vector2(624, 0)
 script = ExtResource("3")
 tiles_x = 1
-tiles_y = 8
+tiles_y = 11
 theme = 3
 
 [node name="R10_EntranceLedge" type="StaticBody2D" parent="Platforms"]
@@ -365,9 +366,9 @@ blast_time = 0.8
 
 [node name="Mechanics" type="Node2D" parent="."]
 
-[node name="Chest_R0" parent="Mechanics" instance=ExtResource("13")]
-position = Vector2(50, 153)
-initial_items = ["health_pack", "steam_crystal"]
+[node name="VesperChest" parent="Mechanics" instance=ExtResource("13")]
+position = Vector2(65, 153)
+initial_items = ["grapple_hook", "health_pack"]
 
 [node name="GrapplePoint_R0" parent="Mechanics" instance=ExtResource("6")]
 position = Vector2(160, 64)
@@ -425,6 +426,11 @@ crystal_id = "crystal_r21"
 [node name="Crystal_32" parent="Collectibles" instance=ExtResource("12")]
 position = Vector2(1128, 376)
 crystal_id = "crystal_r32"
+
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="Vesper" parent="NPCs" instance=ExtResource("18")]
+position = Vector2(100, 152)
 
 [node name="Enemies" type="Node2D" parent="."]
 

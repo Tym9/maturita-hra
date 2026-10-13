@@ -2,3 +2,9 @@
 .godot/
 /android/
 *.docx
+
+# Agent / Tooling ignores
+.agents/
+graphify-out/
+.graphifyignore
+skills-lock.json

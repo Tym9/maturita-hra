@@ -101,7 +101,9 @@ func _ready():
 	if get_parent() and get_parent().has_meta("use_legacy_grass"):
 		call_deferred("_texture_platforms")
 	call_deferred("_init_ui")
-	if SaveManager and SaveManager.pending_load:
+	if Global and Global.has_persistent_player:
+		Global.load_player_state(self)
+	elif SaveManager and SaveManager.pending_load:
 		SaveManager.apply_save_to_player(self)
 	if backpack_window and backpack_window.has_method("setup"):
 		backpack_window.setup(grid_inventory)
@@ -420,7 +422,20 @@ func _physics_process(delta):
 	if kill_label:
 		kill_label.text = "Zabití: " + str(Global.kill_count)
 	
-	if global_position.y > 1000 or global_position.y < -3000:
+	# Bezpečný záchytný bod (checkpoint) na pevné zemi uvnitř platné místnosti
+	if is_on_floor() and not is_dashing and not is_grappling:
+		var rx = int(floor(global_position.x / 320.0))
+		var ry = int(floor(global_position.y / 180.0))
+		if not camera or camera.valid_rooms.is_empty() or camera.valid_rooms.has(Vector2i(rx, ry)):
+			spawn_point = global_position
+	
+	# Okamžitá detekce vypadnutí z mapy
+	if camera and not camera.valid_rooms.is_empty():
+		var rx = int(floor(global_position.x / 320.0))
+		var ry = int(floor(global_position.y / 180.0))
+		if not camera.valid_rooms.has(Vector2i(rx, ry)):
+			die()
+	elif global_position.y > 600 or global_position.y < -400:
 		die()
 
 func die():

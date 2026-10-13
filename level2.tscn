@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="15"]
 [ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="16"]
 [ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="17"]
+[ext_resource type="PackedScene" path="res://npc/rusty.tscn" id="18"]
 
 [node name="Level2" type="Node2D"]
 
@@ -106,8 +107,14 @@ theme = 2
 position = Vector2(624, 0)
 script = ExtResource("3")
 tiles_x = 1
-tiles_y = 8
+tiles_y = 11
 theme = 2
+
+[node name="R10_DashCrumble1" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(410, 136)
+
+[node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(480, 136)
 
 [node name="R10_EntranceLedge" type="StaticBody2D" parent="Platforms"]
 position = Vector2(320, 128)
@@ -276,6 +283,12 @@ tiles_x = 9
 tiles_y = 1
 theme = 2
 
+[node name="R32_DashCrumble1" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(1056, 504)
+
+[node name="R32_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
+position = Vector2(1120, 504)
+
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="R0_Spikes" type="Area2D" parent="Hazards"]
@@ -322,15 +335,9 @@ blast_time = 0.9
 
 [node name="Mechanics" type="Node2D" parent="."]
 
-[node name="MinesChest" parent="Mechanics" instance=ExtResource("13")]
+[node name="RustyChest" parent="Mechanics" instance=ExtResource("13")]
 position = Vector2(65, 153)
-initial_items = ["health_pack", "steam_crystal"]
-
-[node name="GrapplePoint_Chasm1" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(430, 60)
-
-[node name="GrapplePoint_Chasm2" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(500, 75)
+initial_items = ["gravity_coil", "health_pack"]
 
 [node name="CelesteKey_Corridor" parent="Mechanics" instance=ExtResource("14")]
 position = Vector2(750, 204)
@@ -345,12 +352,6 @@ position = Vector2(750, 440)
 
 [node name="GravityAnomaly_Up" parent="Mechanics" instance=ExtResource("7")]
 position = Vector2(880, 420)
-
-[node name="GrapplePoint_Shaft" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(1060, 400)
-
-[node name="GrapplePoint_Final" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(1140, 390)
 
 [node name="HealthPack_Ledge" parent="Mechanics" instance=ExtResource("8")]
 position = Vector2(840, 244)
@@ -368,6 +369,11 @@ crystal_id = "crystal_m21"
 [node name="Crystal_22" parent="Collectibles" instance=ExtResource("12")]
 position = Vector2(768, 410)
 crystal_id = "crystal_m22"
+
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="Rusty" parent="NPCs" instance=ExtResource("18")]
+position = Vector2(100, 152)
 
 [node name="Enemies" type="Node2D" parent="."]
 

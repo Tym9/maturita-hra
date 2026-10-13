@@ -10,7 +10,7 @@ func _ready():
 	assert(DialogueManager.dialogue_box != null, "DialogueManager musí mít inicializované DialogueBox")
 	print("[PASS] TEST 1: DialogueManager autoload funkční")
 	
-	# Test 2: Ověření přítomnosti 3 NPC a EventTriggeru v Levelu 1
+	# Test 2: Ověření přítomnosti NPC a EventTriggeru napříč kapitolami
 	var level = Level1Scene.instantiate()
 	add_child(level)
 	
@@ -18,15 +18,19 @@ func _ready():
 	assert(npcs_node != null, "Uzel NPCs musí existovat v level1")
 	
 	var otis = npcs_node.get_node_or_null("Otis")
-	var rusty = npcs_node.get_node_or_null("Rusty")
-	var vesper = npcs_node.get_node_or_null("Vesper")
 	var trigger = npcs_node.get_node_or_null("EventTrigger_ShaftWarning")
 	
 	assert(otis != null, "Otis musí existovat v Levelu 1")
-	assert(rusty != null, "Rusty musí existovat v Levelu 1")
-	assert(vesper != null, "Vesper musí existovat v Levelu 1")
 	assert(trigger != null, "EventTrigger musí existovat v Levelu 1")
-	print("[PASS] TEST 2: Všechna 3 NPC i EventTrigger nalezena v Levelu 1")
+	
+	var level2 = preload("res://level2.tscn").instantiate()
+	assert(level2.get_node_or_null("NPCs/Rusty") != null, "Rusty musí existovat v Levelu 2")
+	level2.queue_free()
+	
+	var level3 = preload("res://level3.tscn").instantiate()
+	assert(level3.get_node_or_null("NPCs/Vesper") != null, "Vesper musí existovat v Levelu 3")
+	level3.queue_free()
+	print("[PASS] TEST 2: Všechna 3 NPC i EventTrigger správně rozmístěna v kapitolách 1, 2 a 3")
 	
 	# Test 3: Zahájení dialogu s Otisem
 	var player = level.get_node("Player")

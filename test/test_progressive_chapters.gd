@@ -18,7 +18,9 @@ func _ready():
 	test_subchapter_1_wrench_only()
 	test_subchapter_2_wrench_and_coil()
 	test_subchapter_3_all_three_tools()
-	test_level1_chests_configuration()
+	test_level_npc_and_chest_distribution()
+	test_cross_chapter_inventory_persistence()
+	test_void_and_safe_checkpoint_protection()
 	
 	print("==================================================")
 	if failed:
@@ -136,29 +138,95 @@ func test_subchapter_3_all_three_tools():
 	
 	player.queue_free()
 
-func test_level1_chests_configuration():
-	print("\n--- 4. Konfigurace truhel v Levelu 1 ---")
-	var lvl_scene = preload("res://level1.tscn")
-	var lvl = lvl_scene.instantiate()
+func test_level_npc_and_chest_distribution():
+	print("\n--- 4. Distribuce NPC a truhel napříč kapitolami ---")
+	# Level 1: Pouze Otis a StartChest (Hasák)
+	var lvl1 = preload("res://level1.tscn").instantiate()
+	add_child(lvl1)
+	var npcs1 = lvl1.get_node_or_null("NPCs")
+	var mech1 = lvl1.get_node_or_null("Mechanics")
+	assert_true(npcs1 != null and npcs1.get_node_or_null("Otis") != null, "Level 1 obsahuje NPC Otis")
+	assert_true(npcs1.get_node_or_null("Rusty") == null, "Level 1 NEOBSAHUJE NPC Rusty")
+	assert_true(npcs1.get_node_or_null("Vesper") == null, "Level 1 NEOBSAHUJE NPC Vesper")
+	assert_true(mech1.get_node_or_null("StartChest") != null, "Level 1 obsahuje StartChest")
+	assert_true(mech1.get_node("StartChest").inventory.has_item("wrench"), "StartChest obsahuje Hasák")
+	assert_true(not mech1.get_node("StartChest").inventory.has_item("gravity_coil"), "StartChest NEOBSAHUJE Gravity Coil")
+	assert_true(not mech1.get_node("StartChest").inventory.has_item("grapple_hook"), "StartChest NEOBSAHUJE Hák")
+	lvl1.queue_free()
+
+	# Level 2: Pouze Rusty a RustyChest (Gravity Coil)
+	var lvl2 = preload("res://level2.tscn").instantiate()
+	add_child(lvl2)
+	var npcs2 = lvl2.get_node_or_null("NPCs")
+	var mech2 = lvl2.get_node_or_null("Mechanics")
+	assert_true(npcs2 != null and npcs2.get_node_or_null("Rusty") != null, "Level 2 obsahuje NPC Rusty")
+	assert_true(npcs2.get_node_or_null("Otis") == null, "Level 2 NEOBSAHUJE NPC Otis")
+	assert_true(npcs2.get_node_or_null("Vesper") == null, "Level 2 NEOBSAHUJE NPC Vesper")
+	assert_true(mech2.get_node_or_null("RustyChest") != null, "Level 2 obsahuje RustyChest")
+	assert_true(mech2.get_node("RustyChest").inventory.has_item("gravity_coil"), "RustyChest obsahuje Gravity Coil")
+	assert_true(not mech2.get_node("RustyChest").inventory.has_item("grapple_hook"), "RustyChest NEOBSAHUJE Hák")
+	lvl2.queue_free()
+
+	# Level 3: Pouze Vesper a VesperChest (Grapple Hook)
+	var lvl3 = preload("res://level3.tscn").instantiate()
+	add_child(lvl3)
+	var npcs3 = lvl3.get_node_or_null("NPCs")
+	var mech3 = lvl3.get_node_or_null("Mechanics")
+	assert_true(npcs3 != null and npcs3.get_node_or_null("Vesper") != null, "Level 3 obsahuje NPC Vesper")
+	assert_true(npcs3.get_node_or_null("Otis") == null, "Level 3 NEOBSAHUJE NPC Otis")
+	assert_true(npcs3.get_node_or_null("Rusty") == null, "Level 3 NEOBSAHUJE NPC Rusty")
+	assert_true(mech3.get_node_or_null("VesperChest") != null, "Level 3 obsahuje VesperChest")
+	assert_true(mech3.get_node("VesperChest").inventory.has_item("grapple_hook"), "VesperChest obsahuje Přitahovací hák")
+	lvl3.queue_free()
+
+func test_cross_chapter_inventory_persistence():
+	print("\n--- 5. Perzistence inventáře napříč kapitolami ---")
+	Global.reset_all_stats()
+	
+	# Hráč v Level 1
+	var player1 = preload("res://player.tscn").instantiate()
+	add_child(player1)
+	player1.grid_inventory.clear()
+	player1.grid_inventory.add_item_auto(ItemData.create("wrench"))
+	Global.save_player_state(player1)
+	assert_true(Global.has_persistent_player, "Hráčův stav byl uložen do Global")
+	assert_true(Global.persistent_player_inventory.size() == 1, "Perzistentní inventář má 1 předmět")
+	player1.queue_free()
+
+	# Hráč v Level 2 (načte stav z Global)
+	var player2 = preload("res://player.tscn").instantiate()
+	add_child(player2)
+	assert_true(player2.grid_inventory.has_item("wrench"), "Hráč v Levelu 2 má zděděný Hasák z Levelu 1")
+	assert_true(not player2.grid_inventory.has_item("gravity_coil"), "Hráč v Levelu 2 zatím nemá Gravity Coil")
+	# Sebrání Gravity Coil v Levelu 2
+	player2.grid_inventory.add_item_auto(ItemData.create("gravity_coil"))
+	Global.save_player_state(player2)
+	player2.queue_free()
+
+	# Hráč v Level 3 (načte stav z Global)
+	var player3 = preload("res://player.tscn").instantiate()
+	add_child(player3)
+	assert_true(player3.grid_inventory.has_item("wrench"), "Hráč v Levelu 3 má Hasák")
+	assert_true(player3.grid_inventory.has_item("gravity_coil"), "Hráč v Levelu 3 má Gravity Coil")
+	assert_true(not player3.grid_inventory.has_item("grapple_hook"), "Hráč v Levelu 3 zatím nemá Hák")
+	player3.queue_free()
+
+func test_void_and_safe_checkpoint_protection():
+	print("\n--- 6. Ochrana před uložením checkpointu ve voidu (mimo mapu) ---")
+	var lvl = preload("res://level1.tscn").instantiate()
 	add_child(lvl)
+	var player = lvl.get_node("Player")
+	var cam = player.camera
+	var initial_spawn = player.spawn_point
 	
-	var mechanics = lvl.get_node("Mechanics")
-	var start_chest = mechanics.get_node_or_null("StartChest")
-	var rusty_chest = mechanics.get_node_or_null("RustyChest")
-	var vesper_chest = mechanics.get_node_or_null("VesperChest")
+	assert_true(cam.is_valid_room(Vector2i(0, 0)), "Pokoj [0, 0] je validní")
+	assert_true(not cam.is_valid_room(Vector2i(99, 99)), "Void [99, 99] NENÍ validní")
 	
-	assert_true(start_chest != null, "StartChest (Otis) nalezena v Levelu 1")
-	assert_true(rusty_chest != null, "RustyChest (Rusty) nalezena v Levelu 1")
-	assert_true(vesper_chest != null, "VesperChest (Vesper) nalezena v Levelu 1")
+	# Hráč skočí do nevalidní zóny
+	player.global_position = Vector2(9999, 9999)
+	cam._process(0.016)
+	player._physics_process(0.016)
 	
-	# Ověření rozdělení výbavy
-	assert_true(start_chest.inventory.has_item("wrench"), "StartChest obsahuje Hasák")
-	assert_true(not start_chest.inventory.has_item("gravity_coil"), "StartChest NEOBSAHUJE Gravity Coil")
-	assert_true(not start_chest.inventory.has_item("grapple_hook"), "StartChest NEOBSAHUJE Hák")
-	
-	assert_true(rusty_chest.inventory.has_item("gravity_coil"), "RustyChest obsahuje Gravity Coil")
-	assert_true(not rusty_chest.inventory.has_item("grapple_hook"), "RustyChest NEOBSAHUJE Hák")
-	
-	assert_true(vesper_chest.inventory.has_item("grapple_hook"), "VesperChest obsahuje Přitahovací hák")
-	
+	# Checkpoint se nesmí přepsat na void
+	assert_true(player.spawn_point == initial_spawn, "Spawn point nebyl přepsán do voidu")
 	lvl.queue_free()

@@ -22,9 +22,9 @@ func _ready():
 		chapter_scroll.visible = false
 
 func _on_new_game_pressed():
-	Global.death_count = 0
-	Global.kill_count = 0
+	Global.reset_all_stats()
 	SaveManager.pending_load = false
+	SaveManager.delete_save()
 	_start_level("res://level1.tscn")
 
 func _on_continue_pressed():

@@ -255,14 +255,6 @@ position = Vector2(416, 238)
 position = Vector2(65, 153)
 initial_items = ["wrench", "health_pack"]
 
-[node name="RustyChest" parent="Mechanics" instance=ExtResource("17")]
-position = Vector2(505, 273)
-initial_items = ["gravity_coil", "health_pack"]
-
-[node name="VesperChest" parent="Mechanics" instance=ExtResource("17")]
-position = Vector2(645, 333)
-initial_items = ["grapple_hook", "mine_key"]
-
 [node name="CelesteKey_HighBeam" parent="Mechanics" instance=ExtResource("18")]
 position = Vector2(430, 64)
 
@@ -270,12 +262,6 @@ position = Vector2(430, 64)
 position = Vector2(616, 310)
 block_width = 16.0
 block_height = 48.0
-
-[node name="GrapplePoint_Tunnel" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(750, 230)
-
-[node name="GrapplePoint_Reactor" parent="Mechanics" instance=ExtResource("6")]
-position = Vector2(830, 390)
 
 [node name="GravityAnomaly_Down" parent="Mechanics" instance=ExtResource("7")]
 position = Vector2(690, 420)
@@ -315,12 +301,6 @@ crystal_id = "crystal_r22"
 
 [node name="Otis" parent="NPCs" instance=ExtResource("13")]
 position = Vector2(100, 152)
-
-[node name="Rusty" parent="NPCs" instance=ExtResource("14")]
-position = Vector2(530, 272)
-
-[node name="Vesper" parent="NPCs" instance=ExtResource("15")]
-position = Vector2(670, 332)
 
 [node name="EventTrigger_ShaftWarning" parent="NPCs" instance=ExtResource("16")]
 position = Vector2(370, 120)
