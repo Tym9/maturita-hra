@@ -28,60 +28,70 @@ script = ExtResource("5")
 room_x = 0
 room_y = 0
 room_title = "SEKTOR 0-0: NÁSTUPNÍ KOMORA REAKTORU"
+style = 6
 
 [node name="Room_1_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 1
 room_y = 0
 room_title = "SEKTOR 1-0: LASEROVÝ KORIDOR & DRONY"
+style = 6
 
 [node name="Room_2_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 2
 room_y = 0
 room_title = "SEKTOR 2-0: HORNÍ SERVISNÍ LÁVKA"
+style = 6
 
 [node name="Room_1_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 1
 room_y = 1
 room_title = "SEKTOR 1-1: PARNÍ CHLADICÍ ŠACHTA"
+style = 6
 
 [node name="Room_2_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 2
 room_y = 1
 room_title = "SEKTOR 2-1: GRAVITAČNÍ AKCELERÁTOR"
+style = 6
 
 [node name="Room_3_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 3
 room_y = 1
 room_title = "SEKTOR 3-1: TURBÍNOVÁ GALERIE"
+style = 6
 
 [node name="Room_4_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 4
 room_y = 1
 room_title = "SEKTOR 4-1: HLUBINNÁ ŠACHTA"
+style = 6
 
 [node name="Room_4_2" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 4
 room_y = 2
 room_title = "SEKTOR 4-2: BEZPEČNOSTNÍ PŘETLAK"
+style = 6
 
 [node name="Room_2_2" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 2
 room_y = 2
 room_title = "SEKTOR 2-2: BRÁNA JÁDRA REAKTORU"
+style = 6
 
 [node name="Room_3_2" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 3
 room_y = 2
 room_title = "SEKTOR 3-2: PŘEDPOLÍ VELÍNU"
+style = 6
 
 [node name="Platforms" type="Node2D" parent="."]
 
@@ -111,14 +121,14 @@ position = Vector2(144, 120)
 script = ExtResource("3")
 tiles_x = 3
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R0_Landing" type="StaticBody2D" parent="Platforms"]
 position = Vector2(208, 144)
 script = ExtResource("3")
 tiles_x = 7
 tiles_y = 2
-theme = 3
+theme = 0
 
 [node name="R10_Ceiling" type="StaticBody2D" parent="Platforms"]
 position = Vector2(320, 0)
@@ -132,7 +142,7 @@ position = Vector2(320, 144)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R10_CrumblingBridge1" parent="Platforms" instance=ExtResource("17")]
 position = Vector2(416, 136)
@@ -145,14 +155,14 @@ position = Vector2(544, 48)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R10_Landing" type="StaticBody2D" parent="Platforms"]
 position = Vector2(544, 144)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R20_Ceiling" type="StaticBody2D" parent="Platforms"]
 position = Vector2(640, 0)
@@ -173,21 +183,21 @@ position = Vector2(656, 120)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R20_Ledge2" type="StaticBody2D" parent="Platforms"]
 position = Vector2(768, 90)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R20_Ledge3" type="StaticBody2D" parent="Platforms"]
 position = Vector2(880, 60)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R20_Floor" type="StaticBody2D" parent="Platforms"]
 position = Vector2(672, 168)
@@ -208,21 +218,21 @@ position = Vector2(624, 180)
 script = ExtResource("3")
 tiles_x = 1
 tiles_y = 6
-theme = 3
+theme = 1
 
 [node name="R11_CatchLedge" type="StaticBody2D" parent="Platforms"]
 position = Vector2(528, 216)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R11_Perch" type="StaticBody2D" parent="Platforms"]
 position = Vector2(352, 256)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R11_FloorRight" type="StaticBody2D" parent="Platforms"]
 position = Vector2(496, 320)
@@ -278,14 +288,14 @@ position = Vector2(960, 320)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 2
-theme = 3
+theme = 1
 
 [node name="R31_MidBeam" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1050, 290)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R31_Crumble" parent="Platforms" instance=ExtResource("17")]
 position = Vector2(1130, 280)
@@ -295,7 +305,7 @@ position = Vector2(1200, 260)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R41_Ceiling" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1280, 180)
@@ -316,21 +326,21 @@ position = Vector2(1280, 260)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R41_Beam1" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1420, 240)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R41_Beam2" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1500, 300)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R42_WallRight" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1584, 360)
@@ -351,7 +361,7 @@ position = Vector2(1480, 400)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R42_Crumble1" parent="Platforms" instance=ExtResource("17")]
 position = Vector2(1400, 440)
@@ -364,7 +374,7 @@ position = Vector2(1280, 490)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R22_LeftWall" type="StaticBody2D" parent="Platforms"]
 position = Vector2(640, 360)
@@ -385,7 +395,7 @@ position = Vector2(864, 400)
 script = ExtResource("3")
 tiles_x = 5
 tiles_y = 1
-theme = 3
+theme = 1
 
 [node name="R22_Crumble" parent="Platforms" instance=ExtResource("17")]
 position = Vector2(800, 430)
@@ -416,21 +426,21 @@ position = Vector2(960, 520)
 script = ExtResource("3")
 tiles_x = 4
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R32_EntranceRight" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1240, 490)
 script = ExtResource("3")
 tiles_x = 3
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R32_HighPerch" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1104, 392)
 script = ExtResource("3")
 tiles_x = 3
 tiles_y = 1
-theme = 3
+theme = 0
 
 [node name="R32_BossThreshold" type="StaticBody2D" parent="Platforms"]
 position = Vector2(1168, 496)

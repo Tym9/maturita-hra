@@ -10,6 +10,9 @@ const STYLE_INDUSTRIAL = 0
 const STYLE_SURFACE = 1
 const STYLE_MINE_ENTRANCE = 2
 const STYLE_MINE_INTERIOR = 3
+const STYLE_WORKSHOP = 4
+const STYLE_CRYSTAL_MINES = 5
+const STYLE_REACTOR_CORE = 6
 
 @export var room_x: int = 0:
 	set(val):
@@ -30,7 +33,7 @@ const STYLE_MINE_INTERIOR = 3
 		room_title = val
 		queue_redraw()
 
-@export_enum("Industrial", "Surface", "Mine Entrance", "Mine Interior") var style: int = 0:
+@export_enum("Industrial", "Surface", "Mine Entrance", "Mine Interior", "Workshop", "Crystal Mines", "Reactor Core") var style: int = 0:
 	set(val):
 		style = val
 		queue_redraw()
@@ -77,6 +80,15 @@ func _draw():
 		STYLE_MINE_INTERIOR:
 			_draw_mine_interior()
 			_draw_title(Color(0.85, 0.70, 0.50, 0.55))
+		STYLE_WORKSHOP:
+			_draw_workshop()
+			_draw_title(Color(0.95, 0.78, 0.48, 0.65))
+		STYLE_CRYSTAL_MINES:
+			_draw_crystal_mines()
+			_draw_title(Color(0.65, 0.90, 1.0, 0.70))
+		STYLE_REACTOR_CORE:
+			_draw_reactor_core()
+			_draw_title(Color(0.40, 0.95, 0.90, 0.75))
 		_:
 			_draw_industrial()
 			_draw_title(Color(0.25, 0.28, 0.38, 0.6))
@@ -392,3 +404,323 @@ func _draw_support_frame(cx: float):
 	draw_rect(Rect2(cx - 20.0, 20.0, 40.0, 8.0), COLOR_WOOD_DARK, false, 1.0)
 	draw_line(Vector2(cx - 10.0, 28.0), Vector2(cx - 4.0, 36.0), COLOR_WOOD, 3.0)
 	draw_line(Vector2(cx + 10.0, 28.0), Vector2(cx + 4.0, 36.0), COLOR_WOOD, 3.0)
+
+
+# ---------------------------------------------------------------------------
+# ETAPA 1: Staré dílny (Workshop & Foundry)
+# Cihlové zdivo, masivní parní potrubí, ozubená kola, tlakoměry a lucerny
+# ---------------------------------------------------------------------------
+
+func _draw_workshop():
+	# 1. Tmavé cihlové zdivo
+	draw_rect(Rect2(0, 0, room_width, room_height), Color(0.08, 0.07, 0.09, 1.0))
+	var mortar_col = Color(0.14, 0.11, 0.13, 0.45)
+	for by in range(0, int(room_height), 12):
+		draw_line(Vector2(0, float(by)), Vector2(room_width, float(by)), mortar_col, 1.0)
+		var shift = 12.0 if (by / 12) % 2 == 0 else 0.0
+		for bx in range(int(shift), int(room_width), 24):
+			draw_line(Vector2(float(bx), float(by)), Vector2(float(bx), float(by + 12)), mortar_col, 1.0)
+	
+	# 2. Ocelový příhradový vazník podél stropu
+	var truss_y = 18.0
+	var truss_col = Color(0.20, 0.16, 0.18, 1.0)
+	var truss_light = Color(0.42, 0.32, 0.26, 0.7)
+	draw_line(Vector2(0, truss_y), Vector2(room_width, truss_y), truss_col, 2.0)
+	draw_line(Vector2(0, truss_y + 10.0), Vector2(room_width, truss_y + 10.0), truss_col, 2.0)
+	for tx in range(0, int(room_width), 20):
+		draw_line(Vector2(float(tx), truss_y), Vector2(float(tx + 20), truss_y + 10.0), truss_light, 1.0)
+		draw_line(Vector2(float(tx + 20), truss_y), Vector2(float(tx), truss_y + 10.0), truss_light, 1.0)
+	
+	# 3. Obří ozubená kola v pozadí (podle polohy místnosti)
+	var gear_seed = float(room_x * 23 + room_y * 41)
+	var gear1_x = 75.0 + _hash(gear_seed) * 80.0
+	var gear1_y = 65.0 + _hash(gear_seed * 1.7) * 45.0
+	var gear1_r = 26.0 + _hash(gear_seed * 2.3) * 12.0
+	_draw_cogwheel(Vector2(gear1_x, gear1_y), gear1_r, 12, Color(0.18, 0.13, 0.15, 0.8))
+	var gear2_r = gear1_r * 0.55
+	var gear2_pos = Vector2(gear1_x + gear1_r + gear2_r - 2.0, gear1_y - 8.0)
+	_draw_cogwheel(gear2_pos, gear2_r, 8, Color(0.24, 0.17, 0.18, 0.75))
+	
+	# 4. Měděné a bronzové parní potrubí s přírubami
+	var pipe_y = 44.0 + _hash(gear_seed * 3.1) * 20.0
+	draw_rect(Rect2(0, pipe_y, room_width, 6.0), COLOR_COPPER)
+	draw_rect(Rect2(0, pipe_y, room_width, 1.0), Color(0.85, 0.55, 0.30, 1.0))
+	draw_rect(Rect2(0, pipe_y + 5.0, room_width, 1.0), Color(0.30, 0.16, 0.08, 1.0))
+	var fx = 24.0
+	while fx < room_width:
+		draw_rect(Rect2(fx, pipe_y - 2.0, 3.0, 10.0), Color(0.48, 0.28, 0.15, 1.0))
+		fx += 48.0
+	
+	# Svislá odbočka potrubí
+	var drop_x = 180.0 + _hash(gear_seed * 4.3) * 80.0
+	draw_rect(Rect2(drop_x, pipe_y, 5.0, room_height - pipe_y), COLOR_COPPER)
+	draw_rect(Rect2(drop_x, pipe_y, 1.0, room_height - pipe_y), Color(0.85, 0.55, 0.30, 1.0))
+	
+	# Tlakoměr (manometr) na potrubí
+	var gauge_pos = Vector2(drop_x + 14.0, pipe_y + 16.0)
+	draw_line(Vector2(drop_x + 5.0, pipe_y + 16.0), gauge_pos, Color(0.4, 0.25, 0.15, 1.0), 2.0)
+	draw_circle(gauge_pos, 7.0, COLOR_BRASS)
+	draw_circle(gauge_pos, 5.5, Color(0.92, 0.90, 0.82, 1.0))
+	draw_line(gauge_pos, gauge_pos + Vector2(3.5, -2.5), Color(0.85, 0.15, 0.1, 1.0), 1.0)
+	
+	# Červený uzavírací ventil
+	var valve_pos = Vector2(drop_x + 2.5, pipe_y + 36.0)
+	draw_arc(valve_pos, 6.0, 0.0, TAU, 14, Color(0.75, 0.22, 0.16, 1.0), 2.0)
+	draw_line(valve_pos - Vector2(6, 0), valve_pos + Vector2(6, 0), Color(0.75, 0.22, 0.16, 1.0), 1.0)
+	draw_line(valve_pos - Vector2(0, 6), valve_pos + Vector2(0, 6), Color(0.75, 0.22, 0.16, 1.0), 1.0)
+	
+	# 5. Záře tavicí pece u spodních rohů
+	_draw_glow(Vector2(40.0, 175.0), 45.0, Color(1.0, 0.45, 0.10, 0.10))
+	_draw_glow(Vector2(280.0, 175.0), 40.0, Color(1.0, 0.45, 0.10, 0.08))
+	
+	# 6. Visící dílenské lucerny
+	_draw_hanging_lantern(Vector2(60.0 + _hash(gear_seed * 5.1) * 30.0, truss_y + 10.0), 24.0)
+	_draw_hanging_lantern(Vector2(240.0 + _hash(gear_seed * 6.7) * 40.0, truss_y + 10.0), 30.0)
+
+func _draw_cogwheel(center: Vector2, radius: float, teeth: int, color: Color):
+	# Střed a náboj
+	draw_circle(center, radius * 0.35, color)
+	draw_circle(center, radius * 0.15, Color(0.08, 0.07, 0.09, 1.0))
+	# Vnější věnec
+	draw_arc(center, radius, 0.0, TAU, teeth * 3, color, 3.0)
+	# Zuby po obvodu
+	for i in range(teeth):
+		var ang = float(i) / float(teeth) * TAU
+		var tooth_dir = Vector2(cos(ang), sin(ang))
+		var p_base1 = center + tooth_dir * radius + Vector2(-tooth_dir.y, tooth_dir.x) * 2.5
+		var p_base2 = center + tooth_dir * radius - Vector2(-tooth_dir.y, tooth_dir.x) * 2.5
+		var p_tip1 = center + tooth_dir * (radius + 4.5) + Vector2(-tooth_dir.y, tooth_dir.x) * 2.0
+		var p_tip2 = center + tooth_dir * (radius + 4.5) - Vector2(-tooth_dir.y, tooth_dir.x) * 2.0
+		draw_colored_polygon(PackedVector2Array([p_base1, p_tip1, p_tip2, p_base2]), color)
+	# Loukotě (paprsky kola)
+	for i in range(4):
+		var ang = float(i) / 4.0 * PI
+		var dir = Vector2(cos(ang), sin(ang))
+		draw_line(center - dir * radius, center + dir * radius, color, 2.0)
+
+# ---------------------------------------------------------------------------
+# ETAPA 2: Krystalové doly (Crystal Mines & Geodes)
+# Hlubinné jeskynní stěny, zářící krystaly, dřevěné vzpěry a důlní vozíkové koleje
+# ---------------------------------------------------------------------------
+
+func _draw_crystal_mines():
+	# 1. Hlubinná temná skalní jeskyně
+	draw_rect(Rect2(0, 0, room_width, room_height), Color(0.05, 0.045, 0.075, 1.0))
+	
+	# Skalní vrstvy a pukliny
+	for i in range(50):
+		var rx = _hash(float(i) * 3.3 + float(room_x * 19)) * room_width
+		var ry = _hash(float(i) * 5.7 + float(room_y * 23)) * room_height
+		var rw = 6.0 + _hash(float(i) * 2.1) * 24.0
+		draw_rect(Rect2(rx, ry, rw, 2.0), Color(0.10, 0.08, 0.14, 0.6))
+		draw_rect(Rect2(rx, ry, rw * 0.6, 1.0), Color(0.18, 0.14, 0.24, 0.4))
+	
+	# Skalní krápníky (stalaktity) na stropě
+	var stal_step = 28.0
+	var sx = 10.0
+	while sx < room_width:
+		var sh = 8.0 + _hash(sx * 1.7 + float(room_x * 7)) * 16.0
+		var sw = 6.0 + _hash(sx * 3.1) * 6.0
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(sx - sw * 0.5, 0), Vector2(sx + sw * 0.5, 0), Vector2(sx, sh)
+		]), Color(0.12, 0.10, 0.16, 1.0))
+		sx += stal_step
+	
+	# 2. Zářící krystalové shluky (azurové, fialové a smaragdové)
+	var cry_seed = float(room_x * 31 + room_y * 17)
+	var clusters = [
+		Vector2(45.0 + _hash(cry_seed) * 30.0, 40.0 + _hash(cry_seed * 1.3) * 30.0),
+		Vector2(160.0 + _hash(cry_seed * 2.1) * 40.0, 70.0 + _hash(cry_seed * 2.7) * 40.0),
+		Vector2(265.0 + _hash(cry_seed * 3.3) * 35.0, 35.0 + _hash(cry_seed * 3.9) * 35.0),
+		Vector2(95.0 + _hash(cry_seed * 4.5) * 40.0, 130.0 + _hash(cry_seed * 5.1) * 30.0)
+	]
+	for idx in range(clusters.size()):
+		var cpos = clusters[idx]
+		var hue_type = int(idx + room_x) % 3
+		_draw_crystal_cluster(cpos, hue_type, 4 + int(_hash(float(idx * 7)) * 3), 1.0)
+	
+	# 3. Důlní dřevěná výdřeva (štolové rámy)
+	for fx in [55.0, 180.0, 290.0]:
+		_draw_timber_post(Rect2(fx - 4.0, 0, 8.0, room_height))
+		# Horní spojovací trám
+		draw_rect(Rect2(fx - 24.0, 18.0, 48.0, 8.0), COLOR_WOOD)
+		draw_rect(Rect2(fx - 24.0, 18.0, 48.0, 1.0), COLOR_WOOD_LIGHT)
+		draw_rect(Rect2(fx - 24.0, 18.0, 48.0, 8.0), COLOR_WOOD_DARK, false, 1.0)
+		# Šikmé vzpěry
+		draw_line(Vector2(fx - 16, 26), Vector2(fx - 4, 38), COLOR_WOOD, 2.0)
+		draw_line(Vector2(fx + 16, 26), Vector2(fx + 4, 38), COLOR_WOOD, 2.0)
+	
+	# 4. Důlní koleje v pozadí
+	var rail_y = 158.0
+	draw_line(Vector2(0, rail_y), Vector2(room_width, rail_y), Color(0.28, 0.22, 0.20, 1.0), 2.0)
+	draw_line(Vector2(0, rail_y + 4.0), Vector2(room_width, rail_y + 4.0), Color(0.28, 0.22, 0.20, 1.0), 2.0)
+	for rx in range(8, int(room_width), 16):
+		draw_rect(Rect2(float(rx), rail_y - 2.0, 4.0, 8.0), COLOR_WOOD_DARK)
+	
+	# 5. Závěsné hornické lampy v kleci
+	_draw_hanging_lantern(Vector2(85.0 + _hash(cry_seed * 6.1) * 30.0, 26.0), 22.0)
+	_draw_hanging_lantern(Vector2(220.0 + _hash(cry_seed * 7.3) * 30.0, 26.0), 26.0)
+
+func _draw_crystal_cluster(pos: Vector2, hue: int, count: int, sc: float):
+	var glow_col: Color
+	var base_col: Color
+	var mid_col: Color
+	var tip_col: Color
+	
+	match hue:
+		0: # Azur / Éterický safír (Hlavní krystal hry)
+			glow_col = Color(0.25, 0.85, 1.0, 0.16)
+			base_col = Color(0.10, 0.38, 0.65, 1.0)
+			mid_col = Color(0.25, 0.80, 0.98, 1.0)
+			tip_col = Color(0.85, 0.98, 1.0, 1.0)
+		1: # Ametyst / Fialový geod
+			glow_col = Color(0.75, 0.35, 0.95, 0.15)
+			base_col = Color(0.32, 0.12, 0.50, 1.0)
+			mid_col = Color(0.68, 0.32, 0.88, 1.0)
+			tip_col = Color(0.92, 0.78, 1.0, 1.0)
+		_: # Smaragd / Zelený minerál
+			glow_col = Color(0.25, 0.90, 0.45, 0.15)
+			base_col = Color(0.12, 0.40, 0.22, 1.0)
+			mid_col = Color(0.28, 0.82, 0.44, 1.0)
+			tip_col = Color(0.82, 1.0, 0.88, 1.0)
+	
+	# 1. Světelná aura
+	_draw_glow(pos, 28.0 * sc, glow_col)
+	
+	# 2. Jednotlivé fazetované krystalové hroty
+	for i in range(count):
+		var ang = -PI * 0.5 + float(i - count / 2) * 0.42
+		var dir = Vector2(cos(ang), sin(ang))
+		var norm = Vector2(-dir.y, dir.x)
+		var h = (12.0 + float((i * 7) % 8)) * sc
+		var w = (3.5 + float((i * 3) % 3)) * sc
+		var p_root1 = pos + norm * w * 0.5
+		var p_root2 = pos - norm * w * 0.5
+		var p_mid1 = pos + dir * h * 0.65 + norm * w * 0.6
+		var p_mid2 = pos + dir * h * 0.65 - norm * w * 0.6
+		var p_tip = pos + dir * h
+		# Levá stinná fazeta
+		draw_colored_polygon(PackedVector2Array([p_root1, p_mid1, p_tip, pos]), base_col)
+		# Pravá osvětlená fazeta
+		draw_colored_polygon(PackedVector2Array([pos, p_tip, p_mid2, p_root2]), mid_col)
+		# Zářící hrana / špička
+		draw_line(pos, p_tip, tip_col, 1.0)
+	
+	# 3. Třpytivé minerální jiskry okolo
+	for k in range(3):
+		var jx = pos.x + cos(float(k) * 2.1) * 16.0 * sc
+		var jy = pos.y + sin(float(k) * 2.1) * 12.0 * sc
+		draw_rect(Rect2(jx, jy, 1.5, 1.5), tip_col)
+
+# ---------------------------------------------------------------------------
+# ETAPA 3: Jádro reaktoru (Reactor Core & High-Tech Velín)
+# Masivní reaktorové sloupy, pulzující plazmová vedení, turbínové ventilátory,
+# analogové manometry, bezpečnostní šrafování a kontrolní pulty
+# ---------------------------------------------------------------------------
+
+func _draw_reactor_core():
+	# 1. Tmavý grafitový technický bulkhead
+	draw_rect(Rect2(0, 0, room_width, room_height), Color(0.035, 0.045, 0.065, 1.0))
+	
+	# Vertikální ocelové výztuhy s nýty
+	var rib_col = Color(0.09, 0.12, 0.17, 1.0)
+	var rivet_col = Color(0.20, 0.28, 0.36, 1.0)
+	for rx in range(0, int(room_width), 32):
+		draw_line(Vector2(float(rx), 0), Vector2(float(rx), room_height), rib_col, 2.0)
+		for ry in range(16, int(room_height), 28):
+			draw_rect(Rect2(float(rx) - 1.0, float(ry) - 1.0, 2.0, 2.0), rivet_col)
+	
+	var r_seed = float(room_x * 43 + room_y * 29)
+	
+	# 2. Masivní reaktorový sloup / cylindrická nádoba jádra
+	var col_x = 90.0 + _hash(r_seed) * 140.0
+	var col_w = 40.0
+	draw_rect(Rect2(col_x, 0, col_w, room_height), Color(0.08, 0.11, 0.16, 1.0))
+	draw_rect(Rect2(col_x, 0, 2.0, room_height), Color(0.18, 0.25, 0.34, 1.0))
+	draw_rect(Rect2(col_x + col_w - 2.0, 0, 2.0, room_height), Color(0.05, 0.07, 0.10, 1.0))
+	
+	# Magnetické izolační prstence reaktoru
+	for cy in range(10, int(room_height), 26):
+		draw_rect(Rect2(col_x - 3.0, float(cy), col_w + 6.0, 5.0), COLOR_COPPER)
+		draw_rect(Rect2(col_x - 3.0, float(cy), col_w + 6.0, 1.0), Color(0.9, 0.6, 0.3, 1.0))
+	
+	# Vertikální plazmové okno reaktoru s pulzujícím světlem
+	var core_cx = col_x + col_w * 0.5
+	_draw_glow(Vector2(core_cx, room_height * 0.5), 36.0, Color(0.20, 0.90, 0.85, 0.18))
+	draw_rect(Rect2(core_cx - 3.0, 10.0, 6.0, room_height - 20.0), Color(0.15, 0.70, 0.80, 0.85))
+	draw_rect(Rect2(core_cx - 1.0, 12.0, 2.0, room_height - 24.0), Color(0.80, 1.0, 0.98, 1.0))
+	
+	# 3. Turbínový ventilátor v krytu
+	var turb_x = 260.0 if col_x < 160.0 else 45.0
+	var turb_y = 70.0 + _hash(r_seed * 1.9) * 40.0
+	_draw_turbine(Vector2(turb_x, turb_y), 24.0)
+	
+	# 4. Vysokonapěťová plazmová vedení a kabely podél stropu
+	var cable_y = 20.0
+	draw_line(Vector2(0, cable_y), Vector2(room_width, cable_y), Color(0.12, 0.15, 0.20, 1.0), 3.0)
+	# Svítící neonový cyan vodič
+	draw_line(Vector2(0, cable_y + 4.0), Vector2(room_width, cable_y + 4.0), Color(0.25, 0.92, 0.85, 0.75), 1.0)
+	_draw_glow(Vector2(room_width * 0.5, cable_y + 4.0), 20.0, Color(0.20, 0.85, 0.80, 0.10))
+	
+	# Keramické talířové izolátory
+	for ix in range(30, int(room_width), 60):
+		for iy in range(3):
+			draw_rect(Rect2(float(ix) - 4.0, cable_y + float(iy) * 3.0, 8.0, 2.0), Color(0.35, 0.45, 0.55, 1.0))
+	
+	# 5. Bezpečnostní žluto-černé šrafování (Hazard Stripes) na nosníku
+	var haz_y = 135.0
+	var haz_h = 6.0
+	draw_rect(Rect2(col_x - 30.0, haz_y, col_w + 60.0, haz_h), Color(0.10, 0.10, 0.12, 1.0))
+	for hx in range(int(col_x - 30.0), int(col_x + col_w + 30.0), 8):
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(float(hx), haz_y),
+			Vector2(float(hx + 4), haz_y),
+			Vector2(float(hx), haz_y + haz_h),
+			Vector2(float(hx - 4), haz_y + haz_h)
+		]), Color(0.95, 0.75, 0.20, 0.9))
+	
+	# 6. Kontrolní pult s LED indikátory a manometry
+	var panel_x = turb_x - 18.0
+	var panel_y = turb_y + 34.0
+	if panel_y + 24.0 < room_height:
+		draw_rect(Rect2(panel_x, panel_y, 36.0, 22.0), Color(0.10, 0.13, 0.18, 1.0))
+		draw_rect(Rect2(panel_x, panel_y, 36.0, 22.0), COLOR_BRASS, false, 1.0)
+		# LED diody (zelená, žlutá, azurová)
+		var leds = [Color(0.2, 0.9, 0.3, 1.0), Color(1.0, 0.8, 0.2, 1.0), Color(0.2, 0.8, 1.0, 1.0)]
+		for li in range(3):
+			var led_c = leds[li]
+			draw_circle(Vector2(panel_x + 6.0 + float(li) * 7.0, panel_y + 6.0), 2.0, led_c)
+			_draw_glow(Vector2(panel_x + 6.0 + float(li) * 7.0, panel_y + 6.0), 6.0, led_c * 0.35)
+		# Miniaturní manometr na pultu
+		draw_circle(Vector2(panel_x + 28.0, panel_y + 11.0), 5.0, COLOR_COPPER)
+		draw_circle(Vector2(panel_x + 28.0, panel_y + 11.0), 3.8, Color(0.9, 0.9, 0.85, 1.0))
+		draw_line(Vector2(panel_x + 28.0, panel_y + 11.0), Vector2(panel_x + 30.5, panel_y + 9.0), Color(0.85, 0.15, 0.1, 1.0), 1.0)
+
+func _draw_turbine(center: Vector2, radius: float):
+	var casing_col = Color(0.18, 0.22, 0.28, 1.0)
+	var blade_col = Color(0.12, 0.16, 0.22, 1.0)
+	var blade_edge = Color(0.28, 0.35, 0.44, 1.0)
+	
+	# Vnější kryt turbíny
+	draw_circle(center, radius, casing_col)
+	draw_arc(center, radius, 0.0, TAU, 24, COLOR_BRASS, 2.0)
+	draw_circle(center, radius - 2.0, Color(0.05, 0.07, 0.10, 1.0))
+	
+	# 8 lopatek turbíny
+	for i in range(8):
+		var ang = float(i) / 8.0 * TAU
+		var p_hub = center + Vector2(cos(ang), sin(ang)) * (radius * 0.3)
+		var p_tip1 = center + Vector2(cos(ang + 0.25), sin(ang + 0.25)) * (radius - 3.0)
+		var p_tip2 = center + Vector2(cos(ang - 0.10), sin(ang - 0.10)) * (radius - 3.0)
+		draw_colored_polygon(PackedVector2Array([center, p_hub, p_tip1, p_tip2]), blade_col)
+		draw_line(center, p_tip1, blade_edge, 1.0)
+	
+	# Středový kužel
+	draw_circle(center, radius * 0.30, casing_col)
+	draw_circle(center, radius * 0.16, COLOR_BRASS)
+	
+	# Ochranná mřížka přes turbínu
+	for line_i in range(-2, 3):
+		var dy = float(line_i) * (radius * 0.35)
+		var dx_limit = sqrt(max(0.0, radius * radius - dy * dy)) * 0.95
+		draw_line(center + Vector2(-dx_limit, dy), center + Vector2(dx_limit, dy), Color(0.25, 0.32, 0.40, 0.45), 1.0)
