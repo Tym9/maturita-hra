@@ -62,12 +62,16 @@ func _display_stats():
 	if kills_value:
 		kills_value.text = str(res.get("kills", 0))
 
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and event.keycode in [KEY_SPACE, KEY_ENTER]):
-		_on_continue_pressed()
-		get_viewport().set_input_as_handled()
-
 var is_continuing: bool = false
+
+func _unhandled_input(event):
+	if is_continuing:
+		return
+	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and event.keycode in [KEY_SPACE, KEY_ENTER]):
+		var vp = get_viewport()
+		if vp:
+			vp.set_input_as_handled()
+		_on_continue_pressed()
 
 func _on_continue_pressed():
 	if is_continuing:
