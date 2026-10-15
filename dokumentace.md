@@ -1,6 +1,6 @@
-# Dokumentace Projektu: 2D Plošinovka (15 Úrovní)
+# Dokumentace Projektu: 2D Plošinovka (Steampunk Odyssey)
 
-Vítej v dokumentaci pro moderní 2D přesnou plošinovku vytvořenou v Godot Engine 4.6. Hra kombinuje dynamické prvky pohybu inspirované Celeste s klasickými mechanikami Super Mario Bros. Hra byla kompletně vizuálně přepracována pomocí vlastních textur a rozšířena na **15 plnohodnotných úrovní**.
+Vítej v dokumentaci pro moderní 2D přesnou plošinovku vytvořenou v Godot Engine 4.6. Hra kombinuje dynamické prvky pohybu inspirované Celeste s klasickými mechanikami Super Mario Bros. Hra byla kompletně vizuálně přepracována pomocí vlastních textur, procedurálního steampunkového stylu a uspořádána do ucelené kampaně s kapitolami (**Prolog + 3 Etapy + Boss aréna**).
 
 ---
 
@@ -37,29 +37,29 @@ Hra využívá speciální autorské pixel-artové textury nakopírované ze slo
 
 ## 🎛️ Hlavní Menu a Herní Smyčka (res://global.gd)
 
-- **Hlavní Scéna:** Projekt začíná na landing page `main_menu.tscn`, která obsahuje přehledný scrollovací panel (ScrollContainer) s tlačítky pro Tutorial a všech **15 úrovní**.
+- **Hlavní Scéna:** Projekt začíná na landing page `main_menu.tscn`, která obsahuje přehledný panel (ScrollContainer) s tlačítky pro Tutoriál a jednotlivé etapy hry (Sektor 1: Šachta, Sektor 2: Doly, Sektor 3: Reaktor).
 - **Statistiky na obrazovce (Autoload res://global.gd):**
   - **Počítadlo Smrtí (Death Count - vlevo nahoře):** Sleduje celkový počet úmrtí hráče.
   - **Počítadlo Zabití (Kill Count - vpravo nahoře):** Zobrazuje celkový počet zničených nepřátel.
   - Obě počítadla se při návratu do hlavního menu nulují.
-- **Zóna Cíle (level_end.tscn):** Žlutá zóna na konci každého levelu, která automaticky načte další úroveň v pořadí.
+- **Zóna Cíle (level_end.tscn):** Zlatý portál na konci každého levelu, který automaticky vyvolá StageClearScreen a načte další etapu v pořadí.
 
 ---
 
-## 🗺️ Přehled Všech 15 Úrovní
+## 🗺️ Přehled Kampaně
 
-1. **Tutorial Level (tutorial_level.tscn):** Úvod do ovládání, skákání, plazení pod nízkými stropy a Wall-Jumpů.
-2. **Kapitola 1: Předměstí (level1.tscn) [Celeste-Style Redesign]:**
+1. **Prolog: Na Povrchu (tutorial_level.tscn):** Úvod do ovládání, skákání, plazení pod nízkými stropy, Wall-Jumpů a sestupu starou důlní šachtou do podzemí.
+2. **Etapa 1: Staré dílny / Šachta (level1.tscn) [Celeste-Style Redesign]:**
    - **Sekce 1 (Šachta):** Úzká šachta vyžadující Wall-Climb a Dvojskok na vrchol věže.
    - **Sekce 2 (Propast s bodáky):** 550 px široká propast nad ostny – skok/dash nestačí, je NUTNÉ použít přitahovací hák (zamíření myší na kotvy, katapultový odskok).
    - **Sekce 3 (Koridor hlídek):** Úzký nízký koridor se 2 strážemi korporace – vyžaduje eliminaci hákem (2 DMG) nebo shození drop-stompem.
    - **Sekce 4 (Gravitační komora):** Gravitační anomálie otočí hráče na strop – chůze, dvojskok a vyhýbání se bodákům v obrácené gravitaci.
    - **Sekce 5 (Finální Zip-Block):** Jízda na Zip-Bloku a skok do portálu Kapitoly 2.
-3. **Kapitola 2: Krystalové doly (level2.tscn) [Celeste-Style Redesign]:**
+3. **Etapa 2: Krystalové doly (level2.tscn) [Celeste-Style Redesign]:**
    - Vertikální výtahová plošina nad ostny, dvojitá štafeta Zip-Bloků s přichycením hákem v letu, krystalová krypta s obrácenou gravitací a bojem se 2 hlídkami.
-4. **Kapitola 3: Jádro reaktoru (level3.tscn) [Celeste-Style Redesign]:**
+4. **Etapa 3: Předpolí reaktoru (level3.tscn) [Celeste-Style Redesign]:**
    - Sabotáž centrálního reaktoru megakorporace – vertikální šachtový výtah mezi ostny, trojitý hákovací traverz nad roztaveným jádrem, 3 elitní stráže reaktoru, gravitační anomálie a finální Zip-Block do vítězného portálu!
-5. **Level 4 – 15 (level4.tscn – level15.tscn):** Původní minihry a arkádové zkoušky zručnosti.
+5. **Boss Aréna: Velín reaktoru (boss_room.tscn):** Finální komora reaktoru po dokončení Etapy 3.
 ---
 
 
