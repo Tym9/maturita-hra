@@ -85,9 +85,9 @@ func _draw():
 				draw_circle(Vector2.ZERO, 1.5, col)
 				draw_line(local_player, local_hit, Color(1.0, 0.3, 0.2, 0.45), 1.0)
 				
-			"world", "anchor":
-				# ZLATÉ / TYRKYSOVÉ mířidlo - Lze se přitáhnout
-				var col = Color(0.25, 0.95, 0.7, 0.95) if type == "world" else Color(1.0, 0.85, 0.25, 0.95)
+			"anchor":
+				# ZLATÉ mířidlo - Lze se přitáhnout ke kotvě
+				var col = Color(1.0, 0.85, 0.25, 0.95)
 				var r = 5.5 + pulse * 0.4
 				draw_arc(Vector2.ZERO, r, 0.0, TAU, 16, col, 1.2)
 				draw_line(Vector2(-r - 3, 0), Vector2(-r + 1, 0), col, 1.2)

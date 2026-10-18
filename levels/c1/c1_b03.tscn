@@ -1,0 +1,73 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_esxmq"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_m1poi"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_fdwug"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="4_jto1q"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_3t6dr"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="6_m203u"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_j1o8g"]
+[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="8_30vro"]
+
+[node name="c1_b03" type="Node2D" unique_id=381340245]
+script = ExtResource("1_esxmq")
+room_id = "c1_b03"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1392709116]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=264045393]
+script = ExtResource("2_m1poi")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1013001576]
+z_index = -2
+tile_map_data = PackedByteArray("AAARAAIAAAAHAAEAAAASAAIAAAAHAAEAAAAFAAMAAAAGAAEAAAAGAAMAAAAGAAEAAAASAAMAAAAHAAEAAAAEAAUAAAAAAAEAAAAFAAUAAAAAAAEAAAAGAAUAAAAAAAEAAAAEAAYAAAAAAAEAAAAFAAYAAAACAAEAAAAGAAYAAAADAAEAAAAEAAcAAAAAAAEAAAAFAAcAAAAAAAEAAAAGAAcAAAAAAAEAAAA=")
+tile_set = ExtResource("3_fdwug")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1428664785]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAAQAAEAAAAEAAAAAAARAAEAAAAEAAAAAAASAAEAAAAEAAAAAAATAAEAAAAEAAAAAAAAAAIAAAADAAAAAAATAAIAAAADAAAAAAAAAAMAAAADAAAAAAATAAMAAAADAAAAAAAAAAQAAAADAAAAAAAEAAQAAAAEAAAAAAAFAAQAAAAEAAAAAAAGAAQAAAAEAAAAAAARAAQAAAACAAAAAAASAAQAAAACAAAAAAATAAQAAAACAAAAAAACAAYAAAACAAAAAAACAAcAAAADAAAAAAAKAAcAAAACAAAAAAALAAcAAAACAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAGAAAAAAACAAgAAAAGAAAAAAADAAgAAAAGAAAAAAAEAAgAAAAGAAAAAAAFAAgAAAAGAAAAAAAGAAgAAAAGAAAAAAAHAAgAAAAGAAAAAAAIAAgAAAAGAAAAAAAJAAgAAAAGAAAAAAAKAAgAAAAGAAAAAAALAAgAAAAGAAAAAAAMAAgAAAAGAAAAAAANAAgAAAAGAAAAAAAOAAgAAAAGAAAAAAAPAAgAAAAGAAAAAAAQAAgAAAAGAAAAAAARAAgAAAAGAAAAAAASAAgAAAAGAAAAAAATAAgAAAAGAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAFAAkAAAADAAAAAAAGAAkAAAADAAAAAAAHAAkAAAADAAAAAAAIAAkAAAADAAAAAAAJAAkAAAADAAAAAAAKAAkAAAADAAAAAAALAAkAAAADAAAAAAAMAAkAAAADAAAAAAANAAkAAAADAAAAAAAOAAkAAAADAAAAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAADAAAAAAANAAoAAAADAAAAAAAOAAoAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_fdwug")
+
+[node name="Spring" parent="." unique_id=1682496207 instance=ExtResource("4_jto1q")]
+position = Vector2(104, 64)
+direction = Vector2(1, 0)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=784134191]
+position = Vector2(264, 64)
+script = ExtResource("5_3t6dr")
+
+[node name="Crystal" parent="." unique_id=1136337006 instance=ExtResource("6_m203u")]
+position = Vector2(296, 56)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=190891467]
+position = Vector2(24, 119)
+script = ExtResource("7_j1o8g")
+
+[node name="Vent" parent="." unique_id=997043372 instance=ExtResource("8_30vro")]
+position = Vector2(136, 128)
+idle_time = 1.4
+
+[node name="Vent2" parent="." unique_id=581933972 instance=ExtResource("8_30vro")]
+position = Vector2(232, 128)
+idle_time = 1.4
+offset = 0.7
+
+[node name="Blight" type="Node2D" parent="." unique_id=1677389644]
+position = Vector2(248, 128)
+script = ExtResource("5_3t6dr")
+kind = 4
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=593049485]
+position = Vector2(280, 128)
+script = ExtResource("5_3t6dr")
+kind = 3
+
+[node name="Pylon" type="Node2D" parent="." unique_id=574684783]
+position = Vector2(296, 128)
+script = ExtResource("5_3t6dr")
+kind = 5

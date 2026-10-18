@@ -89,6 +89,28 @@ func _ready():
 	print("  ✓ PASS: Střelec úspěšně detekován a poškozen hákem")
 	
 	shooter.queue_free()
+
+	# Test 4: Hák se chytá jen kotev - zeď ho zastaví a kotvu za zdí nenabídne
+	var wall = StaticBody2D.new()
+	var wall_shape = CollisionShape2D.new()
+	wall_shape.shape = RectangleShape2D.new()
+	wall_shape.shape.size = Vector2(16, 128)
+	wall.add_child(wall_shape)
+	add_child(wall)
+	wall.global_position = player.global_position + Vector2(40, 0)
+	var anchor = load("res://mechanics/grapple_point.tscn").instantiate()
+	add_child(anchor)
+	anchor.global_position = player.global_position + Vector2(70, 0)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	assert(player.get_hook_aim_info(wall.global_position).type == "none", "Zeď už není záchytný bod")
+	assert(player.get_hook_aim_info(anchor.global_position).type == "none", "Kotva za zdí není cíl")
+	wall.queue_free()
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	assert(player.get_hook_aim_info(anchor.global_position).type == "anchor", "Volná kotva je cíl háku")
+	print("  ✓ PASS: Hák se chytá jen kotev v přímé viditelnosti")
+
 	player.queue_free()
 	
 	print("==================================================")

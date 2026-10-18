@@ -30,8 +30,8 @@ func _physics_process(delta):
 		var spikes = $GridSpikes
 		player.global_position = spikes.global_position + Vector2(16, 8)
 	
-	# Krok 100: Ověření, že bodáky zranily/zabili hráče a proběhl respawn
-	if step_count == 100:
+	# Krok 115: Ověření, že bodáky zabily hráče a po zatmění (~0.25 s) proběhl respawn
+	if step_count == 115:
 		# Po úmrtí na bodácích se hráč respawnuje na spawn_pointu místnosti
 		assert(player.global_position.distance_to(player.spawn_point) < 40.0, "Player should respawn at room entrance")
 		print("[TEST_MODULAR_ROOM] Step 3 (GridSpikes kill & room respawn): PASS")

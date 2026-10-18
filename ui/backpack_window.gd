@@ -37,7 +37,9 @@ func open_backpack():
 		if equip_view:
 			equip_view.setup(player_inventory)
 	if info_label:
-		info_label.text = "Vyberte předmět pro zobrazení detailů."
+		var crystal: ItemData = ItemData.create("gravity_crystal")
+		info_label.text = "%s %s: %d   Velké: %d
+Vyberte předmět pro zobrazení detailů." % [crystal.icon_symbol, crystal.name, SaveManager.progress.crystals.size(), SaveManager.progress.grand.size()]
 
 func close_backpack():
 	if grid_view:

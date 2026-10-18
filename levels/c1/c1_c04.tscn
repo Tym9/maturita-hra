@@ -1,0 +1,76 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_s6ftb"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_vvian"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_wawva"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="4_smjxg"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_ba7m4"]
+[ext_resource type="PackedScene" path="res://npc/brann.tscn" id="6_cxv1r"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="7_b7my6"]
+
+[node name="c1_c04" type="Node2D" unique_id=706045870]
+script = ExtResource("1_s6ftb")
+room_id = "c1_c04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1436080861]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1053168809]
+script = ExtResource("2_vvian")
+burning = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=913003196]
+z_index = -2
+tile_map_data = PackedByteArray("AAAHAAQAAAAGAAEAAAAIAAQAAAAGAAEAAAAJAAQAAAAGAAEAAAAKAAQAAAAGAAEAAAALAAQAAAAGAAEAAAAMAAQAAAAGAAEAAAANAAQAAAAGAAEAAAAGAAUAAAAGAAEAAAAHAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAJAAUAAAAGAAEAAAAKAAUAAAAGAAEAAAALAAUAAAAGAAEAAAAMAAUAAAAGAAEAAAANAAUAAAAGAAEAAAAOAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAAGAAEAAAAHAAYAAAADAAEAAAAIAAYAAAAGAAEAAAAJAAYAAAAGAAEAAAAKAAYAAAAHAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAANAAYAAAAGAAEAAAAOAAYAAAADAAEAAAAPAAYAAAAGAAEAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAAJAAcAAAAGAAEAAAAKAAcAAAAGAAEAAAALAAcAAAAGAAEAAAAMAAcAAAAGAAEAAAANAAcAAAAGAAEAAAAOAAcAAAAGAAEAAAAPAAcAAAAGAAEAAAA=")
+tile_set = ExtResource("3_wawva")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1806589932]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAATAAEAAAADAAAAAAAAAAIAAAADAAAAAAAFAAIAAAAEAAAAAAAGAAIAAAAEAAAAAAAHAAIAAAAEAAAAAAATAAIAAAADAAAAAAAAAAMAAAADAAAAAAAEAAMAAAAEAAAAAAAFAAMAAAAEAAAAAAAGAAMAAAAEAAAAAAAHAAMAAAAEAAAAAAAIAAMAAAAEAAAAAAATAAMAAAADAAAAAAAAAAQAAAADAAAAAAATAAQAAAADAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAGAAAAAAACAAgAAAAGAAAAAAADAAgAAAAGAAAAAAAEAAgAAAAGAAAAAAAFAAgAAAAGAAAAAAAGAAgAAAAGAAAAAAAHAAgAAAAGAAAAAAAIAAgAAAAGAAAAAAAJAAgAAAAGAAAAAAAKAAgAAAAGAAAAAAALAAgAAAAGAAAAAAAMAAgAAAAGAAAAAAANAAgAAAAGAAAAAAAOAAgAAAAGAAAAAAAPAAgAAAAGAAAAAAAQAAgAAAAGAAAAAAARAAgAAAAGAAAAAAASAAgAAAAGAAAAAAATAAgAAAAGAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAFAAkAAAADAAAAAAAGAAkAAAADAAAAAAAHAAkAAAADAAAAAAAIAAkAAAADAAAAAAAJAAkAAAADAAAAAAAKAAkAAAADAAAAAAALAAkAAAADAAAAAAAMAAkAAAADAAAAAAANAAkAAAADAAAAAAAOAAkAAAADAAAAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAADAAAAAAANAAoAAAADAAAAAAAOAAoAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_wawva")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=263097414]
+position = Vector2(24, 119)
+script = ExtResource("4_smjxg")
+
+[node name="Blight" type="Node2D" parent="." unique_id=918628480]
+position = Vector2(40, 128)
+script = ExtResource("5_ba7m4")
+kind = 4
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=8469310]
+position = Vector2(56, 128)
+script = ExtResource("5_ba7m4")
+kind = 3
+
+[node name="Brann" parent="." unique_id=457397569 instance=ExtResource("6_cxv1r")]
+position = Vector2(152, 120)
+dialogue_pages = Array[String](["Tábor je ztracený... ale lidi stihli utéct do skal.", "Jdi do Smallville. Starostka Elda ví, kudy do Parního města. Řekni jí, že tě posílá odboj."])
+repeat_dialogue_pages = Array[String](["Běž! Dokud hoří, stráže tě v kouři nevidí."])
+
+[node name="HealthPack" parent="." unique_id=920723743 instance=ExtResource("7_b7my6")]
+position = Vector2(200, 120)
+
+[node name="DeadTree2" type="Node2D" parent="." unique_id=1018803005]
+position = Vector2(248, 128)
+script = ExtResource("5_ba7m4")
+kind = 3
+
+[node name="Antenna" type="Node2D" parent="." unique_id=166410765]
+position = Vector2(264, 128)
+script = ExtResource("5_ba7m4")
+kind = 2
+
+[node name="Blight2" type="Node2D" parent="." unique_id=387888594]
+position = Vector2(280, 128)
+script = ExtResource("5_ba7m4")
+kind = 4
+
+[node name="Pylon" type="Node2D" parent="." unique_id=1610641816]
+position = Vector2(296, 128)
+script = ExtResource("5_ba7m4")
+kind = 5

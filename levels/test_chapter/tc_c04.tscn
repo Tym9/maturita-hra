@@ -1,0 +1,41 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_15bk7"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_vleib"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_nn2b4"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4_yuj7t"]
+
+[node name="tc_c04" type="Node2D" unique_id=1564162686]
+script = ExtResource("1_15bk7")
+room_id = "tc_c04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=670942829]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=999089180]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_vleib")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=66256824]
+position = Vector2(24, 135)
+script = ExtResource("3_nn2b4")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1569107613]
+position = Vector2(296, 135)
+script = ExtResource("3_nn2b4")
+
+[node name="AnchorMoving" parent="." unique_id=1170094393 instance=ExtResource("4_yuj7t")]
+position = Vector2(88, 64)
+rail_end = Vector2(48, 0)
+
+[node name="AnchorBreakable" parent="." unique_id=736146748 instance=ExtResource("4_yuj7t")]
+position = Vector2(168, 48)
+breakable = true
+
+[node name="AnchorVertical" parent="." unique_id=2097406646 instance=ExtResource("4_yuj7t")]
+position = Vector2(240, 72)
+rail_end = Vector2(0, -40)
+period = 2.0

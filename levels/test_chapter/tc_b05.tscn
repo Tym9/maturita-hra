@@ -1,0 +1,35 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_jegjh"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_wbc6u"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_f2tui"]
+[ext_resource type="PackedScene" path="res://mechanics/molten_slag.tscn" id="4_6gwp1"]
+
+[node name="tc_b05" type="Node2D" unique_id=1119897971]
+script = ExtResource("1_jegjh")
+room_id = "tc_b05"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1761145106]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=2038180934]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAJAAcAAAABAAAAAAAKAAcAAAABAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAA=")
+tile_set = ExtResource("2_wbc6u")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=938176233]
+position = Vector2(24, 135)
+script = ExtResource("3_f2tui")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=304445752]
+position = Vector2(296, 135)
+script = ExtResource("3_f2tui")
+
+[node name="Slag" parent="." unique_id=661424975 instance=ExtResource("4_6gwp1")]
+position = Vector2(160, 160)
+size = Vector2(192, 24)
+rise_speed = 8.0
+rise_delay = 1.5
+max_rise = 40.0

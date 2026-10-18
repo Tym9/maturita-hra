@@ -28,6 +28,9 @@ const STYLE_REACTOR_CORE = 6
 
 @export var room_width: float = 320.0
 @export var room_height: float = 180.0
+## Buňky se stejnou skupinou tvoří jednu velkou Celeste místnost (kamera v ní jede za hráčem).
+## Prázdná = samostatná místnost o velikosti jedné obrazovky.
+@export var room_group: String = ""
 @export var room_title: String = "":
 	set(val):
 		room_title = val
@@ -61,8 +64,17 @@ const COLOR_BRASS = Color(0.88, 0.66, 0.28, 1.0)
 const COLOR_COPPER = Color(0.62, 0.34, 0.18, 1.0)
 const COLOR_LANTERN = Color(1.0, 0.80, 0.38, 1.0)
 
+var _title_layer: Node2D
+var _title_color := Color.WHITE
+
 func _ready():
 	z_index = -50
+	# Název kreslí vlastní vrstva nad dlaždicemi, jinak ho zakryje strop místnosti.
+	_title_layer = Node2D.new()
+	_title_layer.z_as_relative = false
+	_title_layer.z_index = 10
+	_title_layer.draw.connect(_draw_title_layer)
+	add_child(_title_layer)
 	_update_position()
 	queue_redraw()
 
@@ -94,11 +106,17 @@ func _draw():
 			_draw_title(Color(0.25, 0.28, 0.38, 0.6))
 
 func _draw_title(color: Color):
-	# 4. Označení sektoru / místnosti v levém horním rohu
+	_title_color = color
+	if _title_layer:
+		_title_layer.queue_redraw()
+
+func _draw_title_layer():
+	# 4. Označení sektoru / místnosti v levém horním rohu (tmavý obrys = čitelné i přes dlaždice)
 	if not room_title.is_empty():
 		var font = ThemeDB.get_fallback_font()
 		if font:
-			draw_string(font, Vector2(10, 16), room_title, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, color)
+			_title_layer.draw_string_outline(font, Vector2(18, 28), room_title, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, 2, Color(0, 0, 0, 0.6))
+			_title_layer.draw_string(font, Vector2(18, 28), room_title, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, _title_color)
 
 func _draw_industrial():
 	# 1. Základní výplň místnosti
@@ -667,11 +685,11 @@ func _draw_reactor_core():
 		for iy in range(3):
 			draw_rect(Rect2(float(ix) - 4.0, cable_y + float(iy) * 3.0, 8.0, 2.0), Color(0.35, 0.45, 0.55, 1.0))
 	
-	# 5. Bezpečnostní žluto-černé šrafování (Hazard Stripes) na nosníku
+	# 5. Bezpečnostní žluto-černé šrafování (Hazard Stripes) jen na plášti sloupu – vodorovný pruh přes celou šířku vypadal jako plošina
 	var haz_y = 135.0
 	var haz_h = 6.0
-	draw_rect(Rect2(col_x - 30.0, haz_y, col_w + 60.0, haz_h), Color(0.10, 0.10, 0.12, 1.0))
-	for hx in range(int(col_x - 30.0), int(col_x + col_w + 30.0), 8):
+	draw_rect(Rect2(col_x, haz_y, col_w, haz_h), Color(0.10, 0.10, 0.12, 1.0))
+	for hx in range(int(col_x) + 4, int(col_x + col_w), 8):
 		draw_colored_polygon(PackedVector2Array([
 			Vector2(float(hx), haz_y),
 			Vector2(float(hx + 4), haz_y),

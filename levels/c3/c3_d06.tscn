@@ -1,0 +1,75 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_l20rx"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_2y2th"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_7d22y"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_8ck81"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_20o6b"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="6_ir7jb"]
+
+[node name="c3_d06" type="Node2D" unique_id=430515041]
+script = ExtResource("1_l20rx")
+room_id = "c3_d06"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1227241240]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=26074889]
+script = ExtResource("2_2y2th")
+style = 2
+altitude = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=329271602]
+z_index = -2
+tile_set = ExtResource("3_7d22y")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=970734495]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAPAAgAAAAAAAAAAAAQAAgAAAAAAAAAAAARAAgAAAAAAAAAAAASAAgAAAAAAAAAAAATAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_7d22y")
+
+[node name="CorpBanner" type="Node2D" parent="." unique_id=52068652]
+position = Vector2(24, 96)
+script = ExtResource("4_8ck81")
+kind = 7
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1680690989]
+position = Vector2(40, 87)
+script = ExtResource("5_20o6b")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1572768091]
+position = Vector2(72, 96)
+script = ExtResource("4_8ck81")
+
+[node name="Event" parent="." unique_id=1395524310 instance=ExtResource("6_ir7jb")]
+position = Vector2(104, 64)
+speaker_name = "Vrchol hory"
+dialogue_pages = Array[String](["Pod tebou leží celá hora — rokle, Smallville, Parní město v páře. Před tebou zeje černé ústí šachty, která vede až k jádru planety.", "Odtud už vede cesta jen dolů."])
+
+[node name="Pylon" type="Node2D" parent="." unique_id=1455106661]
+position = Vector2(152, 96)
+script = ExtResource("4_8ck81")
+kind = 5
+
+[node name="Blight" type="Node2D" parent="." unique_id=1853435265]
+position = Vector2(184, 96)
+script = ExtResource("4_8ck81")
+kind = 4
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=743671600]
+position = Vector2(216, 112)
+script = ExtResource("4_8ck81")
+
+[node name="Blight2" type="Node2D" parent="." unique_id=627278951]
+position = Vector2(248, 112)
+script = ExtResource("4_8ck81")
+kind = 4
+
+[node name="CorpBanner2" type="Node2D" parent="." unique_id=1989341901]
+position = Vector2(280, 128)
+script = ExtResource("4_8ck81")
+kind = 7

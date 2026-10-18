@@ -75,6 +75,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "☰ Výběr kapitol"
 
+[node name="BtnGrabMode" type="Button" parent="VBoxContainer/MainButtons"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Lezení: Shift (Grab)"
+
 [node name="BtnQuit" type="Button" parent="VBoxContainer/MainButtons"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
@@ -100,25 +106,46 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
 text = "Tutoriál"
 
+[node name="BtnOutpost" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Kap. 1: Základna"
+
+[node name="BtnSmallville" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Kap. 2: Smallville"
+
+[node name="BtnSteamCity" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Kap. 3: Parní město"
+
 [node name="BtnLevel1" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Sektor 1: Šachta"
+text = "Kap. 4: Šachta"
 
 [node name="BtnLevel2" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Sektor 2: Doly"
+text = "Kap. 5: Doly"
 
 [node name="BtnLevel3" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Sektor 3: Reaktor"
+text = "Kap. 6: Reaktor"
 
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnTutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnOutpost" to="." method="_on_outpost_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnSmallville" to="." method="_on_smallville_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnSteamCity" to="." method="_on_steam_city_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel1" to="." method="_on_level1_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel2" to="." method="_on_level2_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel3" to="." method="_on_level3_pressed"]

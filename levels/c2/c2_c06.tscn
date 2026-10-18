@@ -1,0 +1,62 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_h0688"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_uk5vt"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_pnwi2"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="4_h5ncc"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="5_4kdf1"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="6_xmr46"]
+
+[node name="c2_c06" type="Node2D" unique_id=1781204188]
+script = ExtResource("1_h0688")
+room_id = "c2_c06"
+
+[node name="Background" type="ColorRect" parent="." unique_id=191760301]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1456364571]
+script = ExtResource("2_uk5vt")
+style = 1
+altitude = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1080774471]
+z_index = -2
+tile_map_data = PackedByteArray("AAACAAEAAAAHAAEAAAADAAEAAAAHAAEAAAAEAAEAAAAHAAEAAAAFAAEAAAAHAAEAAAAGAAEAAAAHAAEAAAAHAAEAAAAHAAEAAAAIAAEAAAAHAAEAAAAJAAEAAAAHAAEAAAAKAAEAAAAHAAEAAAALAAEAAAAHAAEAAAAMAAEAAAAHAAEAAAANAAEAAAAHAAEAAAAOAAEAAAAHAAEAAAAPAAEAAAAHAAEAAAAQAAEAAAAHAAEAAAARAAEAAAAHAAEAAAACAAIAAAAHAAEAAAADAAIAAAAHAAEAAAAEAAIAAAAHAAEAAAAFAAIAAAAHAAEAAAAGAAIAAAAHAAEAAAAHAAIAAAAHAAEAAAAIAAIAAAAHAAEAAAAJAAIAAAAHAAEAAAAKAAIAAAAHAAEAAAALAAIAAAAHAAEAAAAMAAIAAAAHAAEAAAANAAIAAAAHAAEAAAAOAAIAAAAHAAEAAAAPAAIAAAAHAAEAAAAQAAIAAAAHAAEAAAARAAIAAAAHAAEAAAA=")
+tile_set = ExtResource("3_pnwi2")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1297137408]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAASAAEAAAAAAAAAAAATAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAASAAIAAAAAAAAAAAATAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAASAAMAAAAAAAAAAAATAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAASAAQAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAASAAUAAAAAAAAAAAATAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_pnwi2")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=580269278]
+position = Vector2(120, 151)
+script = ExtResource("4_h5ncc")
+
+[node name="Event" parent="." unique_id=298143129 instance=ExtResource("5_4kdf1")]
+position = Vector2(152, 128)
+speaker_name = "Otřesy"
+dialogue_pages = Array[String](["Hora se otřese. Hluboko pod vesnicí řve korporátní vrták a celý svah se dává do pohybu."])
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=1389237197]
+position = Vector2(184, 160)
+script = ExtResource("6_xmr46")
+kind = 3
+
+[node name="Blight" type="Node2D" parent="." unique_id=326509884]
+position = Vector2(200, 160)
+script = ExtResource("6_xmr46")
+kind = 4
+
+[node name="Pylon" type="Node2D" parent="." unique_id=1444148541]
+position = Vector2(232, 160)
+script = ExtResource("6_xmr46")
+kind = 5
+
+[node name="Lantern" type="Node2D" parent="." unique_id=987262810]
+position = Vector2(280, 160)
+script = ExtResource("6_xmr46")

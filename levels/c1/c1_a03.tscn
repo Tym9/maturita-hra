@@ -1,0 +1,73 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_my58h"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_n1edy"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_ah33i"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_incca"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="5_4n8kl"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="6_tv843"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_4fpiq"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="8_eao60"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9_odmge"]
+
+[node name="c1_a03" type="Node2D" unique_id=337305453]
+script = ExtResource("1_my58h")
+room_id = "c1_a03"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1069646266]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1360664834]
+script = ExtResource("2_n1edy")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=132693777]
+z_index = -2
+tile_map_data = PackedByteArray("AAABAAcAAAAAAAEAAAACAAcAAAAAAAEAAAADAAcAAAAAAAEAAAAEAAcAAAAAAAEAAAABAAgAAAAAAAEAAAACAAgAAAACAAEAAAADAAgAAAAAAAEAAAAEAAgAAAADAAEAAAABAAkAAAAAAAEAAAACAAkAAAAAAAEAAAADAAkAAAAEAAEAAAAEAAkAAAAAAAEAAAA=")
+tile_set = ExtResource("3_ah33i")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1214595496]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAAAAAIAAAADAAAAAAAAAAMAAAADAAAAAAAAAAQAAAADAAAAAAARAAQAAAACAAAAAAASAAQAAAACAAAAAAATAAQAAAACAAAAAAAAAAUAAAADAAAAAAACAAUAAAAEAAAAAAADAAUAAAAEAAAAAAAEAAUAAAAEAAAAAAARAAUAAAADAAAAAAASAAUAAAADAAAAAAATAAUAAAADAAAAAAAAAAYAAAADAAAAAAABAAYAAAAEAAAAAAACAAYAAAAEAAAAAAADAAYAAAAEAAAAAAAEAAYAAAAEAAAAAAAFAAYAAAAEAAAAAAARAAYAAAADAAAAAAASAAYAAAADAAAAAAATAAYAAAADAAAAAAAAAAcAAAADAAAAAAARAAcAAAADAAAAAAASAAcAAAADAAAAAAATAAcAAAADAAAAAAAAAAgAAAADAAAAAAARAAgAAAADAAAAAAASAAgAAAADAAAAAAATAAgAAAADAAAAAAAAAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAAGAAAAAAACAAoAAAAGAAAAAAADAAoAAAAGAAAAAAAEAAoAAAAGAAAAAAAFAAoAAAAGAAAAAAAGAAoAAAAGAAAAAAAHAAoAAAAGAAAAAAALAAoAAAAGAAAAAAAMAAoAAAAGAAAAAAANAAoAAAAFAAAAAAAOAAoAAAAFAAAAAAAPAAoAAAAFAAAAAAAQAAoAAAAFAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_ah33i")
+
+[node name="Pylon" type="Node2D" parent="." unique_id=291634704]
+position = Vector2(280, 64)
+script = ExtResource("4_incca")
+kind = 5
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1422005037]
+position = Vector2(296, 64)
+script = ExtResource("4_incca")
+
+[node name="Antenna" type="Node2D" parent="." unique_id=214768323]
+position = Vector2(56, 80)
+script = ExtResource("4_incca")
+kind = 2
+
+[node name="Crystal" parent="." unique_id=711780913 instance=ExtResource("5_4n8kl")]
+position = Vector2(248, 136)
+
+[node name="Chest" parent="." unique_id=1602141467 instance=ExtResource("6_tv843")]
+position = Vector2(40, 150)
+initial_items = Array[String](["wrench", "health_pack"])
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1939432316]
+position = Vector2(104, 151)
+script = ExtResource("7_4fpiq")
+
+[node name="Blight" type="Node2D" parent="." unique_id=1645194271]
+position = Vector2(120, 160)
+script = ExtResource("4_incca")
+kind = 4
+
+[node name="Spring" parent="." unique_id=1676662024 instance=ExtResource("8_eao60")]
+position = Vector2(200, 160)
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1596171956]
+position = Vector2(208, 160)
+script = ExtResource("9_odmge")
+count = 4

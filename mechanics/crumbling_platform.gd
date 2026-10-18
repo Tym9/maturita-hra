@@ -21,6 +21,7 @@ var shake_offset: Vector2 = Vector2.ZERO
 
 func _ready():
 	add_to_group("platforms")
+	add_to_group("room_reset")
 	if step_zone:
 		step_zone.body_entered.connect(_on_step_zone_entered)
 	if collision_shape and collision_shape.shape is RectangleShape2D:

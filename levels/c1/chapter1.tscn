@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mechanics/chapter.gd" id="1_ll2ry"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a01.tscn" id="2_p337y"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a02.tscn" id="3_au1on"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a03.tscn" id="4_ra7n1"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a04.tscn" id="5_0467q"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a05.tscn" id="6_g231w"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a06.tscn" id="7_ycb6l"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a07.tscn" id="8_egj4c"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_a08.tscn" id="9_0dvy2"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b01.tscn" id="10_pajen"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b02.tscn" id="11_1fxlo"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b03.tscn" id="12_xmv5j"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b04.tscn" id="13_r2vch"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b05.tscn" id="14_klwhb"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_b06.tscn" id="15_bk2mt"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c01.tscn" id="16_lpghx"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c02.tscn" id="17_veq0i"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c02b.tscn" id="18_208bm"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c03.tscn" id="19_u4grs"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c04.tscn" id="20_1h0er"]
+[ext_resource type="PackedScene" path="res://levels/c1/c1_c05.tscn" id="21_ghj3p"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="22_ur2ls"]
+
+[node name="Chapter1" type="Node2D" unique_id=406100765]
+script = ExtResource("1_ll2ry")
+
+[node name="c1_a01" parent="." unique_id=1660531940 instance=ExtResource("2_p337y")]
+
+[node name="c1_a02" parent="." unique_id=1137992140 instance=ExtResource("3_au1on")]
+position = Vector2(320, 0)
+
+[node name="c1_a03" parent="." unique_id=337305453 instance=ExtResource("4_ra7n1")]
+position = Vector2(320, -180)
+
+[node name="c1_a04" parent="." unique_id=617424355 instance=ExtResource("5_0467q")]
+position = Vector2(640, -180)
+
+[node name="c1_a05" parent="." unique_id=1869149557 instance=ExtResource("6_g231w")]
+position = Vector2(960, -180)
+
+[node name="c1_a06" parent="." unique_id=790345065 instance=ExtResource("7_ycb6l")]
+position = Vector2(1280, -360)
+
+[node name="c1_a07" parent="." unique_id=700293153 instance=ExtResource("8_egj4c")]
+position = Vector2(1280, -540)
+
+[node name="c1_a08" parent="." unique_id=570065007 instance=ExtResource("9_0dvy2")]
+position = Vector2(1920, -540)
+
+[node name="c1_b01" parent="." unique_id=1280751622 instance=ExtResource("10_pajen")]
+position = Vector2(2240, -540)
+
+[node name="c1_b02" parent="." unique_id=776098412 instance=ExtResource("11_1fxlo")]
+position = Vector2(2880, -540)
+
+[node name="c1_b03" parent="." unique_id=381340245 instance=ExtResource("12_xmv5j")]
+position = Vector2(3520, -540)
+
+[node name="c1_b04" parent="." unique_id=335496136 instance=ExtResource("13_r2vch")]
+position = Vector2(3840, -540)
+
+[node name="c1_b05" parent="." unique_id=498631071 instance=ExtResource("14_klwhb")]
+position = Vector2(4480, -540)
+
+[node name="c1_b06" parent="." unique_id=1683681818 instance=ExtResource("15_bk2mt")]
+position = Vector2(4800, -720)
+
+[node name="c1_c01" parent="." unique_id=629426553 instance=ExtResource("16_lpghx")]
+position = Vector2(5120, -720)
+
+[node name="c1_c02" parent="." unique_id=770870656 instance=ExtResource("17_veq0i")]
+position = Vector2(5760, -720)
+
+[node name="c1_c02b" parent="." unique_id=1911416790 instance=ExtResource("18_208bm")]
+position = Vector2(5760, -900)
+
+[node name="c1_c03" parent="." unique_id=1473295325 instance=ExtResource("19_u4grs")]
+position = Vector2(6080, -720)
+
+[node name="c1_c04" parent="." unique_id=706045870 instance=ExtResource("20_1h0er")]
+position = Vector2(6720, -720)
+
+[node name="c1_c05" parent="." unique_id=1776242549 instance=ExtResource("21_ghj3p")]
+position = Vector2(7040, -720)
+
+[node name="Player" parent="." unique_id=221660195 instance=ExtResource("22_ur2ls")]
+position = Vector2(40, 119)

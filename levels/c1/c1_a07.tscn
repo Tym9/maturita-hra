@@ -1,0 +1,98 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_iuxvd"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_pmthg"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_r4joo"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="4_hf2af"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_ac6j8"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="6_pwglp"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="7_wtisv"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="8_w8hxc"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="9_v7p11"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="10_s2l03"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="11_hbdq3"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="12_f4k8e"]
+
+[node name="c1_a07" type="Node2D" unique_id=700293153]
+script = ExtResource("1_iuxvd")
+room_id = "c1_a07"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=665261180]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=791576978]
+script = ExtResource("2_pmthg")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=451383947]
+z_index = -2
+tile_map_data = PackedByteArray("AAAIAAYAAAAHAAEAAAAJAAYAAAAHAAEAAAAKAAYAAAAHAAEAAAALAAYAAAAHAAEAAAAMAAYAAAAHAAEAAAANAAYAAAAHAAEAAAAOAAYAAAAHAAEAAAA=")
+tile_set = ExtResource("3_r4joo")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=565173299]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAUAAAAAAADAAAAAAAVAAAAAAADAAAAAAAWAAAAAAADAAAAAAAXAAAAAAADAAAAAAAYAAAAAAADAAAAAAAZAAAAAAADAAAAAAAaAAAAAAADAAAAAAAbAAAAAAADAAAAAAAcAAAAAAADAAAAAAAdAAAAAAADAAAAAAAeAAAAAAADAAAAAAAfAAAAAAADAAAAAAAgAAAAAAADAAAAAAAhAAAAAAADAAAAAAAiAAAAAAADAAAAAAAjAAAAAAADAAAAAAAkAAAAAAADAAAAAAAlAAAAAAADAAAAAAAmAAAAAAADAAAAAAAnAAAAAAADAAAAAAAAAAEAAAADAAAAAAABAAEAAAADAAAAAAACAAEAAAADAAAAAAADAAEAAAADAAAAAAAEAAEAAAADAAAAAAAFAAEAAAADAAAAAAAWAAEAAAABAAAAAAAAAAIAAAADAAAAAAABAAIAAAADAAAAAAACAAIAAAADAAAAAAADAAIAAAADAAAAAAAEAAIAAAADAAAAAAAFAAIAAAADAAAAAAAWAAIAAAABAAAAAAAAAAMAAAADAAAAAAABAAMAAAADAAAAAAACAAMAAAADAAAAAAADAAMAAAADAAAAAAAEAAMAAAADAAAAAAAFAAMAAAADAAAAAAAWAAMAAAADAAAAAAAXAAMAAAACAAAAAAAYAAMAAAACAAAAAAAZAAMAAAACAAAAAAAaAAMAAAACAAAAAAAbAAMAAAACAAAAAAAAAAQAAAADAAAAAAABAAQAAAADAAAAAAACAAQAAAADAAAAAAADAAQAAAADAAAAAAAEAAQAAAADAAAAAAAFAAQAAAADAAAAAAAfAAQAAAACAAAAAAAgAAQAAAACAAAAAAAhAAQAAAACAAAAAAAiAAQAAAACAAAAAAAjAAQAAAACAAAAAAAmAAQAAAACAAAAAAAnAAQAAAADAAAAAAAAAAUAAAADAAAAAAABAAUAAAADAAAAAAACAAUAAAADAAAAAAADAAUAAAADAAAAAAAEAAUAAAADAAAAAAAFAAUAAAADAAAAAAAmAAUAAAADAAAAAAAnAAUAAAADAAAAAAAAAAYAAAADAAAAAAABAAYAAAADAAAAAAACAAYAAAADAAAAAAADAAYAAAADAAAAAAAEAAYAAAADAAAAAAAFAAYAAAADAAAAAAAmAAYAAAADAAAAAAAnAAYAAAADAAAAAAAAAAcAAAADAAAAAAABAAcAAAADAAAAAAACAAcAAAADAAAAAAADAAcAAAADAAAAAAAEAAcAAAADAAAAAAAFAAcAAAADAAAAAAAcAAcAAAACAAAAAAAdAAcAAAACAAAAAAAmAAcAAAADAAAAAAAnAAcAAAADAAAAAAAAAAgAAAADAAAAAAABAAgAAAADAAAAAAACAAgAAAADAAAAAAADAAgAAAADAAAAAAAEAAgAAAADAAAAAAAFAAgAAAADAAAAAAAcAAgAAAADAAAAAAAdAAgAAAADAAAAAAAmAAgAAAADAAAAAAAnAAgAAAADAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAFAAkAAAADAAAAAAAPAAkAAAAGAAAAAAAVAAkAAAAGAAAAAAAcAAkAAAADAAAAAAAdAAkAAAADAAAAAAAmAAkAAAADAAAAAAAnAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAAGAAAAAAAHAAoAAAAGAAAAAAAIAAoAAAAGAAAAAAAMAAoAAAAGAAAAAAANAAoAAAAGAAAAAAAOAAoAAAAGAAAAAAAPAAoAAAADAAAAAAAQAAoAAAAGAAAAAAARAAoAAAAGAAAAAAASAAoAAAAGAAAAAAATAAoAAAAGAAAAAAAUAAoAAAAGAAAAAAAVAAoAAAADAAAAAAAWAAoAAAAGAAAAAAAXAAoAAAAGAAAAAAAYAAoAAAAGAAAAAAAZAAoAAAAGAAAAAAAaAAoAAAAGAAAAAAAbAAoAAAAGAAAAAAAcAAoAAAADAAAAAAAdAAoAAAADAAAAAAAeAAoAAAAGAAAAAAAfAAoAAAAGAAAAAAAgAAoAAAAGAAAAAAAhAAoAAAAGAAAAAAAiAAoAAAAGAAAAAAAjAAoAAAAGAAAAAAAkAAoAAAAGAAAAAAAlAAoAAAAGAAAAAAAmAAoAAAADAAAAAAAnAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_r4joo")
+
+[node name="KeyBlock" parent="." unique_id=812851154 instance=ExtResource("4_hf2af")]
+position = Vector2(392, 32)
+
+[node name="Antenna" type="Node2D" parent="." unique_id=1102638854]
+position = Vector2(296, 48)
+script = ExtResource("5_ac6j8")
+kind = 2
+
+[node name="Crystal" parent="." unique_id=651565782 instance=ExtResource("6_pwglp")]
+position = Vector2(376, 40)
+
+[node name="Banner" type="Node2D" parent="." unique_id=1068217259]
+position = Vector2(424, 48)
+script = ExtResource("5_ac6j8")
+kind = 1
+
+[node name="Key" parent="." unique_id=814146134 instance=ExtResource("7_wtisv")]
+position = Vector2(600, 40)
+
+[node name="Guard" parent="." unique_id=1758800425 instance=ExtResource("8_w8hxc")]
+position = Vector2(536, 52)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1157465447]
+position = Vector2(584, 64)
+script = ExtResource("5_ac6j8")
+
+[node name="Spring" parent="." unique_id=767931027 instance=ExtResource("9_v7p11")]
+position = Vector2(472, 112)
+
+[node name="Grate" parent="." unique_id=1271398210 instance=ExtResource("10_s2l03")]
+position = Vector2(400, 133)
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=909557789]
+position = Vector2(120, 160)
+script = ExtResource("5_ac6j8")
+kind = 3
+
+[node name="Blight" type="Node2D" parent="." unique_id=216697299]
+position = Vector2(136, 160)
+script = ExtResource("5_ac6j8")
+kind = 4
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1559942651]
+position = Vector2(216, 151)
+script = ExtResource("11_hbdq3")
+
+[node name="Guard2" parent="." unique_id=1111113885 instance=ExtResource("8_w8hxc")]
+position = Vector2(296, 148)
+
+[node name="Spikes" type="Area2D" parent="." unique_id=2088109262]
+position = Vector2(352, 160)
+script = ExtResource("12_f4k8e")
+count = 6
+
+[node name="Spikes2" type="Area2D" parent="." unique_id=1626258388]
+position = Vector2(480, 160)
+script = ExtResource("12_f4k8e")
+count = 8

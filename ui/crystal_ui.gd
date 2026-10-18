@@ -1,21 +1,39 @@
 extends Control
 
 ## UI komponenta pro počítadlo sebraných krystalů v HUDu
+## Jako v Celeste je schované za levým okrajem a vyjede jen při sebrání krystalu.
 
 var collected: int = 0
 var total: int = 5
 var pulse_timer: float = 0.0
+var shown_x: float = 0.0
+var initialized: bool = false
+var slide_tween: Tween = null
 
 @onready var label = $Label
 
+func _ready():
+	shown_x = position.x
+	position.x = -size.x - 20.0
+
 func set_crystals(count: int, max_count: int):
-	if count > collected:
+	if count > collected and initialized:
 		pulse_timer = 0.4
+		_slide_in()
+	initialized = true
 	collected = count
 	total = max_count
 	if label:
 		label.text = "%d/%d" % [collected, total]
 	queue_redraw()
+
+func _slide_in():
+	if slide_tween:
+		slide_tween.kill()
+	slide_tween = create_tween()
+	slide_tween.tween_property(self, "position:x", shown_x, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	slide_tween.tween_interval(2.0)
+	slide_tween.tween_property(self, "position:x", -size.x - 20.0, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 func _process(delta):
 	if pulse_timer > 0.0:

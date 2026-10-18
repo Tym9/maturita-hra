@@ -1,0 +1,42 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_2txed"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_f404k"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_s83rl"]
+[ext_resource type="PackedScene" path="res://mechanics/rhythm_block.tscn" id="4_ch7gq"]
+
+[node name="tc_d06" type="Node2D" unique_id=2086492874]
+script = ExtResource("1_2txed")
+room_id = "tc_d06"
+
+[node name="Background" type="ColorRect" parent="." unique_id=450078550]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1616664366]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_f404k")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1826351156]
+position = Vector2(24, 135)
+script = ExtResource("3_s83rl")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1991866639]
+position = Vector2(296, 135)
+script = ExtResource("3_s83rl")
+
+[node name="Rhythm1" parent="." unique_id=1843607363 instance=ExtResource("4_ch7gq")]
+position = Vector2(80, 112)
+
+[node name="Rhythm2" parent="." unique_id=2093866879 instance=ExtResource("4_ch7gq")]
+position = Vector2(128, 96)
+set_b = true
+
+[node name="Rhythm3" parent="." unique_id=380861930 instance=ExtResource("4_ch7gq")]
+position = Vector2(176, 112)
+
+[node name="Rhythm4" parent="." unique_id=1413333535 instance=ExtResource("4_ch7gq")]
+position = Vector2(224, 96)
+set_b = true

@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="ColorRect" parent="CenterContainer"]
-custom_minimum_size = Vector2(170, 130)
+custom_minimum_size = Vector2(170, 164)
 layout_mode = 2
 color = Color(0.1, 0.08, 0.14, 0.96)
 
@@ -66,6 +66,12 @@ theme_override_font_sizes/font_size = 9
 text = "HRA POZASTAVENA"
 horizontal_alignment = 1
 
+[node name="CrystalsLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+
 [node name="StatusLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
@@ -89,6 +95,12 @@ custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Zpět na checkpoint"
+
+[node name="BtnGrabMode" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Lezení: Shift (Grab)"
 
 [node name="BtnMainMenu" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)

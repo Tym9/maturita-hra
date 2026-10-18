@@ -1,0 +1,23 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_2mjph"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_idiuw"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_b3j8t"]
+
+[node name="room_id" type="Node2D" unique_id=903199105]
+script = ExtResource("1_2mjph")
+room_id = "room_id"
+
+[node name="Background" type="ColorRect" parent="." unique_id=454372534]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=562029140]
+tile_map_data = PackedByteArray("AAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAkAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAkAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAkAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_idiuw")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1221645745]
+position = Vector2(40, 135)
+script = ExtResource("3_b3j8t")

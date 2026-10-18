@@ -1,0 +1,106 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_wcb1e"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_k0d7o"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_pwt8s"]
+[ext_resource type="PackedScene" path="res://mechanics/falling_rock.tscn" id="4_vyn1v"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_i7o7y"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="6_g1xu8"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="7_r6uhl"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="8_yruf6"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="9_0fr6a"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="10_tobpk"]
+
+[node name="c1_c03" type="Node2D" unique_id=1473295325]
+script = ExtResource("1_wcb1e")
+room_id = "c1_c03"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1442787240]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=990960806]
+script = ExtResource("2_k0d7o")
+burning = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=53594787]
+z_index = -2
+tile_map_data = PackedByteArray("AAAbAAQAAAAAAAEAAAAfAAQAAAAAAAEAAAAbAAUAAAAAAAEAAAAfAAUAAAAAAAEAAAAbAAYAAAAAAAEAAAAfAAYAAAAAAAEAAAAUAAcAAAAAAAEAAAAWAAcAAAAAAAEAAAAIAAgAAAAAAAEAAAALAAgAAAAAAAEAAAAUAAgAAAAAAAEAAAAWAAgAAAAAAAEAAAA=")
+tile_set = ExtResource("3_pwt8s")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=51839074]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAUAAAAAAADAAAAAAAVAAAAAAADAAAAAAAWAAAAAAADAAAAAAAXAAAAAAADAAAAAAAYAAAAAAADAAAAAAAZAAAAAAADAAAAAAAaAAAAAAADAAAAAAAbAAAAAAADAAAAAAAcAAAAAAADAAAAAAAdAAAAAAADAAAAAAAeAAAAAAADAAAAAAAfAAAAAAADAAAAAAAgAAAAAAADAAAAAAAhAAAAAAADAAAAAAAiAAAAAAADAAAAAAAjAAAAAAADAAAAAAAkAAAAAAADAAAAAAAlAAAAAAADAAAAAAAmAAAAAAADAAAAAAAnAAAAAAADAAAAAAAAAAEAAAADAAAAAAATAAEAAAACAAAAAAAUAAEAAAACAAAAAAAVAAEAAAACAAAAAAAnAAEAAAADAAAAAAAAAAIAAAADAAAAAAAnAAIAAAADAAAAAAAAAAMAAAADAAAAAAAaAAMAAAACAAAAAAAbAAMAAAACAAAAAAAcAAMAAAACAAAAAAAdAAMAAAACAAAAAAAeAAMAAAACAAAAAAAfAAMAAAACAAAAAAAgAAMAAAACAAAAAAAnAAMAAAADAAAAAAAAAAQAAAADAAAAAAAnAAQAAAADAAAAAAATAAYAAAACAAAAAAAUAAYAAAACAAAAAAAVAAYAAAACAAAAAAAWAAYAAAACAAAAAAAXAAYAAAACAAAAAAAHAAcAAAACAAAAAAAIAAcAAAACAAAAAAAJAAcAAAACAAAAAAAKAAcAAAACAAAAAAALAAcAAAACAAAAAAAMAAcAAAACAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAGAAAAAAACAAgAAAAGAAAAAAADAAgAAAAGAAAAAAAEAAgAAAAGAAAAAAAkAAgAAAAGAAAAAAAlAAgAAAAGAAAAAAAmAAgAAAAGAAAAAAAnAAgAAAAGAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAkAAkAAAADAAAAAAAlAAkAAAADAAAAAAAmAAkAAAADAAAAAAAnAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAAFAAAAAAAGAAoAAAAFAAAAAAAHAAoAAAAFAAAAAAAIAAoAAAAFAAAAAAAJAAoAAAAFAAAAAAAKAAoAAAAFAAAAAAALAAoAAAAFAAAAAAAMAAoAAAAFAAAAAAANAAoAAAAFAAAAAAAOAAoAAAAFAAAAAAAPAAoAAAAFAAAAAAAQAAoAAAAFAAAAAAARAAoAAAAFAAAAAAASAAoAAAAFAAAAAAATAAoAAAAFAAAAAAAUAAoAAAAFAAAAAAAVAAoAAAAFAAAAAAAWAAoAAAAFAAAAAAAXAAoAAAAFAAAAAAAYAAoAAAAFAAAAAAAZAAoAAAAFAAAAAAAaAAoAAAAFAAAAAAAbAAoAAAAFAAAAAAAcAAoAAAAFAAAAAAAdAAoAAAAFAAAAAAAeAAoAAAAFAAAAAAAfAAoAAAAFAAAAAAAgAAoAAAAFAAAAAAAhAAoAAAAFAAAAAAAiAAoAAAAFAAAAAAAjAAoAAAAFAAAAAAAkAAoAAAADAAAAAAAlAAoAAAADAAAAAAAmAAoAAAADAAAAAAAnAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_pwt8s")
+
+[node name="Rock" parent="." unique_id=429028554 instance=ExtResource("4_vyn1v")]
+position = Vector2(328, 32)
+
+[node name="Fire" type="Node2D" parent="." unique_id=279939218]
+position = Vector2(440, 48)
+script = ExtResource("5_i7o7y")
+kind = 6
+
+[node name="Guard" parent="." unique_id=1658376857 instance=ExtResource("6_g1xu8")]
+position = Vector2(472, 36)
+
+[node name="Fire2" type="Node2D" parent="." unique_id=1691402062]
+position = Vector2(520, 48)
+script = ExtResource("5_i7o7y")
+kind = 6
+
+[node name="Fire3" type="Node2D" parent="." unique_id=1596594625]
+position = Vector2(360, 96)
+script = ExtResource("5_i7o7y")
+kind = 6
+
+[node name="Spring" parent="." unique_id=569942276 instance=ExtResource("7_r6uhl")]
+position = Vector2(376, 96)
+
+[node name="Fire4" type="Node2D" parent="." unique_id=1135038076]
+position = Vector2(120, 112)
+script = ExtResource("5_i7o7y")
+kind = 6
+
+[node name="Guard2" parent="." unique_id=2108168582 instance=ExtResource("6_g1xu8")]
+position = Vector2(152, 100)
+
+[node name="Fire5" type="Node2D" parent="." unique_id=1176495827]
+position = Vector2(200, 112)
+script = ExtResource("5_i7o7y")
+kind = 6
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=247857363]
+position = Vector2(24, 119)
+script = ExtResource("8_yruf6")
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=2069779759]
+position = Vector2(40, 128)
+script = ExtResource("5_i7o7y")
+kind = 3
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1045450418]
+position = Vector2(56, 128)
+script = ExtResource("5_i7o7y")
+
+[node name="Grate" parent="." unique_id=755143049 instance=ExtResource("9_0fr6a")]
+position = Vector2(256, 117)
+
+[node name="Blight" type="Node2D" parent="." unique_id=1046377162]
+position = Vector2(600, 128)
+script = ExtResource("5_i7o7y")
+kind = 4
+
+[node name="Pylon" type="Node2D" parent="." unique_id=1357879452]
+position = Vector2(616, 128)
+script = ExtResource("5_i7o7y")
+kind = 5
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1716785206]
+position = Vector2(80, 160)
+script = ExtResource("10_tobpk")
+count = 31

@@ -5,6 +5,9 @@ const CrystalScene = preload("res://mechanics/crystal.tscn")
 
 func _ready():
 	print("=== SPUŠTĚNÍ AUTOMATICKÉHO TESTU SBĚRATELSKÝCH KRYSTALŮ ===")
+	# Sebrané krystaly se zapisují trvale do user:// - test začne s čistým postupem a hráčův obnoví
+	var progress_backup: String = FileAccess.get_file_as_string(SaveManager.PROGRESS_PATH) if FileAccess.file_exists(SaveManager.PROGRESS_PATH) else ""
+	SaveManager.progress = {"crystals": {}, "grand": {}, "flags": {}}
 	
 	# Test 1: Ověření scény Level 1 a přítomnosti všech 5 krystalů
 	var level = Level1Scene.instantiate()
@@ -42,6 +45,35 @@ func _ready():
 		crystals[i].collect(player)
 	assert(player.crystals == 5, "Po sebrání všech krystalů musí být počet 5/5, aktuálně: %d" % player.crystals)
 	print("[PASS] TEST 5: Všech 5 krystalů úspěšně sebráno (5/5)")
-	
+
+	# Test 6: Dotyk krystal jen připne k hráči; smrt ho vrátí na výchozí místo
+	var extra = CrystalScene.instantiate()
+	extra.crystal_id = "test_follow"
+	extra.position = player.global_position + Vector2(0, -60)
+	level.add_child(extra)
+	var home: Vector2 = extra.position
+	extra.start_follow(player)
+	assert(player.crystals == 5 and extra.follow_player == player, "Dotyk krystal jen připne, nezapočítá")
+	player.die()
+	await Global.room_reset # smrt = krátké zatmění, krystal se vrací při room_reset
+	await get_tree().create_timer(0.7).timeout # odplouvá zpět
+	assert(extra.follow_player == null and extra.position.distance_to(home) <= 3.5, "Smrt vrátí krystal na výchozí místo")
+	print("[PASS] TEST 6: Následující krystal se po smrti vrátí a nezapočítá")
+
+	# Test 7: Započítá se až po přistání na pevné zemi
+	extra.start_follow(player)
+	for i in 120:
+		await get_tree().physics_frame
+		if extra.is_collected:
+			break
+	assert(player.crystals == 6, "Krystal se započítá po přistání na pevné zemi, aktuálně: %d" % player.crystals)
+	print("[PASS] TEST 7: Krystal započítán po bezpečném přistání (6)")
+
 	print("=== VŠECHNY TESTY SBĚRATELSKÝCH KRYSTALŮ ÚSPĚŠNĚ PROŠLY (100% OK) ===")
+	if progress_backup.is_empty():
+		DirAccess.remove_absolute(SaveManager.PROGRESS_PATH)
+	else:
+		var f := FileAccess.open(SaveManager.PROGRESS_PATH, FileAccess.WRITE)
+		f.store_string(progress_backup)
+		f.close()
 	get_tree().quit(0)
