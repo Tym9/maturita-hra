@@ -1,0 +1,66 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_1phch"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_t71tm"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_ega5b"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_il4nv"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_1os75"]
+[ext_resource type="PackedScene" path="res://npc/tobi.tscn" id="6_k4eie"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="7_ifdu2"]
+
+[node name="c2_a07" type="Node2D" unique_id=1145764778]
+script = ExtResource("1_1phch")
+room_id = "c2_a07"
+
+[node name="Background" type="ColorRect" parent="." unique_id=627202562]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1715313474]
+script = ExtResource("2_t71tm")
+style = 1
+altitude = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=452409352]
+z_index = -2
+tile_map_data = PackedByteArray("AAAKAAYAAAAAAAEAAAALAAYAAAAAAAEAAAAMAAYAAAAAAAEAAAANAAYAAAAAAAEAAAAOAAYAAAAAAAEAAAAPAAYAAAAAAAEAAAAQAAYAAAAAAAEAAAAKAAcAAAAAAAEAAAALAAcAAAAAAAEAAAAMAAcAAAADAAEAAAANAAcAAAAAAAEAAAAOAAcAAAAAAAEAAAAPAAcAAAACAAEAAAAQAAcAAAAAAAEAAAAKAAgAAAAAAAEAAAALAAgAAAADAAEAAAAMAAgAAAAAAAEAAAANAAgAAAAAAAEAAAAOAAgAAAAAAAEAAAAPAAgAAAAAAAEAAAAQAAgAAAAAAAEAAAAJAAkAAAAAAAEAAAAKAAkAAAAAAAEAAAALAAkAAAAAAAEAAAAMAAkAAAAAAAEAAAANAAkAAAAAAAEAAAAOAAkAAAAEAAEAAAAPAAkAAAAAAAEAAAAQAAkAAAAAAAEAAAA=")
+tile_set = ExtResource("3_ega5b")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1830008773]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAASAAEAAAAAAAAAAAATAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAQAAIAAAAHAAAAAAATAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAMAAMAAAAEAAAAAAANAAMAAAAEAAAAAAAOAAMAAAAEAAAAAAAQAAMAAAAHAAAAAAATAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAALAAQAAAAEAAAAAAAMAAQAAAAEAAAAAAANAAQAAAAEAAAAAAAOAAQAAAAEAAAAAAAPAAQAAAAEAAAAAAAQAAQAAAAHAAAAAAATAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAJAAUAAAAEAAAAAAAKAAUAAAAEAAAAAAALAAUAAAAEAAAAAAAMAAUAAAAEAAAAAAANAAUAAAAEAAAAAAAOAAUAAAAEAAAAAAAPAAUAAAAEAAAAAAAQAAUAAAAEAAAAAAARAAUAAAAEAAAAAAATAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAFAAAAAAARAAoAAAAFAAAAAAASAAoAAAAFAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_ega5b")
+
+[node name="Blight" type="Node2D" parent="." unique_id=1598088851]
+position = Vector2(24, 160)
+script = ExtResource("4_il4nv")
+kind = 4
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=153232165]
+position = Vector2(40, 160)
+script = ExtResource("4_il4nv")
+kind = 3
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1174139750]
+position = Vector2(120, 151)
+script = ExtResource("5_1os75")
+
+[node name="Tobi" parent="." unique_id=1934970390 instance=ExtResource("6_k4eie")]
+position = Vector2(136, 152)
+dialogue_pages = Array[String](["Ty nejsi od korporace? Uf... Táta říkal, ať nikomu neotvírám.", "Ulice jsou zavalené krystaly a hlídají je stráže. Nahoru se dostaneš jen po střechách!", "Babička Elda je úplně nahoře ve zvonici. Ta ví, kudy dál na horu."])
+repeat_dialogue_pages = Array[String](["Po střechách nahoru! A pozor na komíny, ty syčí."])
+
+[node name="Blight2" type="Node2D" parent="." unique_id=1052197983]
+position = Vector2(152, 160)
+script = ExtResource("4_il4nv")
+kind = 4
+
+[node name="HealthPack" parent="." unique_id=665340569 instance=ExtResource("7_ifdu2")]
+position = Vector2(216, 152)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=758702621]
+position = Vector2(296, 160)
+script = ExtResource("4_il4nv")

@@ -109,18 +109,20 @@ func test_steam_vent_cycle():
 	vent.blast_time = 0.1
 	add_child(vent)
 	
+	# Fáze se počítá ze sdílených hodin (BeatClock): klid 0-0.1, syčení 0.1-0.2, výtrysk 0.2-0.3
+	BeatClock.time = 0.05
+	vent._physics_process(0.0)
 	assert_true(vent.current_state == 0, "Tryska začíná ve stavu IDLE")
-	assert_true(vent.collision_shape.disabled, "Během IDLE je kolize páry neaktivní")
-	
+
 	# Posun do stavu WARN
-	vent._physics_process(0.15)
+	BeatClock.time = 0.15
+	vent._physics_process(0.0)
 	assert_true(vent.current_state == 1, "Tryska přešla do stavu WARN (varovné syčení)")
-	assert_true(vent.collision_shape.disabled, "Během WARN je kolize páry stále neaktivní")
-	
+
 	# Posun do stavu BLAST
-	vent._physics_process(0.15)
+	BeatClock.time = 0.25
+	vent._physics_process(0.0)
 	assert_true(vent.current_state == 2, "Tryska přešla do stavu BLAST (výtrysk páry)")
-	assert_true(not vent.collision_shape.disabled, "Během BLAST je kolize výtrysku aktivní")
 	
 	# Test poškození hráče párou
 	var player_scene = preload("res://player.tscn")

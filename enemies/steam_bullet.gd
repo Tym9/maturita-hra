@@ -1,7 +1,7 @@
 extends Area2D
 
 # Parní / energetický projektil vystřelený střelcem korporace.
-# Lze se mu vyhnout, nebo ho zničit seknutím hasáku!
+# Lze se mu vyhnout, nebo ho zničit seknutím hasáku - to hráči obnoví dash.
 
 @export var speed: float = 175.0
 @export var damage: int = 1
@@ -41,9 +41,16 @@ func _on_area_entered(area):
 	if area.is_in_group("player_attacks"):
 		_destroy()
 
-func take_damage(_amount: int = 1, _from_dir: Vector2 = Vector2.ZERO):
-	# Zásah hasákem nebo hákem zničí střelu
+func take_hit(_amount: int = 1, _from_dir: Vector2 = Vector2.ZERO):
+	# Zásah hasákem nebo hákem zničí střelu a obnoví hráči dash
+	var player = get_tree().get_first_node_in_group("player")
+	if player:
+		player.refill_dash()
 	_destroy()
+
+## Starší jméno zásahu.
+func take_damage(amount: int = 1, from_dir: Vector2 = Vector2.ZERO):
+	take_hit(amount, from_dir)
 
 func _destroy():
 	# Parní rozpad

@@ -1,0 +1,41 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_3yps4"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_010l0"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_y4wqh"]
+[ext_resource type="PackedScene" path="res://mechanics/bellows_wind.tscn" id="4_o6drg"]
+
+[node name="tc_d05" type="Node2D" unique_id=1788731577]
+script = ExtResource("1_3yps4")
+room_id = "tc_d05"
+
+[node name="Background" type="ColorRect" parent="." unique_id=2120976406]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=34128031]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_010l0")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1811745627]
+position = Vector2(24, 135)
+script = ExtResource("3_y4wqh")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1147661231]
+position = Vector2(296, 135)
+script = ExtResource("3_y4wqh")
+
+[node name="Tailwind" parent="." unique_id=460834299 instance=ExtResource("4_o6drg")]
+position = Vector2(80, 32)
+size = Vector2(160, 112)
+strength = 100.0
+
+[node name="GustLeft" parent="." unique_id=768967486 instance=ExtResource("4_o6drg")]
+position = Vector2(240, 64)
+size = Vector2(64, 80)
+direction = Vector2(-1, 0)
+strength = 120.0
+period = 2.0
+on_time = 0.8

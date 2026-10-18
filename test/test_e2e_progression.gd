@@ -47,7 +47,25 @@ func _start_test():
 	await process_frame
 	await process_frame
 	
-	# 5. Zkontrolujeme, ze se nacetl Level 1 bez jakehokoliv padu!
+	# 5. Pribehove kapitoly 1 (Zakladna), 2 (Smallville) a 3 (Parni mesto): LevelEnd v posledni mistnosti, stav hrace se prenasi
+	for chapter_name in ["Chapter1", "Chapter2", "Chapter3"]:
+		assert(current_scene != null and current_scene.name == chapter_name, "Musi se nacist " + chapter_name)
+		var ch_player = current_scene.get_node_or_null("Player")
+		assert(ch_player != null and ch_player.crystals == 2, chapter_name + ": hrac s krystaly z tutorialu")
+		var ch_end = current_scene.find_child("LevelEnd", true, false)
+		assert(ch_end != null, chapter_name + ": LevelEnd musi existovat")
+		print("  ✓ PASS: ", chapter_name, " nactena, hrac prevzal stav")
+		ch_end._on_body_entered(ch_player)
+		await process_frame
+		await process_frame
+		await process_frame
+		assert(current_scene != null and current_scene.name == "StageClearScreen", "StageClearScreen po " + chapter_name)
+		current_scene._on_continue_pressed()
+		await process_frame
+		await process_frame
+		await process_frame
+
+	# 6. Zkontrolujeme, ze se nacetl Level 1 (kapitola 4) bez jakehokoliv padu!
 	assert(current_scene != null and current_scene.name == "Level1", "Musi se nacist Level1")
 	print("  ✓ PASS: Level 1 uspesne nacten (", current_scene.name, ")!")
 	
@@ -121,6 +139,6 @@ func _start_test():
 	print("  ✓ PASS: Hrac v Levelu 3 uspesne zdedil vyzbroj z Levelu 2!")
 	
 	print("==================================================")
-	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP (TUTORIAL -> L1 -> L2 -> L3) 100% USPESNY!")
+	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP (TUTORIAL -> K1 -> K2 -> K3 -> L1 -> L2 -> L3) 100% USPESNY!")
 	print("==================================================")
 	quit(0)

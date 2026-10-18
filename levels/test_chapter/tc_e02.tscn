@@ -1,0 +1,37 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_nu5u0"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_4oc8h"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_c7es1"]
+[ext_resource type="PackedScene" path="res://enemies/pressure_mine.tscn" id="4_ajcno"]
+
+[node name="tc_e02" type="Node2D" unique_id=590971177]
+script = ExtResource("1_nu5u0")
+room_id = "tc_e02"
+
+[node name="Background" type="ColorRect" parent="." unique_id=780906794]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=882054376]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_4oc8h")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=454906954]
+position = Vector2(24, 135)
+script = ExtResource("3_c7es1")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=2124547929]
+position = Vector2(296, 135)
+script = ExtResource("3_c7es1")
+
+[node name="Mine1" parent="." unique_id=410851757 instance=ExtResource("4_ajcno")]
+position = Vector2(104, 120)
+
+[node name="Mine2" parent="." unique_id=333102068 instance=ExtResource("4_ajcno")]
+position = Vector2(168, 104)
+
+[node name="Mine3" parent="." unique_id=1860091615 instance=ExtResource("4_ajcno")]
+position = Vector2(232, 120)

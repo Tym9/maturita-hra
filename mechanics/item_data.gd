@@ -34,6 +34,10 @@ static func create(item_id: String) -> RefCounted:
 			return new("health_pack", "Lékárnička", 1, 1, Color(0.25, 0.85, 0.45), "Opravná sada: doplní 1 ztracené srdíčko.", "✚")
 		"mine_key":
 			return new("mine_key", "Klíč od šachty", 1, 2, Color(1.0, 0.85, 0.35), "Mosazný klíč: otevírá bezpečnostní zábrany.", "🗝")
+		"drill":
+			return new("drill", "Důlní vrták", 2, 1, Color(0.6, 0.62, 0.68), "Vrták (pasivní): dash prorazí popraskanou skálu.", "🔩")
+		"gravity_crystal":
+			return new("gravity_crystal", "Gravitační krystal", 1, 1, Color(0.25, 0.92, 1.0), "Sběratelský krystal (jahoda z Celeste): v batohu se jen počítá, nezabírá místo.", "💎")
 		"steam_crystal":
 			return new("steam_crystal", "Éterický krystal", 1, 1, Color(0.25, 0.92, 1.0), "Zářící krystal z hlubin reaktoru.", "💎")
 		_:

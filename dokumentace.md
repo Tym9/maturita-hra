@@ -48,17 +48,31 @@ Hra využívá speciální autorské pixel-artové textury nakopírované ze slo
 
 ## 🗺️ Přehled Kampaně
 
-1. **Prolog: Na Povrchu (tutorial_level.tscn):** Úvod do ovládání, skákání, plazení pod nízkými stropy, Wall-Jumpů a sestupu starou důlní šachtou do podzemí.
+1. **Prolog: Na Povrchu (tutorial_level.tscn) [Celeste-Style Redesign, 6 velkých místností / 16 obrazovek]:** Úvod do ovládání, skákání, plazení pod nízkými stropy, Wall-Jumpů a sestupu po starém lešení do rokle, kde začíná Kapitola 1 (Základna odboje).
 2. **Etapa 1: Staré dílny / Šachta (level1.tscn) [Celeste-Style Redesign]:**
-   - **Sekce 1 (Šachta):** Úzká šachta vyžadující Wall-Climb a Dvojskok na vrchol věže.
-   - **Sekce 2 (Propast s bodáky):** 550 px široká propast nad ostny – skok/dash nestačí, je NUTNÉ použít přitahovací hák (zamíření myší na kotvy, katapultový odskok).
-   - **Sekce 3 (Koridor hlídek):** Úzký nízký koridor se 2 strážemi korporace – vyžaduje eliminaci hákem (2 DMG) nebo shození drop-stompem.
-   - **Sekce 4 (Gravitační komora):** Gravitační anomálie otočí hráče na strop – chůze, dvojskok a vyhýbání se bodákům v obrácené gravitaci.
-   - **Sekce 5 (Finální Zip-Block):** Jízda na Zip-Bloku a skok do portálu Kapitoly 2.
+   - Level je tvořen **6 velkými Celeste místnostmi (19 obrazovek)** – kamera v každé jede za hráčem; hráč má jen hasák, dvojskok a lezení po zdech (bez háku a dashe).
+   - **Místnost 1 – Vstupní slévárna (2x1):** skákání, dvojskok na plovoucí plošinu se strážcem, bodáky, drolící můstek a pád dírou do šachty.
+   - **Místnost 2 – Sklad ventilů (3x2):** sestup věží k Celeste klíči, nesení klíče halou (parní tryska, střelec s krytím, dron nad bodáky, tryska u pilíře) k zamčené bráně; volitelný krystal přes drolící plošiny pod stropní tryskou.
+   - **Místnost 3 – Vertikální šachta (1x3):** schody plošin nad bodáky, lezení po zdi (stamina) a drolící můstek s dronem; krystal v bočním výklenku.
+   - **Místnost 4 – Přetlaková komora (2x2):** diagonální sestup po ostrůvcích nad polem bodáků, strážce a parní tryska na ostrově, volitelný krystal dvěma dvojskoky.
+   - **Místnost 5 – Jádro generátoru (1x2):** gravitační výtah – anomálie otočí gravitaci, hráč „padá“ vzhůru úzkou šachtou mezi bodáky, projde po stropě a druhou anomálií se vrátí na balkón.
+   - **Místnost 6 – Vstup do krystalových dolů (2x1):** závěrečný klidnější úsek s bodáky a portálem do Etapy 2.
 3. **Etapa 2: Krystalové doly (level2.tscn) [Celeste-Style Redesign]:**
-   - Vertikální výtahová plošina nad ostny, dvojitá štafeta Zip-Bloků s přichycením hákem v letu, krystalová krypta s obrácenou gravitací a bojem se 2 hlídkami.
+   - Level je tvořen **6 velkými Celeste místnostmi (21 obrazovek)**; hlavní novinkou je **dash (Gravity Coil)** od Rustyho, hák hráč ještě nemá.
+   - **Místnost 1 – Krystalový vestibul (2x2):** výuka dashe – mezera 12 dlaždic, kterou přeskočí jen skok + dash; pod ní bezpečná jáma se schody zpět, stěna na druhé straně je pokrytá bodáky.
+   - **Místnost 2 – Krystalová propast (2x2):** dash přes 16 dlaždic širokou propast s bodáky na ostrůvek s dronem; krystal nad ostrůvkem (skok + dvojskok + dash nahoru).
+   - **Místnost 3 – Větrná šachta (1x2):** lezení po pilíři a skok s dashem přes šachtu na výstupní římsu (pravá stěna s bodáky nejde vylézt).
+   - **Místnost 4 – Safírová geoda (3x2):** drolící se schody, strážce, střelec a parní tryska; Celeste klíč na odbočce přes široký skok s dashem, krystal nad klíčem (diagonální dash) a brána.
+   - **Místnost 5 – Chrám gravitace (1x2):** gravitační výtah – chůze po stropě, přeskok stropního příkopu s bodáky a návrat druhou anomálií na balkón.
+   - **Místnost 6 – Výtah do reaktoru (3x1):** závěrečná zkouška – dva široké příkopy s bodáky (skok + dvojskok + dash) s ostrůvkem s tryskou, drolící schody ke krystalu a portál do Etapy 3; styl reaktoru předznamenává další etapu.
 4. **Etapa 3: Předpolí reaktoru (level3.tscn) [Celeste-Style Redesign]:**
-   - Sabotáž centrálního reaktoru megakorporace – vertikální šachtový výtah mezi ostny, trojitý hákovací traverz nad roztaveným jádrem, 3 elitní stráže reaktoru, gravitační anomálie a finální Zip-Block do vítězného portálu!
+   - Level je tvořen **6 velkými Celeste místnostmi (20 obrazovek)**; hlavní novinkou je **přitahovací hák** od Vesper, který se kombinuje s dashem a lezením.
+   - **Místnost 1 – Kotevní hala (2x2):** výuka háku – propast 16 dlaždic se 3 kotvami nad bezpečným dnem se schody zpět; převis na druhé straně nedovolí propast obejít lezením; krystal nad propastí.
+   - **Místnost 2 – Parní galerie (2x1):** příkop s bodáky přes 2 kotvy, mezi nimi stropní parní tryska (načasování), strážce a střelec.
+   - **Místnost 3 – Chladicí šachta (1x3):** sestup po plošinách a drolících prknech, bodáky na stěnách, boční trysky, strážce a dron; krystal nad šachtou jen s hákem.
+   - **Místnost 4 – Gravitační komora (3x2):** anomálie otočí gravitaci, chůze po stropě přes bodáky a tunelem s tryskou ke klíči, druhá anomálie vrátí hráče do vzdálené haly k bráně.
+   - **Místnost 5 – Jádro reaktoru (1x3):** lezení úzkou dírou na římsu a žebřík ze 3 kotev mezi stěnami s bodáky; krystal u vrcholu.
+   - **Místnost 6 – Předsíň reaktoru (2x1):** finální příkop se 2 kotvami a tryskou v dráze letu, truhla se zásobami před bossem a portál do boss arény.
 5. **Boss Aréna: Velín reaktoru (boss_room.tscn):** Finální komora reaktoru po dokončení Etapy 3.
 ---
 
@@ -68,12 +82,12 @@ Hra využívá speciální autorské pixel-artové textury nakopírované ze slo
 - **Přitahovací hák (grappling hook) s mířením myší a poškozením:**
   - **Inventář & výbava:** hák je položka v inventáři (`ui/inventory_ui.tscn`), zobrazená ve spodním HUD slotu `[1] 🪝 Hák`. Lze jej zapnout/vypnout klávesou **1** nebo kliknutím myší na slot. Ve výchozím stavu je aktivní.
   - **Míření myší & zaměřovač (HookReticle):** při vybaveném háku se zobrazuje dynamický zaměřovač s laserovým naváděním:
-    - **Zelený / Zlatý kroužek:** míří na pevnou zeď, strop, podlahu nebo kotvu v dosahu (až 260 px).
+    - **Zlatý kroužek:** míří na kotvu (`mechanics/grapple_point.tscn`) v dosahu (88 px) a v přímé viditelnosti; zeď hák zastaví, ale nezachytí.
     - **Červený rámeček [ X ]:** míří na nepřítele v dosahu.
     - **Bronzový kroužek:** prázdný prostor / mimo dosah.
   - **Vystřelení (L-Klik / R-Klik / E):**
     - Pokud zasáhne **nepřítele**, udělí mu poškození (**2 DMG**), nepřítel červeně zabliká a po vyčerpání životů padne (+1 zabití do počítadla).
-    - Pokud zasáhne **zeď / kotvu**, hák se pevně zachytí a plynule přitáhne hráče rychlostí 380 px/s.
+    - Pokud míří na **kotvu**, hák se pevně zachytí a plynule přitáhne hráče rychlostí 380 px/s (hák se chytá jen kotev, aby level design určoval, kde jde použít).
     - **Katapultový odskok (Slingshot jump):** stiskem **W (skok)** během přitahování hráč hák odpojí a vystřelí se dopředu/nahoru s obnoveným dashem i dvojskokem.
 - **Prohození gravitace:** energetické anomálie (`mechanics/gravity_anomaly.tscn`) volají `set_gravity_dir()` na hráči. Režim `TOGGLE` gravitaci při vstupu přepne, režim `WHILE_INSIDE` ji obrátí jen uvnitř anomálie. Hráč se při obrácené gravitaci překlopí a chodí po stropě.
 - **Testovací místnost:** `test/test_movement.tscn` (v menu tlačítko „Test pohybu“) obsahuje ověřovací úseky pro dvojskok, míření a přitahování hákem, útok hákem na cvičného nepřítele i gravitační chodbu.
@@ -93,7 +107,7 @@ Hra využívá speciální autorské pixel-artové textury nakopírované ze slo
 - **Třída `GridInventory` (`mechanics/grid_inventory.gd`):** spravuje matici buněk $6 \times 4$, ověřuje AABB kolize předmětů a podporuje ukládání/načítání.
 - **Různé rozměry a tvary předmětů (`mechanics/item_data.gd`):**
   - 🔧 **Hasák (Wrench):** $1 \times 2$ (vertikální obdélník) – zbraň na blízko (LMB/F, 2 poškození).
-  - 🪝 **Přitahovací hák (Grapple Hook):** $2 \times 1$ (horizontální obdélník) – přitahování k povrchům a kotvám (RMB/LMB).
+  - 🪝 **Přitahovací hák (Grapple Hook):** $2 \times 1$ (horizontální obdélník) – přitahování ke kotvám (RMB/LMB).
   - ⚡ **Gravitační cívka (Gravity Coil):** $2 \times 2$ (čtverec) – pohání bleskový Dash a uděluje průrazné poškození (2 poškození + knockback).
   - ✚ **Lékárnička (Health Pack):** $1 \times 1$ – obnovuje 1 ztracené srdíčko.
   - 🗝 **Klíč od šachty (Mine Key):** $1 \times 2$ – odemyká bezpečnostní zábrany v dole.
@@ -160,23 +174,6 @@ Hráč začíná s prázdným batohem a postupně si odemyká nástroje v jednot
 
 ---
 
-## 💎 Kapitola 2: Krystalové doly (Level 2 - Celeste / SteamWorld Dig Grid)
-Level 2 je navržen v modulární mřížce místností ($320 \times 180\text{ px}$) se sestupem do hlubin (doprava dolů) a temně fialovou důlní estetikou (`theme = THEME_RUST_MINES`):
-
-1. **Sektor [0, 0] – Krystalový vestibul:**
-   - Výstup z důlního výtahu, truhla se zásobami (lékárnička, krystal), nácvik kombinovaného pohybu.
-2. **Sektor [1, 0] – Krystalová propast (Hákovací traverz):**
-   - Široká propast s ostrými krystaly na dně, 2 kotvy pro míření hákem [RMB], útočný dron v prostoru a skrytý krystal na horní římse (`crystal_m10`).
-3. **Sektor [1, 1] – Parní šachta (Sestup dolů):**
-   - Svislý pád s drolícími se můstky (`CrumblingPlatform`), horizontální parní tryskou ze zdi (`SteamVent`) a hlídkou.
-4. **Sektor [2, 1] – Těžební koridor & Celeste klíč:**
-   - Střelec korporace kryjící lávku, vyvýšený trám s vznášejícím se **Celeste létajícím klíčem**, který hráče následuje vzduchem.
-5. **Sektor [2, 2] – Zapečetěná krypta & Gravitační anomálie:**
-   - Pevný klíčový blok (`KeyBlock`), do kterého klíč vletí a odemkne cestu k anomálii.
-   - Běh v obrácené gravitaci po stropě mezi ostny a sběr krystalu (`crystal_m22`).
-6. **Sektor [3, 2] – Výtah do reaktoru (Finále Levelu 2):**
-   - Široká šachta s dvojitými parními tryskami a stropními kotvami pro hák.
-   - Portál `LevelEnd` vedoucí do Levelu 3 (Předpolí reaktoru).
 
 
 

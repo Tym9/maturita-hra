@@ -1,0 +1,94 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_wboys"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_c1acv"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_62erc"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="4_lbm2i"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_rl7dj"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="6_agsht"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="7_gxbww"]
+[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="8_f7qu7"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="9_p7e2l"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="10_3uk86"]
+
+[node name="c1_b06" type="Node2D" unique_id=1683681818]
+script = ExtResource("1_wboys")
+room_id = "c1_b06"
+screens = Vector2i(1, 2)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1950646912]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1487790242]
+script = ExtResource("2_c1acv")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=584782144]
+z_index = -2
+tile_map_data = PackedByteArray("AAAEAAEAAAABAAEAAAAEAAIAAAABAAEAAAAEAAMAAAABAAEAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAABAAEAAAAEAAcAAAABAAEAAAAHAAcAAAAAAAEAAAAIAAcAAAAAAAEAAAAJAAcAAAAAAAEAAAAKAAcAAAAAAAEAAAAHAAgAAAAAAAEAAAAIAAgAAAAAAAEAAAAJAAgAAAAAAAEAAAAKAAgAAAAAAAEAAAAHAAkAAAAAAAEAAAAIAAkAAAAAAAEAAAAJAAkAAAAAAAEAAAAKAAkAAAAAAAEAAAAHAAoAAAAAAAEAAAAIAAoAAAAAAAEAAAAJAAoAAAAAAAEAAAAKAAoAAAAAAAEAAAAHAAsAAAAAAAEAAAAIAAsAAAAAAAEAAAAJAAsAAAAAAAEAAAAKAAsAAAAAAAEAAAAHAAwAAAAAAAEAAAAIAAwAAAAAAAEAAAAJAAwAAAAAAAEAAAAKAAwAAAAAAAEAAAALAAwAAAAAAAEAAAAHAA0AAAAAAAEAAAAIAA0AAAACAAEAAAAJAA0AAAADAAEAAAAKAA0AAAAAAAEAAAAHAA4AAAAAAAEAAAAIAA4AAAAAAAEAAAAJAA4AAAAAAAEAAAAKAA4AAAAAAAEAAAAHAA8AAAAAAAEAAAAIAA8AAAAAAAEAAAAJAA8AAAAAAAEAAAAKAA8AAAAAAAEAAAA=")
+tile_set = ExtResource("3_62erc")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=96297260]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAAAAAIAAAADAAAAAAAAAAMAAAADAAAAAAAAAAQAAAADAAAAAAAJAAQAAAACAAAAAAAKAAQAAAACAAAAAAALAAQAAAACAAAAAAAMAAQAAAACAAAAAAANAAQAAAACAAAAAAAOAAQAAAACAAAAAAAPAAQAAAACAAAAAAAQAAQAAAACAAAAAAARAAQAAAACAAAAAAASAAQAAAACAAAAAAATAAQAAAACAAAAAAAAAAUAAAADAAAAAAAJAAUAAAADAAAAAAAKAAUAAAADAAAAAAALAAUAAAADAAAAAAAMAAUAAAADAAAAAAANAAUAAAADAAAAAAAOAAUAAAADAAAAAAAPAAUAAAADAAAAAAAQAAUAAAADAAAAAAARAAUAAAADAAAAAAASAAUAAAADAAAAAAATAAUAAAADAAAAAAAAAAYAAAADAAAAAAAJAAYAAAADAAAAAAAKAAYAAAADAAAAAAALAAYAAAADAAAAAAAMAAYAAAADAAAAAAANAAYAAAADAAAAAAAOAAYAAAADAAAAAAAPAAYAAAADAAAAAAAQAAYAAAADAAAAAAARAAYAAAADAAAAAAASAAYAAAADAAAAAAATAAYAAAADAAAAAAAAAAcAAAADAAAAAAATAAcAAAADAAAAAAAAAAgAAAADAAAAAAATAAgAAAADAAAAAAAAAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAACAAoAAAACAAAAAAADAAoAAAACAAAAAAAEAAoAAAACAAAAAAAFAAoAAAACAAAAAAAGAAoAAAACAAAAAAATAAoAAAADAAAAAAAAAAsAAAADAAAAAAATAAsAAAADAAAAAAAAAAwAAAADAAAAAAATAAwAAAADAAAAAAAAAA0AAAADAAAAAAATAA0AAAADAAAAAAAAAA4AAAADAAAAAAATAA4AAAADAAAAAAAAAA8AAAADAAAAAAATAA8AAAADAAAAAAATABAAAAADAAAAAAATABEAAAADAAAAAAATABIAAAADAAAAAAAAABMAAAAGAAAAAAABABMAAAAGAAAAAAACABMAAAAGAAAAAAADABMAAAAGAAAAAAAHABMAAAAGAAAAAAAIABMAAAAGAAAAAAAJABMAAAAGAAAAAAATABMAAAADAAAAAAAAABQAAAADAAAAAAABABQAAAADAAAAAAACABQAAAADAAAAAAADABQAAAADAAAAAAAHABQAAAADAAAAAAAIABQAAAADAAAAAAAJABQAAAADAAAAAAATABQAAAADAAAAAAAAABUAAAADAAAAAAABABUAAAADAAAAAAACABUAAAADAAAAAAADABUAAAADAAAAAAAEABUAAAAFAAAAAAAFABUAAAAFAAAAAAAGABUAAAAFAAAAAAAHABUAAAADAAAAAAAIABUAAAADAAAAAAAJABUAAAADAAAAAAAKABUAAAAFAAAAAAALABUAAAAFAAAAAAAMABUAAAAFAAAAAAANABUAAAAFAAAAAAAOABUAAAAFAAAAAAAPABUAAAAFAAAAAAAQABUAAAAFAAAAAAARABUAAAAFAAAAAAASABUAAAADAAAAAAATABUAAAADAAAAAAA=")
+tile_set = ExtResource("3_62erc")
+
+[node name="Spikes" type="Area2D" parent="." unique_id=358228808]
+position = Vector2(16, 16)
+script = ExtResource("4_lbm2i")
+count = 15
+orientation = 3
+
+[node name="Antenna" type="Node2D" parent="." unique_id=130466519]
+position = Vector2(200, 64)
+script = ExtResource("5_rl7dj")
+kind = 2
+
+[node name="Event" parent="." unique_id=1941284410 instance=ExtResource("6_agsht")]
+position = Vector2(232, 32)
+speaker_name = "Hlídková věž"
+dialogue_pages = Array[String](["Na obzoru se zvedá prach. Kolona korporátních strojů míří přímo k táboru!", "Stráže už jsou u brány. Někdo nás prozradil..."])
+
+[node name="Banner" type="Node2D" parent="." unique_id=1370320570]
+position = Vector2(264, 64)
+script = ExtResource("5_rl7dj")
+kind = 1
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1727220672]
+position = Vector2(280, 64)
+script = ExtResource("5_rl7dj")
+
+[node name="Spikes2" type="Area2D" parent="." unique_id=217405703]
+position = Vector2(304, 112)
+script = ExtResource("4_lbm2i")
+count = 9
+orientation = 2
+
+[node name="Spring" parent="." unique_id=1692096414 instance=ExtResource("7_gxbww")]
+position = Vector2(56, 160)
+
+[node name="Vent" parent="." unique_id=1990462617 instance=ExtResource("8_f7qu7")]
+position = Vector2(88, 160)
+
+[node name="Grate" parent="." unique_id=348229179 instance=ExtResource("9_p7e2l")]
+position = Vector2(192, 197)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=859665019]
+position = Vector2(40, 295)
+script = ExtResource("10_3uk86")
+
+[node name="Spring2" parent="." unique_id=1539866164 instance=ExtResource("7_gxbww")]
+position = Vector2(136, 304)
+
+[node name="Spikes3" type="Area2D" parent="." unique_id=1686759111]
+position = Vector2(64, 336)
+script = ExtResource("4_lbm2i")
+count = 3
+
+[node name="Spikes4" type="Area2D" parent="." unique_id=1219067180]
+position = Vector2(160, 336)
+script = ExtResource("4_lbm2i")
+count = 8

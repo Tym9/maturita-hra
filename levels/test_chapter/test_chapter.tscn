@@ -1,0 +1,114 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mechanics/chapter.gd" id="1_ekmos"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_a01.tscn" id="2_vw6t1"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_a02.tscn" id="3_x3gur"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_a03.tscn" id="4_7fctc"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b01.tscn" id="5_02hry"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b02.tscn" id="6_8umhi"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b03.tscn" id="7_4hnlh"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b04.tscn" id="8_2ppwo"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b05.tscn" id="9_y1bsb"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b06.tscn" id="10_7gn54"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_b07.tscn" id="11_whp8h"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_c01.tscn" id="12_s63d7"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_c02.tscn" id="13_0kr53"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_c03.tscn" id="14_bqn1n"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_c04.tscn" id="15_pjn5v"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d01.tscn" id="16_k11ud"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d02.tscn" id="17_76vvv"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d03.tscn" id="18_nc17x"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d04.tscn" id="19_4brue"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d05.tscn" id="20_hixjj"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_d06.tscn" id="21_egrgf"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e01.tscn" id="22_g6n1k"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e02.tscn" id="23_8gy5d"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e03.tscn" id="24_ketla"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e04.tscn" id="25_7ippp"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e05.tscn" id="26_hj73h"]
+[ext_resource type="PackedScene" path="res://levels/test_chapter/tc_e06.tscn" id="27_7a1ac"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="28_vgrru"]
+
+[node name="TestChapter" type="Node2D" unique_id=766744743]
+script = ExtResource("1_ekmos")
+start_items = Array[String](["wrench", "grapple_hook", "gravity_coil", "drill"])
+
+[node name="tc_a01" parent="." unique_id=976036387 instance=ExtResource("2_vw6t1")]
+
+[node name="tc_a02" parent="." unique_id=121761097 instance=ExtResource("3_x3gur")]
+position = Vector2(320, 0)
+
+[node name="tc_a03" parent="." unique_id=350184218 instance=ExtResource("4_7fctc")]
+position = Vector2(640, -180)
+
+[node name="tc_b01" parent="." unique_id=92144721 instance=ExtResource("5_02hry")]
+position = Vector2(960, -180)
+
+[node name="tc_b02" parent="." unique_id=2130658783 instance=ExtResource("6_8umhi")]
+position = Vector2(1280, -180)
+
+[node name="tc_b03" parent="." unique_id=816383918 instance=ExtResource("7_4hnlh")]
+position = Vector2(1600, -180)
+
+[node name="tc_b04" parent="." unique_id=1129788656 instance=ExtResource("8_2ppwo")]
+position = Vector2(1920, -180)
+
+[node name="tc_b05" parent="." unique_id=1119897971 instance=ExtResource("9_y1bsb")]
+position = Vector2(2240, -180)
+
+[node name="tc_b06" parent="." unique_id=637129909 instance=ExtResource("10_7gn54")]
+position = Vector2(2560, -180)
+
+[node name="tc_b07" parent="." unique_id=1335374924 instance=ExtResource("11_whp8h")]
+position = Vector2(2880, -180)
+
+[node name="tc_c01" parent="." unique_id=490174078 instance=ExtResource("12_s63d7")]
+position = Vector2(3200, -180)
+
+[node name="tc_c02" parent="." unique_id=1752200410 instance=ExtResource("13_0kr53")]
+position = Vector2(3520, -180)
+
+[node name="tc_c03" parent="." unique_id=910568983 instance=ExtResource("14_bqn1n")]
+position = Vector2(3840, -180)
+
+[node name="tc_c04" parent="." unique_id=1564162686 instance=ExtResource("15_pjn5v")]
+position = Vector2(4160, -180)
+
+[node name="tc_d01" parent="." unique_id=1097951720 instance=ExtResource("16_k11ud")]
+position = Vector2(4480, -180)
+
+[node name="tc_d02" parent="." unique_id=384637108 instance=ExtResource("17_76vvv")]
+position = Vector2(4800, -180)
+
+[node name="tc_d03" parent="." unique_id=420203756 instance=ExtResource("18_nc17x")]
+position = Vector2(5120, -180)
+
+[node name="tc_d04" parent="." unique_id=1543639782 instance=ExtResource("19_4brue")]
+position = Vector2(5440, -180)
+
+[node name="tc_d05" parent="." unique_id=1788731577 instance=ExtResource("20_hixjj")]
+position = Vector2(5760, -180)
+
+[node name="tc_d06" parent="." unique_id=2086492874 instance=ExtResource("21_egrgf")]
+position = Vector2(6080, -180)
+
+[node name="tc_e01" parent="." unique_id=650138540 instance=ExtResource("22_g6n1k")]
+position = Vector2(6400, -180)
+
+[node name="tc_e02" parent="." unique_id=590971177 instance=ExtResource("23_8gy5d")]
+position = Vector2(6720, -180)
+
+[node name="tc_e03" parent="." unique_id=1007575808 instance=ExtResource("24_ketla")]
+position = Vector2(7040, -180)
+
+[node name="tc_e04" parent="." unique_id=1056627514 instance=ExtResource("25_7ippp")]
+position = Vector2(7360, -180)
+
+[node name="tc_e05" parent="." unique_id=1513182886 instance=ExtResource("26_hj73h")]
+position = Vector2(8000, -180)
+
+[node name="tc_e06" parent="." unique_id=1031973180 instance=ExtResource("27_7a1ac")]
+position = Vector2(8320, -180)
+
+[node name="Player" parent="." unique_id=1878170653 instance=ExtResource("28_vgrru")]
+position = Vector2(120, 135)

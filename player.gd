@@ -80,11 +80,38 @@ var is_crouching = false
 @onready var backpack_window = get_node_or_null("CanvasLayer/BackpackWindow")
 
 var spawn_point = Vector2.ZERO
+# Po vstupu do místnosti bez spawn markeru se checkpoint upřesní při prvním bezpečném přistání
+var awaiting_room_spawn: bool = false
+# Smrt: záblesk + zatmění, respawn ve chvíli plné tmy (~0.25 s), obraz zpět za ~0.5 s
+const DEATH_FADE_TIME: float = 0.25
+var is_dying: bool = false
+var death_fade := ColorRect.new()
 var stamina_max: float = 8.0
 var stamina: float = 8.0
 
 var crystals: int = 0
 var max_crystals: int = 5
+# Krystaly, které za hráčem letí a čekají na započítání (fronta, viz mechanics/crystal.gd)
+var crystal_trail: Array = []
+# Jak dlouho hráč nepřetržitě stojí na pevné bezpečné zemi (krystal se započítá po 0.15 s)
+var safe_ground_time: float = 0.0
+# Unášení prvky prostředí (pružiny, vozíky, pohyblivé kotvy) - viz API pro prvky níže
+const LIFT_GRACE: float = 0.1 # skok do 0.1 s po opuštění pohyblivé věci přičte její rychlost
+const LIFT_LOCK: float = 0.15 # tak dlouho vstup neubírá unášenou vodorovnou rychlost
+var lift_velocity: Vector2 = Vector2.ZERO
+var lift_timer: float = 0.0
+var momentum_lock: float = 0.0
+var can_jump_cut: bool = true
+var grapple_anchor: Node2D = null
+# Tlumicí pole: zdroj -> potlačené schopnosti (&"dash", &"grapple", &"double_jump", &"climb")
+var ability_blocks: Dictionary = {}
+# Anomální zeď: průlet rovně skrz těleso `glide_through`
+var is_gliding: bool = false
+var glide_velocity: Vector2 = Vector2.ZERO
+var glide_through: PhysicsBody2D = null
+# Vítr (měchy) v aktuálním fyzikálním snímku
+var wind: Vector2 = Vector2.ZERO
+var wind_frame: int = -1
 var collected_crystal_ids: Array[String] = []
 var is_talking: bool = false
 
@@ -108,8 +135,18 @@ func _ready():
 		SaveManager.apply_save_to_player(self)
 	if backpack_window and backpack_window.has_method("setup"):
 		backpack_window.setup(grid_inventory)
+	# Nosnou rychlost plošiny přidává jen skok (lift, viz set_lift_velocity), jako v Celeste
+	platform_on_leave = PLATFORM_ON_LEAVE_DO_NOTHING
+	death_fade.color = Color(0, 0, 0, 0)
+	death_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	death_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	if has_node("CanvasLayer"):
+		$CanvasLayer.add_child(death_fade)
 
 func _init_ui():
+	var crystal_stats := CollectibleCrystal.scene_stats(get_tree()) if is_inside_tree() else {"total": 0}
+	if crystal_stats.total > 0:
+		max_crystals = crystal_stats.total # počet běžných krystalů v této kapitole
 	if inventory_ui and inventory_ui.has_method("update_ui"):
 		inventory_ui.update_ui()
 	if hearts_ui and hearts_ui.has_method("set_hearts"):
@@ -118,7 +155,7 @@ func _init_ui():
 		crystal_ui.set_crystals(crystals, max_crystals)
 
 func _unhandled_input(event):
-	if is_talking:
+	if is_talking or is_dying:
 		return
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -239,12 +276,23 @@ func perform_melee_attack():
 				var kb_dir = (enemy.global_position - global_position).normalized()
 				if kb_dir == Vector2.ZERO:
 					kb_dir = aim_dir
-				if enemy.has_method("take_damage"):
-					enemy.take_damage(MELEE_DAMAGE, kb_dir)
-				elif enemy is CharacterBody2D:
+				if not _hit_enemy(enemy, MELEE_DAMAGE, kb_dir) and enemy is CharacterBody2D:
 					enemy.velocity = kb_dir * 180.0 + Vector2(0, -90.0)
 
+## Vstát jde jen tam, kde se vejde plná výška hráče (jinak by uvízl v nízkém tunelu).
+func _has_headroom() -> bool:
+	var standing = RectangleShape2D.new()
+	standing.size = original_shape_extents - Vector2(2, 2) # 1 px rezerva, aby se nepočítala podlaha a stěny, o které se hráč opírá
+	var query = PhysicsShapeQueryParameters2D.new()
+	query.shape = standing
+	query.transform = Transform2D(0.0, global_position)
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
 func _physics_process(delta):
+	if is_dying:
+		return
 	if is_talking:
 		velocity.x = move_toward(velocity.x, 0.0, FRICTION * delta)
 		if not is_on_floor():
@@ -252,6 +300,11 @@ func _physics_process(delta):
 		move_and_slide()
 		if sprite and sprite is AnimatedSprite2D and sprite.animation != "idle":
 			sprite.play("idle")
+		return
+
+	if is_gliding:
+		velocity = glide_velocity # anomální zeď: rovný let bez gravitace a ovládání
+		move_and_slide()
 		return
 
 	# Pokud probíhá přitahování hákem, řešíme jeho fyziku přednostně
@@ -273,6 +326,9 @@ func _physics_process(delta):
 
 	if dash_cooldown > 0:
 		dash_cooldown -= delta
+
+	if lift_timer > 0.0:
+		lift_timer -= delta
 
 	if melee_cooldown > 0:
 		melee_cooldown -= delta
@@ -297,10 +353,15 @@ func _physics_process(delta):
 	# Gravitace a lezení po stěnách se staminou
 	var on_wall = is_on_wall() and not is_on_floor()
 	var wall_normal = get_wall_normal()
-	var pressing_into_wall = on_wall and direction == -sign(wall_normal.x)
+	# Držení zdi podle nastavení: tlačítko Grab (Shift, jako Celeste) nebo automaticky při dotyku
+	var pressing_away = on_wall and direction == sign(wall_normal.x)
+	# Auto režim chytá až když hráč nestoupá rychleji než lezení, aby skok podél zdi nezastavil
+	var grabbing = on_wall and stamina > 0 and not pressing_away and not _ability_blocked(&"climb") and (
+		Input.is_action_pressed("grab") if Global.grab_mode == Global.GRAB_BUTTON
+		else velocity.y * gravity_dir >= -CLIMB_SPEED)
 
 	if on_wall:
-		if pressing_into_wall and stamina > 0:
+		if grabbing:
 			# Celeste lezení a držení se na zdi
 			if Input.is_action_pressed("jump"):
 				velocity.y = -CLIMB_SPEED
@@ -338,6 +399,8 @@ func _physics_process(delta):
 	else:
 		coyote_timer = COYOTE_TIME
 		can_dash = true
+		if velocity.y * gravity_dir >= 0.0: # vymrštění ze země (pružina, vozík) unášení neruší
+			momentum_lock = 0.0
 		air_jumps_left = MAX_AIR_JUMPS
 		stamina = stamina_max
 		if stamina_bar:
@@ -349,26 +412,30 @@ func _physics_process(delta):
 		if collision_shape and collision_shape.shape is RectangleShape2D:
 			collision_shape.shape.size.y = original_shape_extents.y / 2
 			collision_shape.position.y = original_shape_extents.y / 4 * gravity_dir
-	else:
-		if is_crouching:
-			is_crouching = false
-			if collision_shape and collision_shape.shape is RectangleShape2D:
-				collision_shape.shape.size.y = original_shape_extents.y
-				collision_shape.position.y = 0
+	elif is_crouching and _has_headroom():
+		is_crouching = false
+		if collision_shape and collision_shape.shape is RectangleShape2D:
+			collision_shape.shape.size.y = original_shape_extents.y
+			collision_shape.position.y = 0
 
 	# Horizontální pohyb
 	var current_speed = SPEED
 	if is_crouching:
 		current_speed = SPEED * 0.4
 		
-	if direction:
+	if momentum_lock > 0.0:
+		momentum_lock -= delta # unášená rychlost (pružina, vozík) - vstup ani tření ji hned neuberou
+	elif direction:
 		velocity.x = move_toward(velocity.x, direction * current_speed, ACCELERATION * delta)
 		sprite.flip_h = direction < 0
+	elif grabbing:
+		velocity.x = -wall_normal.x * 10.0 # lehký tlak do zdi, jinak by is_on_wall() zhaslo
 	else:
 		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 
 	# Skok a dvojskok
 	if Input.is_action_just_pressed("jump"):
+		var jumped := true
 		if coyote_timer > 0 and not is_crouching:
 			velocity.y = JUMP_VELOCITY * gravity_dir
 			coyote_timer = 0
@@ -378,7 +445,7 @@ func _physics_process(delta):
 				stamina = 0
 			var wall_normal_jump = get_wall_normal()
 			
-			if direction == -sign(wall_normal_jump.x):
+			if direction == -sign(wall_normal_jump.x) or (grabbing and not direction):
 				velocity.y = JUMP_VELOCITY * 0.9 * gravity_dir
 				velocity.x = -wall_normal_jump.x * SPEED
 			else:
@@ -387,15 +454,20 @@ func _physics_process(delta):
 				
 			sprite.flip_h = wall_normal_jump.x < 0
 			air_jumps_left = MAX_AIR_JUMPS
-		elif double_jump_enabled and air_jumps_left > 0 and not is_on_floor():
+		elif double_jump_enabled and air_jumps_left > 0 and not is_on_floor() and not _ability_blocked(&"double_jump"):
 			velocity.y = JUMP_VELOCITY * 0.9 * gravity_dir
 			air_jumps_left -= 1
 			if sprite is AnimatedSprite2D:
 				sprite.stop()
 				sprite.play("jump")
+		else:
+			jumped = false
+		if jumped:
+			can_jump_cut = true
+			_apply_lift()
 
-	# Jump Cut
-	if Input.is_action_just_released("jump") and velocity.y * gravity_dir < 0:
+	# Jump Cut (ne po vymrštění pružinou / vozíkem)
+	if can_jump_cut and Input.is_action_just_released("jump") and velocity.y * gravity_dir < 0:
 		velocity.y *= JUMP_CUT_MULTIPLIER
 
 	# Dash (Gravity Coil jako zbraň a pohon)
@@ -404,7 +476,7 @@ func _physics_process(delta):
 
 	# Aktualizace animací
 	if sprite is AnimatedSprite2D:
-		if on_wall and pressing_into_wall and stamina > 0:
+		if grabbing:
 			sprite.play("climb")
 			if abs(velocity.y) < 1.0:
 				sprite.pause()
@@ -419,18 +491,23 @@ func _physics_process(delta):
 				sprite.play("idle")
 
 	move_and_slide()
+	if wind_frame == Engine.get_physics_frames() and wind != Vector2.ZERO:
+		move_and_collide(wind * delta) # vítr hráče posune, rychlost ani ovládání nemění
 	
 	if death_label:
 		death_label.text = "Smrti: " + str(Global.death_count)
 	if kill_label:
 		kill_label.text = "Zabití: " + str(Global.kill_count)
 	
-	# Bezpečný záchytný bod (checkpoint) na pevné zemi uvnitř platné místnosti
-	if is_on_floor() and not is_dashing and not is_grappling:
+	# Checkpoint = vchod do místnosti (Celeste); bez markeru první bezpečné přistání po vstupu
+	var on_safe_floor := is_on_safe_floor()
+	safe_ground_time = safe_ground_time + delta if on_safe_floor else 0.0
+	if awaiting_room_spawn and on_safe_floor:
 		var rx = int(floor(global_position.x / 320.0))
 		var ry = int(floor(global_position.y / 180.0))
 		if not camera or camera.valid_rooms.is_empty() or camera.valid_rooms.has(Vector2i(rx, ry)):
 			spawn_point = global_position
+			awaiting_room_spawn = false
 	
 	# Okamžitá detekce vypadnutí z mapy
 	if camera and not camera.valid_rooms.is_empty():
@@ -438,10 +515,116 @@ func _physics_process(delta):
 		var ry = int(floor(global_position.y / 180.0))
 		if not camera.valid_rooms.has(Vector2i(rx, ry)):
 			die()
-	elif global_position.y > 600 or global_position.y < -400:
+	elif not (camera and camera.chapter) and (global_position.y > 600 or global_position.y < -400):
 		die()
 
+## Stojí na pevné geometrii levelu (GridPlatform) - ne na drolící se plošině, bráně ani pohyblivém bloku.
+func is_on_safe_floor() -> bool:
+	if not is_on_floor() or is_dashing or is_grappling:
+		return false
+	# Testovací posun o 2 px "dolů" (bez pohybu) vrátí podlahu i když hráč stojí na místě
+	var col: KinematicCollision2D = move_and_collide(-up_direction * 2.0, true)
+	return col != null and (col.get_collider() is GridPlatform or col.get_collider() is TileMapLayer)
+
+# --- API pro prvky prostředí (pružiny, krystaly dashe, vozíky, kotvy) ---
+
+## Obnoví dash (a staminu). Vrací false, když hráč dash už má - krystal se pak nespotřebuje.
+func refill_dash() -> bool:
+	if can_dash:
+		return false
+	can_dash = true
+	dash_cooldown = 0.0
+	stamina = stamina_max
+	return true
+
+## Vymrští hráče rychlostí `v` (pružina, náraz vozíku). Ruší dash i hák a vrací dvojskok;
+## `lock_time` = jak dlouho vstup neubírá vodorovnou rychlost. Puštění skoku výskok nezkrátí.
+func launch(v: Vector2, lock_time: float = 0.0):
+	_end_grapple(false)
+	is_dashing = false
+	velocity = v
+	momentum_lock = lock_time
+	can_jump_cut = false
+	coyote_timer = 0.0
+	lift_timer = 0.0
+	air_jumps_left = MAX_AIR_JUMPS
+	stamina = stamina_max
+
+## Pohyblivá věc, na které hráč stojí nebo visí, hlásí každý snímek svou rychlost.
+## Skok do LIFT_GRACE po opuštění (nebo zastavení) ji přičte (lift boost z Celeste).
+func set_lift_velocity(v: Vector2):
+	lift_velocity = v
+	lift_timer = LIFT_GRACE
+
+## Pustí hák (např. když se kotva ulomí); hráč si nechá polovinu rychlosti.
+func release_grapple():
+	_end_grapple(true)
+
+## Tlumicí pole: `source` potlačí schopnosti (&"dash", &"grapple", &"double_jump", &"climb"); prázdné pole je uvolní.
+func set_abilities_blocked(source: Object, abilities: Array):
+	if abilities.is_empty():
+		ability_blocks.erase(source)
+	else:
+		ability_blocks[source] = abilities
+
+func _ability_blocked(ability: StringName) -> bool:
+	for list in ability_blocks.values():
+		if ability in list:
+			return true
+	return false
+
+## Anomální zeď: hráč letí rychlostí `v` rovně skrz těleso `through` (bez gravitace a ovládání).
+func start_glide(v: Vector2, through: PhysicsBody2D):
+	_end_grapple(false)
+	is_dashing = false
+	is_gliding = true
+	glide_velocity = v
+	glide_through = through
+	add_collision_exception_with(through)
+
+## Konec průletu: vrátí dash i dvojskok, rychlost si nechá a vstup ji chvíli neubere.
+func end_glide():
+	if not is_gliding:
+		return
+	is_gliding = false
+	if is_instance_valid(glide_through):
+		remove_collision_exception_with(glide_through)
+	glide_through = null
+	velocity = glide_velocity
+	momentum_lock = LIFT_LOCK
+	can_dash = true
+	air_jumps_left = MAX_AIR_JUMPS
+
+## Vítr (měchy): v tomto snímku hráče posune o v * delta; rychlost a ovládání nemění.
+func apply_wind(v: Vector2):
+	if wind_frame != Engine.get_physics_frames():
+		wind = Vector2.ZERO
+		wind_frame = Engine.get_physics_frames()
+	wind += v
+
+## Zásah nepřítele útokem hráče (hasák, dash, hák): nové typy mají take_hit, starší take_damage.
+func _hit_enemy(enemy: Node, damage: int, dir: Vector2) -> bool:
+	if enemy.has_method("take_hit"):
+		enemy.take_hit(damage, dir)
+	elif enemy.has_method("take_damage"):
+		enemy.take_damage(damage, dir)
+	else:
+		return false
+	return true
+
+func _apply_lift():
+	if lift_timer <= 0.0:
+		return
+	velocity.x += lift_velocity.x
+	if lift_velocity.y * gravity_dir < 0.0: # jen složka proti gravitaci
+		velocity.y += lift_velocity.y
+	momentum_lock = LIFT_LOCK
+	lift_timer = 0.0
+
 func perform_dash():
+	if _ability_blocked(&"dash"):
+		_show_missing_item_popup("Dash potlačen polem!")
+		return
 	if not grid_inventory.has_item("gravity_coil"):
 		_show_missing_item_popup("Chybí Gravity Coil!")
 		return
@@ -450,6 +633,7 @@ func perform_dash():
 		return
 	if can_dash and dash_cooldown <= 0 and not is_crouching:
 		is_dashing = true
+		momentum_lock = 0.0
 		can_dash = false
 		dash_timer = DASH_DURATION
 		dash_cooldown = 0.4
@@ -470,13 +654,31 @@ func perform_dash():
 		velocity = dash_vec * DASH_SPEED
 
 func die():
+	if is_dying:
+		return
+	is_dying = true
 	Global.death_count += 1
 	player_died.emit()
 	get_tree().call_group("celeste_keys", "on_player_died")
 	_end_grapple(false)
+	velocity = Vector2.ZERO
+	var tw = create_tween()
+	if sprite:
+		tw.tween_property(sprite, "modulate", Color(3.0, 0.5, 0.3, 0.0), DEATH_FADE_TIME)
+	tw.parallel().tween_property(death_fade, "color:a", 1.0, DEATH_FADE_TIME)
+	tw.tween_callback(respawn)
+	tw.tween_property(death_fade, "color:a", 0.0, DEATH_FADE_TIME)
+
+## Návrat na checkpoint po smrti; nakonec globální room_reset (nepřátelé, plošiny, krystaly).
+func respawn():
+	end_glide()
+	ability_blocks.clear()
 	set_gravity_dir(1.0)
 	global_position = spawn_point
 	velocity = Vector2.ZERO
+	momentum_lock = 0.0
+	lift_timer = 0.0
+	can_jump_cut = true
 	stamina = stamina_max
 	air_jumps_left = MAX_AIR_JUMPS
 	melee_cooldown = 0.0
@@ -490,9 +692,11 @@ func die():
 		stamina_bar.visible = false
 	if camera and camera.has_method("reset_to_spawn"):
 		camera.reset_to_spawn()
+	is_dying = false
+	Global.room_reset.emit()
 
 func take_damage(amount: int = 1, from_pos: Vector2 = Vector2.ZERO):
-	if invulnerable_timer > 0:
+	if invulnerable_timer > 0 or is_dying:
 		return
 	health -= amount
 	invulnerable_timer = INVULNERABILITY_TIME
@@ -583,9 +787,7 @@ func _process_dash_attack():
 			var kb_dir = (enemy.global_position - global_position).normalized()
 			if kb_dir == Vector2.ZERO:
 				kb_dir = velocity.normalized()
-			if enemy.has_method("take_damage"):
-				enemy.take_damage(DASH_DAMAGE, kb_dir)
-			elif enemy is CharacterBody2D:
+			if not _hit_enemy(enemy, DASH_DAMAGE, kb_dir) and enemy is CharacterBody2D:
 				enemy.velocity = kb_dir * 220.0 + Vector2(0, -90.0)
 
 func get_inventory_save_data() -> Array:
@@ -639,9 +841,9 @@ func get_hook_aim_info(custom_target_pos: Vector2 = Vector2.INF) -> Dictionary:
 		
 		# Kontrola, zda je kolidující objekt nepřítel nebo komponenta nepřítele (HurtArea/StompArea)
 		var enemy_candidate = null
-		if collider.is_in_group("enemies") or collider.has_method("take_damage") or collider.name.begins_with("Enemy"):
+		if collider.is_in_group("enemies") or collider.has_method("take_hit") or collider.has_method("take_damage") or collider.name.begins_with("Enemy"):
 			enemy_candidate = collider
-		elif collider.get_parent() and (collider.get_parent().is_in_group("enemies") or collider.get_parent().has_method("take_damage") or collider.get_parent().name.begins_with("Enemy")):
+		elif collider.get_parent() and (collider.get_parent().is_in_group("enemies") or collider.get_parent().has_method("take_hit") or collider.get_parent().has_method("take_damage") or collider.get_parent().name.begins_with("Enemy")):
 			enemy_candidate = collider.get_parent()
 			
 		if enemy_candidate != null:
@@ -659,10 +861,8 @@ func get_hook_aim_info(custom_target_pos: Vector2 = Vector2.INF) -> Dictionary:
 	
 	if hit_enemy != null:
 		return {"type": "enemy", "target": hit_enemy, "pos": hit_pos, "in_range": true}
-	elif hit_collider != null:
-		return {"type": "world", "target": hit_collider, "pos": hit_pos, "in_range": true}
-			
-	# Kontrola kotev (GrapplePoints)
+
+	# Hák se chytá jen kotev (GrapplePoints) v přímé viditelnosti; zeď ho jen zastaví
 	var best_anchor = null
 	var best_anchor_dist = 28.0
 	for anchor in get_tree().get_nodes_in_group("grapple_points"):
@@ -671,17 +871,22 @@ func get_hook_aim_info(custom_target_pos: Vector2 = Vector2.INF) -> Dictionary:
 			var proj = (anchor.global_position - global_position).project(aim_dir)
 			if proj.dot(aim_dir) > 0:
 				var perp = (anchor.global_position - (global_position + proj)).length()
-				if perp < best_anchor_dist:
+				if perp < best_anchor_dist and space_state.intersect_ray(PhysicsRayQueryParameters2D.create(global_position, anchor.global_position, 1, [get_rid()])).is_empty():
 					best_anchor = anchor
 					best_anchor_dist = perp
 	
 	if best_anchor:
 		return {"type": "anchor", "target": best_anchor, "pos": best_anchor.global_position, "in_range": true}
-		
+	if hit_collider != null:
+		return {"type": "none", "target": null, "pos": hit_pos, "in_range": false}
+
 	return {"type": "none", "target": null, "pos": target_pos, "in_range": false}
 
 func fire_hook(custom_target_pos: Vector2 = Vector2.INF):
 	if not grapple_enabled:
+		return
+	if _ability_blocked(&"grapple"):
+		_show_missing_item_popup("Hák potlačen polem!")
 		return
 	if not grid_inventory.has_item("grapple_hook"):
 		_show_missing_item_popup("Chybí Hák!")
@@ -700,13 +905,15 @@ func fire_hook(custom_target_pos: Vector2 = Vector2.INF):
 			# Zásah nepřítele: udělí poškození
 			var enemy = info.target
 			var hook_dir = (info.pos - global_position).normalized()
-			if enemy.has_method("take_damage"):
-				enemy.take_damage(hook_damage, hook_dir)
+			_hit_enemy(enemy, hook_damage, hook_dir)
 			_play_hook_strike_fx(info.pos, true)
 			
-		"world", "anchor":
-			# Záchyt za povrch nebo kotvu: zahájí přitahování
+		"anchor":
+			# Záchyt za kotvu: zahájí přitahování (pohyblivou kotvu hák sleduje, křehká začne praskat)
 			grapple_point_pos = info.pos
+			grapple_anchor = info.target
+			if grapple_anchor.has_method("on_grappled"):
+				grapple_anchor.on_grappled(self)
 			is_grappling = true
 			grapple_timer = GRAPPLE_MAX_TIME
 			is_dashing = false
@@ -724,6 +931,8 @@ func fire_hook(custom_target_pos: Vector2 = Vector2.INF):
 
 func _process_grapple(delta):
 	grapple_timer -= delta
+	if is_instance_valid(grapple_anchor):
+		grapple_point_pos = grapple_anchor.global_position
 	var to_hook = grapple_point_pos - global_position
 	var dist = to_hook.length()
 	
@@ -734,6 +943,8 @@ func _process_grapple(delta):
 		velocity.y = JUMP_VELOCITY * 0.9 * gravity_dir
 		air_jumps_left = MAX_AIR_JUMPS
 		can_dash = true
+		can_jump_cut = true
+		_apply_lift() # pohyblivá kotva přidá svou rychlost
 		return
 		
 	# Skrčení zruší hák
@@ -766,6 +977,7 @@ func _end_grapple(keep_momentum: bool):
 	if not is_grappling:
 		return
 	is_grappling = false
+	grapple_anchor = null
 	if grapple_line:
 		grapple_line.clear_points()
 		grapple_line.visible = false

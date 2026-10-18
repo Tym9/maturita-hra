@@ -1,0 +1,68 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_s7qrd"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_d28kf"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_rkvf4"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_5l44x"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_52ocm"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="6_k2a0s"]
+
+[node name="c1_a02" type="Node2D" unique_id=1137992140]
+script = ExtResource("1_s7qrd")
+room_id = "c1_a02"
+
+[node name="Background" type="ColorRect" parent="." unique_id=424802245]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=65816501]
+script = ExtResource("2_d28kf")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=693342153]
+z_index = -2
+tile_map_data = PackedByteArray("AAAHAAQAAAABAAEAAAALAAQAAAABAAEAAAAHAAUAAAABAAEAAAALAAUAAAABAAEAAAAHAAYAAAABAAEAAAALAAYAAAABAAEAAAAHAAcAAAABAAEAAAALAAcAAAABAAEAAAARAAcAAAABAAEAAAAHAAgAAAABAAEAAAALAAgAAAABAAEAAAARAAgAAAADAAEAAAAHAAkAAAABAAEAAAAKAAkAAAABAAEAAAALAAkAAAABAAEAAAA=")
+tile_set = ExtResource("3_rkvf4")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1918169836]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAATAAEAAAADAAAAAAAAAAIAAAADAAAAAAATAAIAAAADAAAAAAAAAAMAAAADAAAAAAAHAAMAAAACAAAAAAAIAAMAAAACAAAAAAAJAAMAAAACAAAAAAAKAAMAAAACAAAAAAALAAMAAAACAAAAAAATAAMAAAADAAAAAAAAAAQAAAADAAAAAAATAAQAAAADAAAAAAAAAAUAAAADAAAAAAATAAUAAAADAAAAAAAAAAYAAAADAAAAAAATAAYAAAADAAAAAAATAAcAAAADAAAAAAATAAgAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAAGAAAAAAACAAoAAAAGAAAAAAADAAoAAAAGAAAAAAAEAAoAAAAGAAAAAAAFAAoAAAAGAAAAAAAGAAoAAAAGAAAAAAAHAAoAAAAGAAAAAAAIAAoAAAAGAAAAAAAJAAoAAAAGAAAAAAAKAAoAAAAGAAAAAAALAAoAAAAGAAAAAAAMAAoAAAAGAAAAAAANAAoAAAAGAAAAAAAOAAoAAAAGAAAAAAAPAAoAAAAGAAAAAAAQAAoAAAAGAAAAAAARAAoAAAAGAAAAAAASAAoAAAAGAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_rkvf4")
+
+[node name="Antenna" type="Node2D" parent="." unique_id=523907771]
+position = Vector2(152, 48)
+script = ExtResource("4_5l44x")
+kind = 2
+
+[node name="Lantern" type="Node2D" parent="." unique_id=100561212]
+position = Vector2(184, 48)
+script = ExtResource("4_5l44x")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1187252276]
+position = Vector2(40, 151)
+script = ExtResource("5_52ocm")
+
+[node name="Blight" type="Node2D" parent="." unique_id=363278440]
+position = Vector2(56, 160)
+script = ExtResource("4_5l44x")
+kind = 4
+
+[node name="Spring" parent="." unique_id=701978152 instance=ExtResource("6_k2a0s")]
+position = Vector2(88, 160)
+
+[node name="Blight2" type="Node2D" parent="." unique_id=1179917533]
+position = Vector2(168, 160)
+script = ExtResource("4_5l44x")
+kind = 4
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=955349276]
+position = Vector2(232, 160)
+script = ExtResource("4_5l44x")
+kind = 3
+
+[node name="Pylon" type="Node2D" parent="." unique_id=944443096]
+position = Vector2(264, 160)
+script = ExtResource("4_5l44x")
+kind = 5

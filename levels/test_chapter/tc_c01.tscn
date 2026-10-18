@@ -1,0 +1,36 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_57ehd"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_xgora"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_jfvoe"]
+[ext_resource type="PackedScene" path="res://mechanics/pressure_spring.tscn" id="4_usid0"]
+
+[node name="tc_c01" type="Node2D" unique_id=490174078]
+script = ExtResource("1_57ehd")
+room_id = "tc_c01"
+
+[node name="Background" type="ColorRect" parent="." unique_id=275134620]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=167664009]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAABAAAAAAAHAAMAAAABAAAAAAA=")
+tile_set = ExtResource("2_xgora")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1309975142]
+position = Vector2(24, 135)
+script = ExtResource("3_jfvoe")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1997041800]
+position = Vector2(296, 135)
+script = ExtResource("3_jfvoe")
+
+[node name="SpringUp" parent="." unique_id=879435359 instance=ExtResource("4_usid0")]
+position = Vector2(40, 144)
+strength = 460.0
+
+[node name="SpringDiagonal" parent="." unique_id=1610129101 instance=ExtResource("4_usid0")]
+position = Vector2(152, 144)
+direction = Vector2(0.70710677, -0.70710677)

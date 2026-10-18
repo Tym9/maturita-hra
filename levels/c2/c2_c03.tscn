@@ -1,0 +1,56 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_vckyg"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_0pbcr"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_ql0oj"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_or5cc"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_kpmvk"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="6_m646w"]
+[ext_resource type="PackedScene" path="res://npc/elda.tscn" id="7_wph7a"]
+
+[node name="c2_c03" type="Node2D" unique_id=690051258]
+script = ExtResource("1_vckyg")
+room_id = "c2_c03"
+
+[node name="Background" type="ColorRect" parent="." unique_id=360718157]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1506893175]
+script = ExtResource("2_0pbcr")
+style = 1
+altitude = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=252210522]
+z_index = -2
+tile_map_data = PackedByteArray("AAACAAcAAAAGAAEAAAADAAcAAAAGAAEAAAAEAAcAAAAGAAEAAAAFAAcAAAAGAAEAAAAGAAcAAAAGAAEAAAAHAAcAAAAGAAEAAAAIAAcAAAAGAAEAAAANAAcAAAAGAAEAAAAOAAcAAAAGAAEAAAAPAAcAAAAGAAEAAAAQAAcAAAAGAAEAAAARAAcAAAAGAAEAAAACAAgAAAAGAAEAAAADAAgAAAAGAAEAAAAEAAgAAAAGAAEAAAAFAAgAAAADAAEAAAAGAAgAAAAGAAEAAAAHAAgAAAAGAAEAAAAIAAgAAAAGAAEAAAANAAgAAAAGAAEAAAAOAAgAAAADAAEAAAAPAAgAAAAGAAEAAAAQAAgAAAAGAAEAAAARAAgAAAAGAAEAAAACAAkAAAAGAAEAAAADAAkAAAAGAAEAAAAEAAkAAAAGAAEAAAAFAAkAAAAGAAEAAAAGAAkAAAAGAAEAAAAHAAkAAAAGAAEAAAAIAAkAAAAGAAEAAAANAAkAAAAGAAEAAAAOAAkAAAAGAAEAAAAPAAkAAAAGAAEAAAAQAAkAAAAGAAEAAAARAAkAAAAGAAEAAAA=")
+tile_set = ExtResource("3_ql0oj")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1892529459]
+tile_map_data = PackedByteArray("AAAAAAAAAAAEAAAAAAABAAAAAAAEAAAAAAACAAAAAAAEAAAAAAADAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAFAAAAAAAEAAAAAAAGAAAAAAAEAAAAAAAHAAAAAAAEAAAAAAAIAAAAAAAEAAAAAAAJAAAAAAAEAAAAAAAKAAAAAAAEAAAAAAALAAAAAAAEAAAAAAAMAAAAAAAEAAAAAAANAAAAAAAEAAAAAAAOAAAAAAAEAAAAAAAPAAAAAAAEAAAAAAAQAAAAAAAEAAAAAAARAAAAAAAEAAAAAAASAAAAAAAEAAAAAAATAAAAAAAEAAAAAAAAAAEAAAAHAAAAAAABAAEAAAAHAAAAAAAEAAEAAAAEAAAAAAAFAAEAAAAEAAAAAAAIAAEAAAAEAAAAAAAJAAEAAAAEAAAAAAAMAAEAAAAEAAAAAAANAAEAAAAEAAAAAAAQAAEAAAAEAAAAAAARAAEAAAAEAAAAAAASAAEAAAAHAAAAAAATAAEAAAAHAAAAAAAAAAIAAAAHAAAAAAABAAIAAAAHAAAAAAAPAAIAAAABAAAAAAAQAAIAAAABAAAAAAASAAIAAAAHAAAAAAATAAIAAAAHAAAAAAAAAAMAAAAHAAAAAAABAAMAAAAHAAAAAAAOAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAASAAMAAAAHAAAAAAATAAMAAAAHAAAAAAAAAAQAAAAHAAAAAAABAAQAAAAHAAAAAAAOAAQAAAABAAAAAAAPAAQAAAABAAAAAAAQAAQAAAABAAAAAAARAAQAAAABAAAAAAASAAQAAAAHAAAAAAATAAQAAAAHAAAAAAAAAAUAAAAHAAAAAAABAAUAAAAHAAAAAAASAAUAAAAHAAAAAAATAAUAAAAHAAAAAAAAAAYAAAAHAAAAAAABAAYAAAAHAAAAAAAAAAcAAAAHAAAAAAABAAcAAAAHAAAAAAAAAAgAAAAHAAAAAAABAAgAAAAHAAAAAAAAAAkAAAAHAAAAAAABAAkAAAAHAAAAAAAAAAoAAAAHAAAAAAABAAoAAAAHAAAAAAACAAoAAAAHAAAAAAADAAoAAAAHAAAAAAAEAAoAAAAHAAAAAAAFAAoAAAAHAAAAAAAGAAoAAAAHAAAAAAAHAAoAAAAHAAAAAAAIAAoAAAAHAAAAAAANAAoAAAAHAAAAAAAOAAoAAAAHAAAAAAAPAAoAAAAHAAAAAAAQAAoAAAAHAAAAAAARAAoAAAAFAAAAAAASAAoAAAAFAAAAAAATAAoAAAAHAAAAAAA=")
+tile_set = ExtResource("3_ql0oj")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=182036115]
+position = Vector2(40, 160)
+script = ExtResource("4_or5cc")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=70483085]
+position = Vector2(72, 151)
+script = ExtResource("5_kpmvk")
+
+[node name="HealthPack" parent="." unique_id=2051458823 instance=ExtResource("6_m646w")]
+position = Vector2(120, 152)
+
+[node name="Elda" parent="." unique_id=1977536113 instance=ExtResource("7_wph7a")]
+position = Vector2(248, 152)
+dialogue_pages = Array[String](["Odboj tě posílá? Pak neseš špatné zprávy pozdě. Korporace dnes ráno spustila vrt přímo pod vesnicí.", "Do Parního města vede jen stará horská stezka nad zvonicí. Jestli se svah utrhne, zůstanou jen útesy.", "Lez, chlapče. My ostatní... my to tu nějak vydržíme."])
+repeat_dialogue_pages = Array[String](["Stezka nad zvonicí. Lez!"])
+
+[node name="Blight" type="Node2D" parent="." unique_id=1722232090]
+position = Vector2(280, 160)
+script = ExtResource("4_or5cc")
+kind = 4

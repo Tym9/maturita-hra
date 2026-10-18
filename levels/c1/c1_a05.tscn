@@ -1,0 +1,72 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_c7mlm"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_aqsiy"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_7l1jm"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="4_mfb37"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="5_ay6hl"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_1qf8n"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="7_fmxsb"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="8_jua1e"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9_0toda"]
+[ext_resource type="Script" path="res://mechanics/fake_wall.gd" id="10_3sl4i"]
+
+[node name="c1_a05" type="Node2D" unique_id=1220179822]
+script = ExtResource("1_c7mlm")
+room_id = "c1_a05"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1327773376]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=841413610]
+script = ExtResource("2_aqsiy")
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1678185361]
+z_index = -2
+tile_map_data = PackedByteArray("AAAGAAIAAAAHAAEAAAAHAAIAAAAHAAEAAAAIAAIAAAAHAAEAAAAJAAIAAAAHAAEAAAAKAAIAAAAHAAEAAAALAAIAAAAHAAEAAAAMAAIAAAAHAAEAAAANAAIAAAAHAAEAAAACAAMAAAADAAEAAAADAAMAAAABAAEAAAAGAAMAAAAHAAEAAAAHAAMAAAAHAAEAAAAIAAMAAAAHAAEAAAAJAAMAAAAHAAEAAAAKAAMAAAAHAAEAAAALAAMAAAAHAAEAAAAMAAMAAAAHAAEAAAANAAMAAAAHAAEAAAA=")
+tile_set = ExtResource("3_7l1jm")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=752580972]
+tile_map_data = PackedByteArray("AAAAAAAAAAADAAAAAAABAAAAAAADAAAAAAACAAAAAAADAAAAAAADAAAAAAADAAAAAAAEAAAAAAADAAAAAAAFAAAAAAADAAAAAAAGAAAAAAADAAAAAAAHAAAAAAADAAAAAAAIAAAAAAADAAAAAAAJAAAAAAADAAAAAAAKAAAAAAADAAAAAAALAAAAAAADAAAAAAAMAAAAAAADAAAAAAANAAAAAAADAAAAAAAOAAAAAAADAAAAAAAPAAAAAAADAAAAAAAQAAAAAAADAAAAAAARAAAAAAADAAAAAAASAAAAAAADAAAAAAATAAAAAAADAAAAAAAAAAEAAAADAAAAAAARAAEAAAADAAAAAAASAAEAAAADAAAAAAATAAEAAAADAAAAAAAAAAIAAAADAAAAAAATAAIAAAADAAAAAAAAAAMAAAADAAAAAAATAAMAAAADAAAAAAAAAAQAAAADAAAAAAARAAQAAAADAAAAAAASAAQAAAADAAAAAAATAAQAAAADAAAAAAAIAAcAAAABAAAAAAAJAAcAAAABAAAAAAAKAAcAAAABAAAAAAALAAcAAAABAAAAAAAAAAgAAAACAAAAAAABAAgAAAACAAAAAAACAAgAAAACAAAAAAARAAgAAAACAAAAAAASAAgAAAACAAAAAAATAAgAAAACAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAAFAAAAAAAEAAoAAAAFAAAAAAAFAAoAAAAFAAAAAAAGAAoAAAAFAAAAAAAHAAoAAAAFAAAAAAAIAAoAAAAFAAAAAAAJAAoAAAAFAAAAAAAKAAoAAAAFAAAAAAALAAoAAAAFAAAAAAAMAAoAAAAFAAAAAAANAAoAAAAFAAAAAAAOAAoAAAAFAAAAAAAPAAoAAAAFAAAAAAAQAAoAAAAFAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_7l1jm")
+
+[node name="Crystal" parent="." unique_id=362407262 instance=ExtResource("4_mfb37")]
+z_index = -1
+position = Vector2(296, 56)
+
+[node name="Guard" parent="." unique_id=1073643529 instance=ExtResource("5_ay6hl")]
+position = Vector2(152, 100)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1742783593]
+position = Vector2(24, 119)
+script = ExtResource("6_1qf8n")
+
+[node name="DeadTree" type="Node2D" parent="." unique_id=1482860925]
+position = Vector2(40, 128)
+script = ExtResource("7_fmxsb")
+kind = 3
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1599422408]
+position = Vector2(296, 128)
+script = ExtResource("7_fmxsb")
+
+[node name="Grate" parent="." unique_id=1275308984 instance=ExtResource("8_jua1e")]
+position = Vector2(80, 133)
+
+[node name="Grate2" parent="." unique_id=1442148382 instance=ExtResource("8_jua1e")]
+position = Vector2(240, 133)
+
+[node name="Spikes" type="Area2D" parent="." unique_id=894411745]
+position = Vector2(48, 160)
+script = ExtResource("9_0toda")
+count = 14
+
+[node name="FakeWall" type="TileMapLayer" parent="." unique_id=2026494833]
+tile_map_data = PackedByteArray("AAARAAIAAAADAAAAAAASAAIAAAADAAAAAAARAAMAAAADAAAAAAASAAMAAAADAAAAAAA=")
+tile_set = ExtResource("3_7l1jm")
+script = ExtResource("10_3sl4i")

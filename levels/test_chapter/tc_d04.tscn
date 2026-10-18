@@ -1,0 +1,33 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_4b60o"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_el738"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_fiy5v"]
+[ext_resource type="PackedScene" path="res://mechanics/conveyor_belt.tscn" id="4_woyag"]
+
+[node name="tc_d04" type="Node2D" unique_id=1543639782]
+script = ExtResource("1_4b60o")
+room_id = "tc_d04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1969894973]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=100022150]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_el738")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1235558603]
+position = Vector2(24, 135)
+script = ExtResource("3_fiy5v")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1317254239]
+position = Vector2(296, 135)
+script = ExtResource("3_fiy5v")
+
+[node name="Belt" parent="." unique_id=730765117 instance=ExtResource("4_woyag")]
+position = Vector2(96, 112)
+width = 6
+speed = 90.0

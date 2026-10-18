@@ -1,0 +1,36 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_scmum"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_emukg"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_5vje8"]
+[ext_resource type="PackedScene" path="res://mechanics/dampener_field.tscn" id="4_d0dhl"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="5_l436d"]
+
+[node name="tc_d01" type="Node2D" unique_id=1097951720]
+script = ExtResource("1_scmum")
+room_id = "tc_d01"
+
+[node name="Background" type="ColorRect" parent="." unique_id=935314305]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1014195781]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_emukg")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=655229012]
+position = Vector2(24, 135)
+script = ExtResource("3_5vje8")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=117166461]
+position = Vector2(296, 135)
+script = ExtResource("3_5vje8")
+
+[node name="Dampener" parent="." unique_id=1510266853 instance=ExtResource("4_d0dhl")]
+position = Vector2(80, 16)
+size = Vector2(160, 128)
+
+[node name="BlockedAnchor" parent="." unique_id=2072527401 instance=ExtResource("5_l436d")]
+position = Vector2(160, 56)

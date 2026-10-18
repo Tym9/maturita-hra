@@ -1,23 +1,23 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="PackedScene" path="res://player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
 [ext_resource type="Script" path="res://mechanics/grid_platform.gd" id="3"]
 [ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="4"]
 [ext_resource type="Script" path="res://mechanics/room_backdrop.gd" id="5"]
-[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="7"]
 [ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="9"]
 [ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="10"]
 [ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="11"]
 [ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="12"]
-[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="13"]
-[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="14"]
-[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="15"]
-[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="16"]
-[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="17"]
-[ext_resource type="PackedScene" path="res://npc/rusty.tscn" id="18"]
+[ext_resource type="PackedScene" path="res://npc/rusty.tscn" id="13"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="17"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="18"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="19"]
+[ext_resource type="PackedScene" path="res://mechanics/steam_vent.tscn" id="20"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="21"]
 
 [node name="Level2" type="Node2D"]
 
@@ -27,549 +27,600 @@
 script = ExtResource("5")
 room_x = 0
 room_y = 0
-room_title = "SEKTOR 0-0: KRYSTALOVÝ VESTIBUL"
+room_group = "vestibul"
+room_title = "SEKTOR 1: KRYSTALOVÝ VESTIBUL"
 style = 5
 
 [node name="Room_1_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 1
 room_y = 0
-room_title = "SEKTOR 1-0: KRYSTALOVÁ PROPAST"
+room_group = "vestibul"
 style = 5
 
-[node name="Room_2_0" type="Node2D" parent="Backdrops"]
+[node name="Room_0_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
-room_x = 2
-room_y = 0
-room_title = "SEKTOR 2-0: HORNÍ GEODA"
+room_x = 0
+room_y = 1
+room_group = "vestibul"
 style = 5
 
 [node name="Room_1_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 1
 room_y = 1
-room_title = "SEKTOR 1-1: PARNÍ ŠACHTA"
+room_group = "vestibul"
+style = 5
+
+[node name="Room_2_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 2
+room_y = 0
+room_group = "propast"
+room_title = "SEKTOR 2: KRYSTALOVÁ PROPAST"
+style = 5
+
+[node name="Room_3_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 3
+room_y = 0
+room_group = "propast"
 style = 5
 
 [node name="Room_2_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 2
 room_y = 1
-room_title = "SEKTOR 2-1: TĚŽEBNÍ KORIDOR"
+room_group = "propast"
 style = 5
 
 [node name="Room_3_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
 room_x = 3
 room_y = 1
-room_title = "SEKTOR 3-1: VĚTRNÁ LÁVKA"
+room_group = "propast"
 style = 5
 
-[node name="Room_3_2" type="Node2D" parent="Backdrops"]
+[node name="Room_4_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
-room_x = 3
-room_y = 2
-room_title = "SEKTOR 3-2: GRAVITAČNÍ ZLOM"
+room_x = 4
+room_y = 0
+room_group = "komin"
+room_title = "SEKTOR 3: VĚTRNÁ ŠACHTA"
 style = 5
 
-[node name="Room_2_2" type="Node2D" parent="Backdrops"]
+[node name="Room_4_1" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
-room_x = 2
-room_y = 2
-room_title = "SEKTOR 2-2: ZAPEČETĚNÁ KRYPTA"
+room_x = 4
+room_y = 1
+room_group = "komin"
 style = 5
 
-[node name="Room_2_3" type="Node2D" parent="Backdrops"]
+[node name="Room_5_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("5")
-room_x = 2
-room_y = 3
-room_title = "SEKTOR 2-3: VÝTAH DO REAKTORU"
+room_x = 5
+room_y = 0
+room_group = "geoda"
+room_title = "SEKTOR 4: SAFÍROVÁ GEODA"
 style = 5
+
+[node name="Room_6_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 6
+room_y = 0
+room_group = "geoda"
+style = 5
+
+[node name="Room_7_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 7
+room_y = 0
+room_group = "geoda"
+style = 5
+
+[node name="Room_5_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 5
+room_y = 1
+room_group = "geoda"
+style = 5
+
+[node name="Room_6_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 6
+room_y = 1
+room_group = "geoda"
+style = 5
+
+[node name="Room_7_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 7
+room_y = 1
+room_group = "geoda"
+style = 5
+
+[node name="Room_8_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 8
+room_y = 0
+room_group = "chram"
+room_title = "SEKTOR 5: CHRÁM GRAVITACE"
+style = 5
+
+[node name="Room_8_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 8
+room_y = 1
+room_group = "chram"
+style = 5
+
+[node name="Room_9_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 9
+room_y = 0
+room_group = "vytah"
+room_title = "SEKTOR 6: VÝTAH DO REAKTORU"
+style = 6
+
+[node name="Room_10_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 10
+room_y = 0
+room_group = "vytah"
+style = 6
+
+[node name="Room_11_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("5")
+room_x = 11
+room_y = 0
+room_group = "vytah"
+style = 6
 
 [node name="Platforms" type="Node2D" parent="."]
 
-[node name="R0_WallLeft" type="StaticBody2D" parent="Platforms"]
+[node name="A_Stone1" type="StaticBody2D" parent="Platforms"]
 position = Vector2(0, 0)
 script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
-theme = 6
-
-[node name="R0_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(0, 0)
-script = ExtResource("3")
-tiles_x = 20
+tiles_x = 240
 tiles_y = 1
 theme = 6
 
-[node name="R0_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(0, 160)
+[node name="A_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 16)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 22
+theme = 6
+
+[node name="A_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 16)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 6
+theme = 6
+
+[node name="B_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1264, 16)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 16
+theme = 6
+
+[node name="C_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1584, 16)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 4
+theme = 6
+
+[node name="D_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2544, 16)
 script = ExtResource("3")
 tiles_x = 12
-tiles_y = 2
-theme = 6
-
-[node name="R0_LedgeMid" type="StaticBody2D" parent="Platforms"]
-position = Vector2(96, 112)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R0_ExitLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(208, 128)
-script = ExtResource("3")
-tiles_x = 7
-tiles_y = 1
-theme = 5
-
-[node name="R10_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 0)
-script = ExtResource("3")
-tiles_x = 20
 tiles_y = 1
 theme = 6
 
-[node name="R10_EntryLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 160)
-script = ExtResource("3")
-tiles_x = 3
-tiles_y = 2
-theme = 2
-
-[node name="R10_DashCrumble1" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(400, 144)
-
-[node name="R10_LedgeMid" type="StaticBody2D" parent="Platforms"]
-position = Vector2(432, 144)
+[node name="E_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2816, 16)
 script = ExtResource("3")
 tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(536, 100)
-
-[node name="R10_SecretLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(560, 48)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 1
-theme = 2
-
-[node name="R10_Landing" type="StaticBody2D" parent="Platforms"]
-position = Vector2(576, 160)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 2
-theme = 5
-
-[node name="R20_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 0)
-script = ExtResource("3")
-tiles_x = 20
 tiles_y = 1
 theme = 6
 
-[node name="R20_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(944, 0)
+[node name="F_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3824, 16)
 script = ExtResource("3")
 tiles_x = 1
 tiles_y = 11
 theme = 6
 
-[node name="R20_Ledge1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(656, 110)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R20_Ledge2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(768, 80)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R20_Ledge3" type="StaticBody2D" parent="Platforms"]
-position = Vector2(880, 50)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R20_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 160)
-script = ExtResource("3")
-tiles_x = 15
-tiles_y = 2
-theme = 6
-
-[node name="R11_WallLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 180)
+[node name="D_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2544, 32)
 script = ExtResource("3")
 tiles_x = 1
-tiles_y = 11
+tiles_y = 15
 theme = 6
 
-[node name="R11_WallRightUpper" type="StaticBody2D" parent="Platforms"]
-position = Vector2(624, 180)
+[node name="E_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2864, 32)
 script = ExtResource("3")
 tiles_x = 1
 tiles_y = 5
-theme = 2
-
-[node name="R11_LedgeMid" type="StaticBody2D" parent="Platforms"]
-position = Vector2(380, 240)
-script = ExtResource("3")
-tiles_x = 3
-tiles_y = 1
-theme = 5
-
-[node name="R11_CrumblingBridge1" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(430, 290)
-
-[node name="R11_LedgeMid2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(512, 260)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R11_CrumblingBridge2" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(490, 290)
-
-[node name="R11_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 340)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 2
 theme = 6
 
-[node name="R21_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 180)
-script = ExtResource("3")
-tiles_x = 13
-tiles_y = 1
-theme = 6
-
-[node name="R21_FloorEntry" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 340)
+[node name="D_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2448, 48)
 script = ExtResource("3")
 tiles_x = 6
 tiles_y = 2
+theme = 5
+
+[node name="F_Tech1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3728, 64)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 3
+
+[node name="B_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1072, 128)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 1
+theme = 5
+
+[node name="C_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1552, 128)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 2
+theme = 5
+
+[node name="C_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1584, 128)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 15
+theme = 6
+
+[node name="D_Rust1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1600, 128)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 12
 theme = 2
 
-[node name="R21_Pillar1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(720, 300)
+[node name="D_Wood2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2368, 144)
+script = ExtResource("3")
+tiles_x = 11
+tiles_y = 2
+theme = 5
+
+[node name="A_Rust1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(16, 160)
+script = ExtResource("3")
+tiles_x = 13
+tiles_y = 13
+theme = 2
+
+[node name="A_Rust2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(416, 160)
+script = ExtResource("3")
+tiles_x = 13
+tiles_y = 13
+theme = 2
+
+[node name="A_Stone4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(624, 160)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 13
+theme = 6
+
+[node name="B_Wood2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(640, 160)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 13
+theme = 5
+
+[node name="E_Rust1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2688, 160)
+script = ExtResource("3")
+tiles_x = 11
+tiles_y = 10
+theme = 2
+
+[node name="E_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2864, 160)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 13
+theme = 6
+
+[node name="F_Tech2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2880, 160)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 3
+
+[node name="F_Tech3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3200, 160)
+script = ExtResource("3")
+tiles_x = 6
+tiles_y = 2
+theme = 3
+
+[node name="F_Tech4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3520, 160)
+script = ExtResource("3")
+tiles_x = 19
+tiles_y = 2
+theme = 3
+
+[node name="F_Tech5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2976, 176)
+script = ExtResource("3")
+tiles_x = 14
+tiles_y = 1
+theme = 3
+
+[node name="F_Tech6" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3296, 176)
+script = ExtResource("3")
+tiles_x = 14
+tiles_y = 1
+theme = 3
+
+[node name="C_Wood2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1328, 192)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 8
+theme = 5
+
+[node name="A_Rust3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(224, 224)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 6
+theme = 2
+
+[node name="B_Wood3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(992, 224)
+script = ExtResource("3")
+tiles_x = 5
+tiles_y = 7
+theme = 5
+
+[node name="D_Rust2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1664, 224)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 6
+theme = 2
+
+[node name="D_Bronze1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1824, 240)
+script = ExtResource("3")
+tiles_x = 9
+tiles_y = 5
+theme = 0
+
+[node name="A_Rust4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(256, 272)
 script = ExtResource("3")
 tiles_x = 2
 tiles_y = 3
 theme = 2
 
-[node name="R21_Pillar2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(790, 280)
+[node name="D_Bronze2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2464, 288)
 script = ExtResource("3")
 tiles_x = 2
-tiles_y = 4
-theme = 2
+tiles_y = 2
+theme = 0
 
-[node name="R21_ShooterTower" type="StaticBody2D" parent="Platforms"]
-position = Vector2(864, 280)
+[node name="A_Stone5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(224, 320)
 script = ExtResource("3")
-tiles_x = 4
-tiles_y = 4
-theme = 2
+tiles_x = 12
+tiles_y = 3
+theme = 6
 
-[node name="R21_HighBeam" type="StaticBody2D" parent="Platforms"]
-position = Vector2(720, 220)
+[node name="B_Rust1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1072, 320)
 script = ExtResource("3")
-tiles_x = 5
+tiles_x = 12
 tiles_y = 1
 theme = 2
 
-[node name="R31_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 180)
+[node name="B_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1264, 320)
 script = ExtResource("3")
 tiles_x = 20
-tiles_y = 1
+tiles_y = 3
 theme = 6
 
-[node name="R31_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1264, 180)
+[node name="D_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1600, 320)
 script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
+tiles_x = 79
+tiles_y = 3
 theme = 6
 
-[node name="R31_EntryLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 320)
+[node name="B_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(736, 336)
 script = ExtResource("3")
-tiles_x = 4
-tiles_y = 2
-theme = 5
-
-[node name="R31_MidBeam" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1050, 280)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R31_Crumble" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(1130, 260)
-
-[node name="R31_UpperLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1200, 240)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
-
-[node name="R32_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1264, 360)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
-theme = 6
-
-[node name="R32_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 360)
-script = ExtResource("3")
-tiles_x = 7
-tiles_y = 1
-theme = 6
-
-[node name="R32_InvertedRunway" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1040, 380)
-script = ExtResource("3")
-tiles_x = 10
-tiles_y = 1
-theme = 2
-
-[node name="R32_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 520)
-script = ExtResource("3")
-tiles_x = 20
+tiles_x = 33
 tiles_y = 2
 theme = 6
 
-[node name="R32_LedgeLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 480)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 1
-theme = 5
+[node name="R11_CrumblingBridge1" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(1712, 181)
 
-[node name="R32_DashCrumble1" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(1120, 460)
+[node name="R11_CrumblingBridge2" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(1776, 213)
 
-[node name="R32_DashCrumble2" parent="Platforms" instance=ExtResource("17")]
-position = Vector2(1170, 460)
+[node name="R10_DashCrumble1" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(2064, 197)
 
-[node name="R22_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 360)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 6
+[node name="R10_DashCrumble2" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(2320, 181)
 
-[node name="R22_WallLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 360)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
-theme = 6
+[node name="R31_Crumble" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(3616, 133)
 
-[node name="R22_GateLintel" type="StaticBody2D" parent="Platforms"]
-position = Vector2(720, 360)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 7
-theme = 2
+[node name="R32_DashCrumble1" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(3664, 133)
 
-[node name="R22_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(720, 520)
-script = ExtResource("3")
-tiles_x = 15
-tiles_y = 2
-theme = 2
-
-[node name="R22_RightLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(880, 480)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 2
-theme = 5
-
-[node name="R23_WallLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 540)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
-theme = 6
-
-[node name="R23_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(944, 540)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 11
-theme = 6
-
-[node name="R23_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 700)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 2
-theme = 6
-
-[node name="R23_Ledge1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(656, 590)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 1
-theme = 5
-
-[node name="R23_Ledge2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(768, 630)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 1
-theme = 5
-
-[node name="R23_FinalLanding" type="StaticBody2D" parent="Platforms"]
-position = Vector2(864, 670)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 2
-theme = 2
+[node name="R32_DashCrumble2" parent="Platforms" instance=ExtResource("21")]
+position = Vector2(3696, 149)
 
 [node name="Hazards" type="Node2D" parent="."]
 
-[node name="R10_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(368, 160)
+[node name="E_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(2736, 13)
 script = ExtResource("4")
-count = 4
+count = 5
+orientation = 1
 
-[node name="R20_Spikes" type="Area2D" parent="Hazards"]
-position = Vector2(704, 160)
-script = ExtResource("4")
-count = 6
-
-[node name="R11_SteamVent" parent="Hazards" instance=ExtResource("16")]
-position = Vector2(330, 270)
-blast_direction = Vector2(1, 0)
-blast_length = 50.0
-
-[node name="R21_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(736, 360)
+[node name="A_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(416, 160)
 script = ExtResource("4")
 count = 8
+orientation = 2
 
-[node name="R31_PitSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(1024, 360)
+[node name="C_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(1584, 160)
 script = ExtResource("4")
-count = 10
+count = 8
+orientation = 2
 
-[node name="R31_SteamVentHoriz" parent="Hazards" instance=ExtResource("16")]
-position = Vector2(1256, 290)
-blast_direction = Vector2(-1, 0)
-blast_length = 60.0
+[node name="F_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(2976, 179)
+script = ExtResource("4")
+count = 14
+
+[node name="F_Spikes2" type="Area2D" parent="Hazards"]
+position = Vector2(3296, 179)
+script = ExtResource("4")
+count = 14
+
+[node name="B_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(736, 339)
+script = ExtResource("4")
+count = 16
+
+[node name="R11_SteamVent" parent="Hazards" instance=ExtResource("20")]
+position = Vector2(2248, 318)
 idle_time = 1.8
 warn_time = 0.4
 blast_time = 0.8
 
-[node name="R22_CeilingSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(704, 376)
-script = ExtResource("4")
-count = 4
-orientation = 1
+[node name="R31_SteamVentHoriz" parent="Hazards" instance=ExtResource("20")]
+position = Vector2(2688, 240)
+blast_direction = Vector2(-1, 0)
+blast_length = 64.0
+idle_time = 2.0
+warn_time = 0.4
+blast_time = 0.9
 
-[node name="R32_CoreSpikes" type="Area2D" parent="Hazards"]
-position = Vector2(1024, 520)
-script = ExtResource("4")
-count = 9
+[node name="CollisionShape2D" parent="Hazards/R31_SteamVentHoriz" index="0"]
+position = Vector2(-30, 0)
+rotation = 1.5708
 
-[node name="R32_SteamVent1" parent="Hazards" instance=ExtResource("16")]
-position = Vector2(1080, 520)
+[node name="R32_SteamVent1" parent="Hazards" instance=ExtResource("20")]
+position = Vector2(3240, 158)
 idle_time = 1.6
 warn_time = 0.4
 blast_time = 0.9
 
-[node name="R32_SteamVent2" parent="Hazards" instance=ExtResource("16")]
-position = Vector2(1130, 520)
+[node name="R32_SteamVent2" parent="Hazards" instance=ExtResource("20")]
+position = Vector2(3640, 158)
 idle_time = 2.0
 warn_time = 0.4
 blast_time = 0.9
 
 [node name="Mechanics" type="Node2D" parent="."]
 
-[node name="RustyChest" parent="Mechanics" instance=ExtResource("13")]
+[node name="RustyChest" parent="Mechanics" instance=ExtResource("17")]
 position = Vector2(65, 153)
 initial_items = ["gravity_coil", "health_pack"]
 
-[node name="CelesteKey_Corridor" parent="Mechanics" instance=ExtResource("14")]
-position = Vector2(750, 204)
+[node name="CelesteKey_Corridor" parent="Mechanics" instance=ExtResource("18")]
+position = Vector2(2400, 122)
 
-[node name="Gate_KeyBlock" parent="Mechanics" instance=ExtResource("15")]
-position = Vector2(728, 496)
+[node name="Gate_KeyBlock" parent="Mechanics" instance=ExtResource("19")]
+position = Vector2(2552, 296)
 block_width = 16.0
 block_height = 48.0
 
 [node name="GravityAnomaly_Down" parent="Mechanics" instance=ExtResource("7")]
-position = Vector2(750, 440)
+position = Vector2(2600, 304)
 
 [node name="GravityAnomaly_Up" parent="Mechanics" instance=ExtResource("7")]
-position = Vector2(880, 420)
+position = Vector2(2836, 48)
 
 [node name="HealthPack_Ledge" parent="Mechanics" instance=ExtResource("8")]
-position = Vector2(840, 244)
+position = Vector2(536, 144)
+
+[node name="HealthPack_R11" parent="Mechanics" instance=ExtResource("8")]
+position = Vector2(1560, 114)
 
 [node name="HealthPack_R31" parent="Mechanics" instance=ExtResource("8")]
-position = Vector2(1220, 210)
+position = Vector2(1896, 226)
 
 [node name="Collectibles" type="Node2D" parent="."]
 
 [node name="Crystal_10" parent="Collectibles" instance=ExtResource("12")]
-position = Vector2(890, 30)
+position = Vector2(1112, 114)
 crystal_id = "crystal_m10"
 
 [node name="Crystal_21" parent="Collectibles" instance=ExtResource("12")]
-position = Vector2(880, 244)
+position = Vector2(2504, 40)
 crystal_id = "crystal_m21"
 
 [node name="Crystal_22" parent="Collectibles" instance=ExtResource("12")]
-position = Vector2(1100, 410)
+position = Vector2(3750, 50)
 crystal_id = "crystal_m22"
 
 [node name="NPCs" type="Node2D" parent="."]
 
-[node name="Rusty" parent="NPCs" instance=ExtResource("18")]
+[node name="Rusty" parent="NPCs" instance=ExtResource("13")]
 position = Vector2(100, 152)
+
+[node name="EventTrigger_MineDepths" parent="NPCs" instance=ExtResource("16")]
+position = Vector2(190, 130)
+speaker_name = "Pohled do krystalové propasti"
+dialogue_pages = [
+"Pod dřevěným lešením září obří ametystové a safírové geody. S cívkou Gravity Coil od Rustyho dokážeš dashovat i přes nejširší průrvy."
+]
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Drone_Chasm" parent="Enemies" instance=ExtResource("11")]
-position = Vector2(460, 110)
+position = Vector2(880, 196)
 
 [node name="PatrolGuard_Shaft" parent="Enemies" instance=ExtResource("9")]
-position = Vector2(450, 320)
+position = Vector2(1896, 228)
 
 [node name="Shooter_Tunnel" parent="Enemies" instance=ExtResource("10")]
-position = Vector2(830, 244)
+position = Vector2(2480, 276)
 
 [node name="Drone_Ledge" parent="Enemies" instance=ExtResource("11")]
-position = Vector2(1140, 220)
+position = Vector2(2736, 122)
 
 [node name="Drone_Final" parent="Enemies" instance=ExtResource("11")]
-position = Vector2(1100, 430)
+position = Vector2(3580, 100)
 
 [node name="LevelEnd" parent="." instance=ExtResource("2")]
-position = Vector2(912, 650)
+position = Vector2(3806, 70)
 next_level = "res://level3.tscn"
-stage_title = "ETAPA 2: KRYSTALOVÉ DOLY"
-stage_index = 2
+stage_title = "KAPITOLA 5: KRYSTALOVÉ DOLY"
+stage_index = 5
 max_stage_crystals = 3
 
 [node name="Player" parent="." instance=ExtResource("1")]

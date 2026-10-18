@@ -1,0 +1,32 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_y6msu"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_3md0u"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_0l81r"]
+[ext_resource type="PackedScene" path="res://mechanics/mine_cart.tscn" id="4_1ak8t"]
+
+[node name="tc_c03" type="Node2D" unique_id=910568983]
+script = ExtResource("1_y6msu")
+room_id = "tc_c03"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1277538248]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1239252136]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("2_3md0u")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=244218835]
+position = Vector2(24, 135)
+script = ExtResource("3_0l81r")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=362597399]
+position = Vector2(296, 135)
+script = ExtResource("3_0l81r")
+
+[node name="Cart" parent="." unique_id=204849781 instance=ExtResource("4_1ak8t")]
+position = Vector2(88, 152)
+rail_end = Vector2(160, 0)

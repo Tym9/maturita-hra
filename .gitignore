@@ -8,3 +8,4 @@
 graphify-out/
 .graphifyignore
 skills-lock.json
+__pycache__/

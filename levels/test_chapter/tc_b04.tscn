@@ -1,0 +1,40 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_u3d2d"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="2_1bsto"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="3_rpyjd"]
+[ext_resource type="PackedScene" path="res://mechanics/falling_rock.tscn" id="4_ub0gr"]
+
+[node name="tc_b04" type="Node2D" unique_id=1129788656]
+script = ExtResource("1_u3d2d")
+room_id = "tc_b04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1325265806]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1113283220]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAkAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAkAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAkAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAATAAEAAAAAAAAAAAATAAIAAAAAAAAAAAATAAMAAAAAAAAAAAATAAQAAAAAAAAAAAA=")
+tile_set = ExtResource("2_1bsto")
+
+[node name="RespawnPoint1" type="Marker2D" parent="." unique_id=1913467816]
+position = Vector2(24, 135)
+script = ExtResource("3_rpyjd")
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=273586237]
+position = Vector2(296, 135)
+script = ExtResource("3_rpyjd")
+
+[node name="Rock1" parent="." unique_id=1143441289 instance=ExtResource("4_ub0gr")]
+position = Vector2(88, 16)
+
+[node name="Rock2" parent="." unique_id=1577099707 instance=ExtResource("4_ub0gr")]
+position = Vector2(136, 16)
+
+[node name="Rock3" parent="." unique_id=181675045 instance=ExtResource("4_ub0gr")]
+position = Vector2(184, 16)
+
+[node name="Rock4" parent="." unique_id=1045135391 instance=ExtResource("4_ub0gr")]
+position = Vector2(232, 16)

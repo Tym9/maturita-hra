@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="PackedScene" path="res://player.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://level_end.tscn" id="2"]
@@ -7,7 +7,8 @@
 [ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="8"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="10"]
 
 [node name="TutorialLevel" type="Node2D"]
 
@@ -17,7 +18,8 @@
 script = ExtResource("4")
 room_x = 0
 room_y = 0
-room_title = "PROLOG 0-0: STARÁ HORSKÁ CESTA"
+room_group = "cesta"
+room_title = "PROLOG 1: STARÁ HORSKÁ CESTA"
 style = 1
 ground_y = 160.0
 lamp_xs = PackedFloat32Array(70, 296)
@@ -26,513 +28,583 @@ lamp_xs = PackedFloat32Array(70, 296)
 script = ExtResource("4")
 room_x = 1
 room_y = 0
-room_title = "PROLOG 1-0: ZAROSTLÝ PODJEZD"
+room_group = "cesta"
 style = 1
 
 [node name="Room_2_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 2
 room_y = 0
-room_title = "PROLOG 2-0: LESNÍ PRŮRVA"
+room_group = "cesta"
 style = 1
 
 [node name="Room_3_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 3
 room_y = 0
-room_title = "PROLOG 3-0: SKALNÍ ÚBOČÍ"
+room_group = "uboci"
+room_title = "PROLOG 2: SKALNÍ ÚBOČÍ"
 style = 1
 
 [node name="Room_4_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 4
 room_y = 0
-room_title = "PROLOG 4-0: KAMENNÁ PRŮRVA"
+room_group = "uboci"
 style = 1
+ground_y = 160.0
+lamp_xs = PackedFloat32Array(150)
 
 [node name="Room_5_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 5
 room_y = 0
-room_title = "PROLOG 5-0: ZCHÁTRALÝ DŘEVĚNÝ MOST"
+room_group = "uboci"
 style = 1
 
 [node name="Room_6_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 6
 room_y = 0
-room_title = "PROLOG 6-0: SKRÝŠ PRŮZKUMNÍKA"
+room_group = "most"
+room_title = "PROLOG 3: ZCHÁTRALÝ MOST"
 style = 1
-ground_y = 144.0
-lamp_xs = PackedFloat32Array(20, 290)
 
 [node name="Room_7_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
 room_x = 7
 room_y = 0
-room_title = "PROLOG 7-0: VSTUP DO DÍLEN A ŠACHTY"
-style = 2
-ground_y = 144.0
-lamp_xs = PackedFloat32Array(56)
+room_group = "most"
+style = 1
 
-[node name="Room_7_1" type="Node2D" parent="Backdrops"]
+[node name="Room_8_0" type="Node2D" parent="Backdrops"]
 script = ExtResource("4")
-room_x = 7
+room_x = 8
+room_y = 0
+room_group = "skrys"
+room_title = "PROLOG 4: SKRÝŠ PRŮZKUMNÍKA"
+style = 1
+ground_y = 144.0
+lamp_xs = PackedFloat32Array(20, 290)
+
+[node name="Room_9_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 9
+room_y = 0
+room_group = "skrys"
+style = 1
+ground_y = 144.0
+lamp_xs = PackedFloat32Array(150)
+
+[node name="Room_10_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 10
+room_y = 0
+room_group = "vchod"
+room_title = "PROLOG 5: OKRAJ ROKLE"
+style = 1
+
+[node name="Room_11_0" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 11
+room_y = 0
+room_group = "vchod"
+style = 1
+
+[node name="Room_10_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 10
 room_y = 1
-style = 3
-room_title = "PROLOG 7-1: ŠIKMÁ ŠTOLA DO ETAPY 1"
+room_group = "stola"
+room_title = "PROLOG 6: SESTUP DO ROKLE"
+style = 1
+
+[node name="Room_11_1" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 11
+room_y = 1
+room_group = "stola"
+style = 1
+
+[node name="Room_10_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 10
+room_y = 2
+room_group = "stola"
+style = 1
+
+[node name="Room_11_2" type="Node2D" parent="Backdrops"]
+script = ExtResource("4")
+room_x = 11
+room_y = 2
+room_group = "stola"
+style = 1
+
+[node name="RavineDecor" type="Node2D" parent="."]
+
+[node name="Rim" type="Node2D" parent="RavineDecor"]
+position = Vector2(3200, 0)
+script = ExtResource("10")
+size = Vector2(640, 180)
+
+[node name="Descent" type="Node2D" parent="RavineDecor"]
+position = Vector2(3200, 180)
+script = ExtResource("10")
+size = Vector2(640, 360)
 
 [node name="Platforms" type="Node2D" parent="."]
 
-[node name="R0_WallLeft" type="StaticBody2D" parent="Platforms"]
+[node name="P1_Border1" type="StaticBody2D" parent="Platforms"]
 position = Vector2(0, 0)
+script = ExtResource("3")
+tiles_x = 239
+tiles_y = 1
+theme = 0
+visible = false
+
+[node name="E_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3824, 0)
+script = ExtResource("3")
+tiles_x = 1
+tiles_y = 34
+theme = 6
+
+[node name="P1_Border2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 16)
 script = ExtResource("3")
 tiles_x = 1
 tiles_y = 11
 theme = 0
 visible = false
 
-[node name="R0_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(0, 0)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R0_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(0, 160)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 2
-theme = 4
-
-[node name="R0_Rock1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(128, 144)
-script = ExtResource("3")
-tiles_x = 3
-tiles_y = 1
-theme = 6
-
-[node name="R0_Rock2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(208, 128)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 2
-theme = 6
-
-[node name="R1_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 0)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R1_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(320, 160)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 2
-theme = 4
-
-[node name="R1_Overhang" type="StaticBody2D" parent="Platforms"]
-position = Vector2(400, 136)
-script = ExtResource("3")
-tiles_x = 8
-tiles_y = 2
-theme = 4
-
-[node name="R1_Ledge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(560, 128)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 2
-theme = 4
-
-[node name="R2_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 0)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R2_EntryLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(640, 128)
-script = ExtResource("3")
-tiles_x = 4
-tiles_y = 2
-theme = 4
-
-[node name="R2_PitFloor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(704, 168)
-script = ExtResource("3")
-tiles_x = 10
-tiles_y = 1
-theme = 6
-
-[node name="R2_ReturnStep" type="StaticBody2D" parent="Platforms"]
-position = Vector2(832, 148)
-script = ExtResource("3")
-tiles_x = 2
-tiles_y = 1
-theme = 4
-
-[node name="R2_ExitLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(864, 128)
+[node name="P2_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1088, 16)
 script = ExtResource("3")
 tiles_x = 6
-tiles_y = 2
-theme = 4
+tiles_y = 8
+theme = 6
 
-[node name="R3_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 0)
+[node name="P2_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1648, 16)
 script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
+tiles_x = 1
+tiles_y = 8
+theme = 6
 
-[node name="R3_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(960, 160)
-script = ExtResource("3")
-tiles_x = 8
-tiles_y = 2
-theme = 4
-
-[node name="R3_CliffWall" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1088, 48)
+[node name="P2_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1360, 48)
 script = ExtResource("3")
 tiles_x = 2
 tiles_y = 7
 theme = 6
 
-[node name="R3_RestLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1056, 104)
-script = ExtResource("3")
-tiles_x = 2
-tiles_y = 1
-theme = 4
-
-[node name="R3_UpperLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1120, 48)
+[node name="P2_Grass1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1392, 48)
 script = ExtResource("3")
 tiles_x = 10
 tiles_y = 2
 theme = 4
 
-[node name="R4_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1280, 0)
+[node name="P2_Stone4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1712, 64)
 script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
+tiles_x = 1
+tiles_y = 6
+theme = 6
 
-[node name="R4_EntryLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1280, 48)
+[node name="P2_Grass2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1728, 64)
 script = ExtResource("3")
-tiles_x = 4
+tiles_x = 18
 tiles_y = 2
 theme = 4
 
-[node name="R4_DropFloor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1344, 160)
+[node name="P4_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2848, 64)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 5
+theme = 6
+
+[node name="P1_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(720, 96)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 4
+theme = 6
+
+[node name="P2_Stone5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1728, 96)
+script = ExtResource("3")
+tiles_x = 18
+tiles_y = 6
+theme = 6
+
+[node name="P4_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2784, 96)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 5
+
+[node name="P1_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(336, 128)
+script = ExtResource("3")
+tiles_x = 4
+tiles_y = 2
+theme = 6
+
+[node name="P1_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(256, 144)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 1
+theme = 6
+
+[node name="P3_Grass1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2304, 144)
+script = ExtResource("3")
+tiles_x = 44
+tiles_y = 3
+theme = 4
+
+[node name="P4_Grass1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3072, 144)
 script = ExtResource("3")
 tiles_x = 16
 tiles_y = 2
 theme = 4
 
-[node name="R4_ChimneyWallLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1400, 32)
+[node name="P1_Grass1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(16, 160)
 script = ExtResource("3")
-tiles_x = 1
-tiles_y = 7
-theme = 6
-
-[node name="R4_ChimneyWallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1460, 16)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 7
-theme = 6
-
-[node name="R4_ExitLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1476, 48)
-script = ExtResource("3")
-tiles_x = 7
+tiles_x = 29
 tiles_y = 2
 theme = 4
 
-[node name="R5_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1600, 0)
+[node name="P1_Grass2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(528, 160)
 script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R5_EntryLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1600, 48)
-script = ExtResource("3")
-tiles_x = 4
+tiles_x = 5
 tiles_y = 2
-theme = 5
+theme = 4
 
-[node name="R5_Crumble1" parent="Platforms" instance=ExtResource("5")]
-position = Vector2(1690, 70)
-
-[node name="R5_Crumble2" parent="Platforms" instance=ExtResource("5")]
-position = Vector2(1750, 90)
-
-[node name="R5_Crumble3" parent="Platforms" instance=ExtResource("5")]
-position = Vector2(1810, 110)
-
-[node name="R5_ExitLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1860, 128)
+[node name="P1_Grass3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(656, 160)
 script = ExtResource("3")
-tiles_x = 4
+tiles_x = 11
 tiles_y = 2
-theme = 5
+theme = 4
 
-[node name="R5_PitFloor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1664, 168)
+[node name="P1_Grass4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(944, 160)
 script = ExtResource("3")
-tiles_x = 14
-tiles_y = 1
-theme = 6
+tiles_x = 49
+tiles_y = 2
+theme = 4
 
-[node name="R5_ReturnLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1824, 148)
+[node name="P3_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2240, 160)
 script = ExtResource("3")
 tiles_x = 2
 tiles_y = 1
 theme = 5
 
-[node name="R6_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1920, 0)
+[node name="P4_Grass2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3008, 160)
 script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R6_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(1920, 144)
-script = ExtResource("3")
-tiles_x = 20
+tiles_x = 4
 tiles_y = 2
 theme = 4
 
-[node name="R6_MidLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2060, 100)
+[node name="E_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3328, 160)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 2
+theme = 5
+
+[node name="P1_Grass5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(480, 176)
 script = ExtResource("3")
 tiles_x = 3
 tiles_y = 1
-theme = 5
-
-[node name="R6_SecretLedge" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2120, 56)
-script = ExtResource("3")
-tiles_x = 5
-tiles_y = 1
-theme = 5
-
-[node name="R7_Ceiling" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2240, 0)
-script = ExtResource("3")
-tiles_x = 20
-tiles_y = 1
-theme = 0
-visible = false
-
-[node name="R7_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2240, 144)
-script = ExtResource("3")
-tiles_x = 8
-tiles_y = 2
 theme = 4
 
-[node name="R7_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2544, 0)
+[node name="P1_Grass6" type="StaticBody2D" parent="Platforms"]
+position = Vector2(608, 176)
+script = ExtResource("3")
+tiles_x = 3
+tiles_y = 1
+theme = 4
+
+[node name="P1_Grass7" type="StaticBody2D" parent="Platforms"]
+position = Vector2(832, 176)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 1
+theme = 4
+
+[node name="P3_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2016, 176)
+script = ExtResource("3")
+tiles_x = 18
+tiles_y = 1
+theme = 6
+
+[node name="P4_Grass3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3072, 176)
+script = ExtResource("3")
+tiles_x = 8
+tiles_y = 1
+theme = 4
+
+[node name="E_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3200, 176)
 script = ExtResource("3")
 tiles_x = 1
-tiles_y = 11
+tiles_y = 23
 theme = 6
 
-[node name="R7_Rock" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2368, 16)
+[node name="E_Grass1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3216, 176)
+script = ExtResource("3")
+tiles_x = 7
+tiles_y = 1
+theme = 4
+
+[node name="E_Stone4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3360, 176)
+script = ExtResource("3")
+tiles_x = 22
+tiles_y = 1
+theme = 6
+
+[node name="E_Stone5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3792, 176)
+script = ExtResource("3")
+tiles_x = 2
+tiles_y = 1
+theme = 6
+
+[node name="U_Wood1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3648, 256)
 script = ExtResource("3")
 tiles_x = 11
-tiles_y = 4
-theme = 6
+tiles_y = 1
+theme = 5
 
-[node name="R7_Beam" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2352, 80)
+[node name="U_Wood2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3424, 320)
+script = ExtResource("3")
+tiles_x = 14
+tiles_y = 1
+theme = 5
+
+[node name="U_Wood3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3616, 384)
+script = ExtResource("3")
+tiles_x = 13
+tiles_y = 1
+theme = 5
+
+[node name="U_Wood4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3440, 448)
 script = ExtResource("3")
 tiles_x = 12
 tiles_y = 1
 theme = 5
 
-[node name="R7_Stair1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2368, 160)
+[node name="U_Stone1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3216, 512)
 script = ExtResource("3")
-tiles_x = 2
-tiles_y = 1
-theme = 5
-
-[node name="R7_Stair2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2400, 176)
-script = ExtResource("3")
-tiles_x = 3
-tiles_y = 1
-theme = 5
-
-[node name="R7B_WallLeft" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2240, 176)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 9
-theme = 6
-
-[node name="R7B_WallRight" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2544, 176)
-script = ExtResource("3")
-tiles_x = 1
-tiles_y = 9
-theme = 6
-
-[node name="R7B_Floor" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2240, 320)
-script = ExtResource("3")
-tiles_x = 20
+tiles_x = 4
 tiles_y = 2
 theme = 6
 
-[node name="R7B_Landing1" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2416, 240)
+[node name="U_Stone2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3328, 512)
 script = ExtResource("3")
-tiles_x = 8
-tiles_y = 1
-theme = 5
+tiles_x = 31
+tiles_y = 2
+theme = 6
 
-[node name="R7B_Landing2" type="StaticBody2D" parent="Platforms"]
-position = Vector2(2288, 272)
+[node name="U_Stone3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3280, 528)
 script = ExtResource("3")
-tiles_x = 9
+tiles_x = 3
 tiles_y = 1
-theme = 5
+theme = 6
+
+[node name="R5_Crumble1" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(2056, 83)
+
+[node name="R5_Crumble2" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(2112, 93)
+
+[node name="R5_Crumble3" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(2168, 103)
+
+[node name="R5_Crumble4" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(2224, 113)
+
+[node name="R5_Crumble5" parent="Platforms" instance=ExtResource("5")]
+position = Vector2(2280, 123)
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="P4_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(3008, 163)
+script = ExtResource("9")
+count = 4
+
+[node name="P1_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(608, 179)
+script = ExtResource("9")
+count = 3
+
+[node name="P1_Spikes2" type="Area2D" parent="Hazards"]
+position = Vector2(832, 179)
+script = ExtResource("9")
+count = 7
+
+[node name="U_Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(3280, 531)
+script = ExtResource("9")
+count = 3
 
 [node name="Mechanics" type="Node2D" parent="."]
 
 [node name="StarterChest" parent="Mechanics" instance=ExtResource("7")]
-position = Vector2(2000, 137)
+position = Vector2(2650, 137)
 initial_items = ["health_pack"]
 
 [node name="Collectibles" type="Node2D" parent="."]
 
 [node name="Crystal_Tut1" parent="Collectibles" instance=ExtResource("6")]
-position = Vector2(784, 90)
+position = Vector2(888, 92)
 crystal_id = "crystal_tut_1"
 
 [node name="Crystal_Tut2" parent="Collectibles" instance=ExtResource("6")]
-position = Vector2(1750, 60)
+position = Vector2(2168, 64)
 crystal_id = "crystal_tut_2"
 
 [node name="Crystal_Tut3" parent="Collectibles" instance=ExtResource("6")]
-position = Vector2(2160, 36)
+position = Vector2(2880, 44)
 crystal_id = "crystal_tut_3"
 
 [node name="TutorialSigns" type="Node2D" parent="."]
 
 [node name="Sign_R0" type="Label" parent="TutorialSigns"]
-offset_left = 50.0
-offset_top = 70.0
-offset_right = 220.0
-offset_bottom = 110.0
+offset_left = 40.0
+offset_top = 62.0
+offset_right = 260.0
+offset_bottom = 102.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 9
-text = "A / D : Běh
-MEZERNÍK : Skok"
+text = "A / D : běh
+W : skok (drž W = vyšší skok)"
 
-[node name="Sign_R1" type="Label" parent="TutorialSigns"]
-offset_left = 370.0
-offset_top = 80.0
-offset_right = 540.0
-offset_bottom = 120.0
+[node name="Sign_Spikes" type="Label" parent="TutorialSigns"]
+offset_left = 470.0
+offset_top = 40.0
+offset_right = 600.0
+offset_bottom = 70.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
-text = "[S] : Skrčení a plazení
-pod nízkými překážkami"
+text = "BODÁKY zabíjejí!
+Přeskoč je skokem [W]."
 
 [node name="Sign_R2" type="Label" parent="TutorialSigns"]
-offset_left = 680.0
-offset_top = 60.0
-offset_right = 860.0
-offset_bottom = 100.0
+offset_left = 612.0
+offset_top = 56.0
+offset_right = 790.0
+offset_bottom = 96.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
 text = "DVOJSKOK:
-Stiskni MEZERNÍK znovu ve vzduchu!"
+Stiskni W znovu ve vzduchu!"
 
-[node name="Sign_R3" type="Label" parent="TutorialSigns"]
-offset_left = 980.0
+[node name="Sign_R1" type="Label" parent="TutorialSigns"]
+offset_left = 975.0
 offset_top = 70.0
-offset_right = 1160.0
+offset_right = 1082.0
 offset_bottom = 110.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
-text = "ŠPLHÁNÍ PO STĚNĚ:
-Drž směr ke stěně a MEZERNÍK
-(Sleduj ukazatel staminy!)"
+text = "[S] : skrčení a plazení
+(drž S pod nízkým stropem)"
 
-[node name="Sign_R4" type="Label" parent="TutorialSigns"]
-offset_left = 1300.0
-offset_top = 80.0
-offset_right = 1480.0
+[node name="Sign_R3" type="Label" parent="TutorialSigns"]
+offset_left = 1196.0
+offset_top = 60.0
+offset_right = 1356.0
 offset_bottom = 120.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
+text = "ŠPLHÁNÍ: u stěny drž [Shift],
+W / S = nahoru / dolů.
+Sleduj staminu! (Automatické lezení
+lze zapnout v menu Esc)"
+
+[node name="Sign_R4" type="Label" parent="TutorialSigns"]
+offset_left = 1480.0
+offset_top = 98.0
+offset_right = 1646.0
+offset_bottom = 138.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
 text = "ODRAZ OD STĚNY (WALL-JUMP):
+u stěny stiskni W a drž směr OD stěny.
 Skákej střídavě ze stěny na stěnu!"
 
 [node name="Sign_R5" type="Label" parent="TutorialSigns"]
-offset_left = 1630.0
-offset_top = 20.0
-offset_right = 1850.0
-offset_bottom = 60.0
+offset_left = 1790.0
+offset_top = 26.0
+offset_right = 2010.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
 text = "ZCHÁTRALÝ MOST:
 Drolící se bloky se po došlapu rozpadnou!"
 
 [node name="Sign_R6" type="Label" parent="TutorialSigns"]
-offset_left = 1950.0
-offset_top = 70.0
-offset_right = 2150.0
-offset_bottom = 110.0
+offset_left = 2570.0
+offset_top = 62.0
+offset_right = 2745.0
+offset_bottom = 112.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
-text = "[E] : Prohledat truhlu
-[I] / [TAB] : Batoh a inventář"
+text = "[E] : otevřít truhlu a vzít lékárničku
+(klikni na předmět = přenos do batohu)
+[I] / [TAB] : batoh    [Esc] : pauza"
 
 [node name="Sign_R7" type="Label" parent="TutorialSigns"]
-offset_left = 2250.0
+offset_left = 3206.0
 offset_top = 60.0
-offset_right = 2362.0
+offset_right = 3318.0
 offset_bottom = 100.0
 theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
 theme_override_font_sizes/font_size = 8
-text = "VSTUP DO STARÝCH DOLŮ
-Schody vedou dolů..."
+text = "OKRAJ ROKLE
+Dole za plechovou hradbou blikají lampy..."
+
+[node name="Sign_R8" type="Label" parent="TutorialSigns"]
+offset_left = 3470.0
+offset_top = 108.0
+offset_right = 3700.0
+offset_bottom = 148.0
+theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
+theme_override_font_sizes/font_size = 8
+text = "ROKLE: seskoč dolů po starém lešení.
+Na dně si dej pozor na bodáky!"
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector2(40, 140)
 
 [node name="LevelEnd" parent="." instance=ExtResource("2")]
-position = Vector2(2272, 300)
-next_level = "res://level1.tscn"
+position = Vector2(3260, 440)
+next_level = "res://levels/c1/chapter1.tscn"
 stage_title = "PROLOG: NA POVRCHU"
 stage_index = 0
 max_stage_crystals = 3

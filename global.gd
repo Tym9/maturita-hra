@@ -2,6 +2,12 @@ extends Node
 
 ## Globální správce statistik a stavu etap (Celeste-style per-chapter & total metrics).
 
+# Systém místností kapitoly (mechanics/chapter.gd); pro dialogy a spouštěče událostí
+signal room_entered(room_id: String)
+signal room_exited(room_id: String)
+# Po respawnu hráče: nepřátelé, plošiny a nesebrané krystaly se vrátí do výchozího stavu
+signal room_reset
+
 # Celkové statistiky napříč celou hrou
 var death_count: int = 0:
 	set(val):
@@ -45,8 +51,35 @@ var completed_stages: Array[Dictionary] = []
 
 var last_detected_scene_path: String = ""
 
+# Nastavení hry (ukládá se do user://settings.cfg)
+const SETTINGS_PATH = "user://settings.cfg"
+const GRAB_BUTTON = 0 # Celeste: držení zdi jen se stisknutým Grab (Shift)
+const GRAB_AUTO = 1   # přilepení ke zdi automaticky při dotyku
+var grab_mode: int = GRAB_BUTTON:
+	set(val):
+		grab_mode = val
+		var cfg = ConfigFile.new()
+		cfg.load(SETTINGS_PATH)
+		cfg.set_value("controls", "grab_mode", val)
+		cfg.save(SETTINGS_PATH)
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	var cfg = ConfigFile.new()
+	if cfg.load(SETTINGS_PATH) == OK:
+		grab_mode = cfg.get_value("controls", "grab_mode", GRAB_BUTTON)
+
+func grab_mode_label() -> String:
+	return "Lezení: Shift (Grab)" if grab_mode == GRAB_BUTTON else "Lezení: Automaticky"
+
+func toggle_grab_mode():
+	grab_mode = GRAB_AUTO if grab_mode == GRAB_BUTTON else GRAB_BUTTON
+
+func _input(event):
+	# F11 přepíná celou obrazovku / okno
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
+		var fs = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if fs else DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func _process(delta):
 	# Automatická detekce načtené úrovně
@@ -65,12 +98,18 @@ func _on_scene_changed(path: String):
 	match path:
 		"res://tutorial_level.tscn":
 			start_stage(0, "PROLOG: NA POVRCHU", 3)
+		"res://levels/c1/chapter1.tscn":
+			start_stage(1, "KAPITOLA 1: ZÁKLADNA ODBOJE", 7)
+		"res://levels/c2/chapter2.tscn":
+			start_stage(2, "KAPITOLA 2: SMALLVILLE", 12)
+		"res://levels/c3/chapter3.tscn":
+			start_stage(3, "KAPITOLA 3: PARNÍ MĚSTO", 12)
 		"res://level1.tscn":
-			start_stage(1, "ETAPA 1: STARÉ DÍLNY", 5)
+			start_stage(4, "KAPITOLA 4: STARÉ DÍLNY", 5)
 		"res://level2.tscn":
-			start_stage(2, "ETAPA 2: KRYSTALOVÉ DOLY", 3)
+			start_stage(5, "KAPITOLA 5: KRYSTALOVÉ DOLY", 3)
 		"res://level3.tscn":
-			start_stage(3, "ETAPA 3: PŘEDPOLÍ REAKTORU", 3)
+			start_stage(6, "KAPITOLA 6: PŘEDPOLÍ REAKTORU", 3)
 		"res://boss_room.tscn":
 			stage_active = false
 		"res://ui/stage_clear_screen.tscn":

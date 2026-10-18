@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-# Typ 2: Střelec korporace (Corporate Shooter)
-# Když spatří hráče v dosahu, zastaví se, zamíří varovným laserovým paprskem a vystřelí parní projektil!
+# Typ 2: Střelec korporace (Steam Turret)
+# Když hráče uvidí (v dosahu a bez překážky), zamíří varovným laserovým paprskem (`aim_duration`,
+# telegraf ≥ 0.5 s) a vystřelí pomalý parní projektil - seknutí hasákem ho zničí a obnoví dash.
+# Dopad shora = odraz + dash, boční dotyk zraní. Útoky hráče přes take_hit.
 
 @export var max_health: int = 2
 @export var detection_range: float = 210.0
@@ -58,7 +60,7 @@ func _physics_process(delta):
 
 	if is_instance_valid(player):
 		var dist_to_player = global_position.distance_to(player.global_position)
-		var can_see_player = dist_to_player <= detection_range
+		var can_see_player = dist_to_player <= detection_range and _clear_line(player)
 		
 		# Otočení k hráči při detekci
 		if can_see_player:
@@ -102,11 +104,14 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	# Kontrola kontaktu s hráčem v HurtArea
-	if hurt_area and hurt_timer <= 0:
-		for body in hurt_area.get_overlapping_bodies():
-			if body.name == "Player" and not is_dead:
-				_damage_player(body)
+	# Dotyk s hráčem: dopad shora = odraz + dash, jinak zásah
+	if hurt_area and EnemyContact.resolve(self, hurt_area, Vector2.UP, hurt_timer <= 0) == EnemyContact.STOMP:
+		take_hit(max_health, Vector2.DOWN)
+
+## Mezi střelcem a hráčem není pevná překážka (nestřílí skrz zdi).
+func _clear_line(player: Node2D) -> bool:
+	var query := PhysicsRayQueryParameters2D.create(global_position, player.global_position, 1, [get_rid(), player.get_rid()])
+	return get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
 func _shoot(target_pos: Vector2):
 	if is_dead:
@@ -135,7 +140,11 @@ func _shoot(target_pos: Vector2):
 	else:
 		add_child(bullet)
 
+## Starší jméno zásahu (testy, starší kód).
 func take_damage(amount: int = 1, from_dir: Vector2 = Vector2.ZERO):
+	take_hit(amount, from_dir)
+
+func take_hit(amount: int = 1, from_dir: Vector2 = Vector2.ZERO):
 	if is_dead:
 		return
 		
@@ -171,8 +180,6 @@ func _die():
 	var col_shape = get_node_or_null("CollisionShape2D")
 	if col_shape:
 		col_shape.set_deferred("disabled", true)
-	if has_node("StompArea"):
-		$StompArea.set_deferred("monitoring", false)
 	if has_node("HurtArea"):
 		$HurtArea.set_deferred("monitoring", false)
 		
@@ -204,23 +211,3 @@ func _draw():
 		draw_rect(Rect2(-bar_w * 0.5 + 1.0, pos_y + 0.5, (bar_w - 2.0) * ratio, bar_h - 1.0), Color(0.95, 0.25, 0.2, 0.95))
 		draw_rect(Rect2(-bar_w * 0.5, pos_y, bar_w, bar_h), Color(0.08, 0.08, 0.08, 0.9), false, 1.0)
 
-func _damage_player(body: Node2D):
-	if is_dead:
-		return
-	if body.name == "Player":
-		if body.velocity.y <= 0 or body.global_position.y > global_position.y - 8:
-			if body.has_method("take_damage"):
-				body.take_damage(1, global_position)
-			elif body.has_method("die"):
-				body.die()
-
-func _on_stomp_area_body_entered(body):
-	if is_dead:
-		return
-	if body.name == "Player":
-		if body.velocity.y > 0:
-			body.velocity.y = -250.0
-			take_damage(max_health, Vector2.DOWN)
-
-func _on_hurt_area_body_entered(body):
-	_damage_player(body)

@@ -29,14 +29,6 @@ position = Vector2(-12, 0)
 target_position = Vector2(0, 15)
 collision_mask = 1
 
-[node name="StompArea" type="Area2D" parent="."]
-position = Vector2(0, -5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
-position = Vector2(0, -1)
-shape = SubResource("2")
-debug_color = Color(0.1, 0.8, 0.1, 0.4)
-
 [node name="HurtArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
@@ -44,5 +36,3 @@ position = Vector2(0, 5)
 shape = SubResource("3")
 debug_color = Color(0.8, 0.1, 0.1, 0.4)
 
-[connection signal="body_entered" from="StompArea" to="." method="_on_stomp_area_body_entered"]
-[connection signal="body_entered" from="HurtArea" to="." method="_on_hurt_area_body_entered"]

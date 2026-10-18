@@ -5,19 +5,29 @@ extends Node
 ## Uchovává stav hráče, sebrané krystaly, statistiky i obsah inventáře.
 
 const SAVE_PATH = "user://save.json"
+# Trvalý postup napříč restarty (jako záznamy v Celeste): sebrané krystaly a stavy přepínačů.
+# Zapisuje se hned při změně, nezávisle na ručním uložení pozice.
+const PROGRESS_PATH = "user://progress.json"
 
 var current_save_data: Dictionary = {}
 var pending_load: bool = false
+var progress: Dictionary = {"crystals": {}, "grand": {}, "flags": {}}
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if has_save_file():
 		current_save_data = load_game_data()
+	if FileAccess.file_exists(PROGRESS_PATH):
+		var data = JSON.parse_string(FileAccess.get_file_as_string(PROGRESS_PATH))
+		if data is Dictionary:
+			for key in progress:
+				if data.get(key) is Dictionary:
+					progress[key] = data[key]
 
 func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
-func save_game(player_node = null, scene_path: String = "") -> bool:
+func save_game(player_node = null, scene_path: String = "", room_id: String = "") -> bool:
 	var current_scene_path = scene_path
 	if current_scene_path.is_empty() and get_tree().current_scene:
 		current_scene_path = get_tree().current_scene.scene_file_path
@@ -26,6 +36,7 @@ func save_game(player_node = null, scene_path: String = "") -> bool:
 		"version": 1,
 		"timestamp": Time.get_unix_time_from_system(),
 		"current_scene": current_scene_path,
+		"room_id": room_id, # místnost kapitoly (checkpoint), prázdné u starých levelů
 		"stats": {
 			"deaths": Global.death_count,
 			"kills": Global.kill_count
@@ -124,6 +135,33 @@ func apply_save_to_player(player_node) -> bool:
 	pending_load = false
 	print("[SaveManager] Uložená data byla úspěšně aplikována na hráče.")
 	return true
+
+func has_crystal(id: String) -> bool:
+	return progress.crystals.has(id) or progress.grand.has(id)
+
+func record_crystal(id: String, grand: bool = false):
+	progress["grand" if grand else "crystals"][id] = true
+	_save_progress()
+
+func get_flag(key: String) -> bool:
+	return progress.flags.has(key)
+
+func set_flag(key: String):
+	progress.flags[key] = true
+	_save_progress()
+
+## Nová hra: smaže sebrané krystaly i otevřené brány.
+func reset_progress():
+	progress = {"crystals": {}, "grand": {}, "flags": {}}
+	_save_progress()
+
+func _save_progress():
+	var file = FileAccess.open(PROGRESS_PATH, FileAccess.WRITE)
+	if not file:
+		printerr("Chyba při zápisu postupu: ", PROGRESS_PATH)
+		return
+	file.store_string(JSON.stringify(progress))
+	file.close()
 
 func delete_save():
 	if has_save_file():
