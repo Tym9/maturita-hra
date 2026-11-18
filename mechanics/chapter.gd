@@ -2,15 +2,20 @@ class_name Chapter
 extends Node2D
 
 ## Kořen kapitoly (Celeste): místnosti (Room) jsou přímí potomci položení hranou k hraně ve světě.
-## Hlídá přechody mezi místnostmi, smrt mimo mapu, aktivaci jen aktuální místnosti a sousedů
+## Hlídá přechody mezi místnostmi, neviditelné okraje, smrt propadem, aktivaci jen aktuální místnosti a sousedů
 ## a ukládání v checkpoint místnostech. Ladění: F1 hranice a id, F2 / Shift+F2 teleport
 ## na další / předchozí místnost, spuštění s `-- --room=<id>` teleportuje rovnou.
 
 const TRANSITION_FREEZE: float = 0.3
-const ItemData = preload("res://mechanics/item_data.gd")
+const EDGE_HALF_WIDTH: float = 7.0 # polovina šířky hráče (player.tscn 14x18): tělo nevyjede z obrazu
+const TOP_OVERSHOOT: float = 24.0
+const ChestScene = preload("res://mechanics/chest.tscn")
 
-## Předměty, které hráč dostane, pokud je ještě nemá (výběr kapitoly z menu, testovací kapitola)
+## Předměty pro hráče, který je ještě nemá (výběr kapitoly z menu): leží v truhle u startu první místnosti,
+## do batohu se nic nepřidává samo
 @export var start_items: Array[String] = []
+## Otvory ve stropě vedoucí do místnosti nad ní jemně svítí (UpExitHint), aby bylo vidět, že cesta vede nahoru
+@export var hint_up_exits: bool = false
 
 var rooms: Array[Room] = []
 var current: Room = null
@@ -25,9 +30,17 @@ func _ready():
 			rooms.append(c)
 	player = get_tree().get_first_node_in_group("player")
 	camera = player.camera
-	for id in start_items:
-		if not player.grid_inventory.has_item(id):
-			player.grid_inventory.add_item_auto(ItemData.create(id))
+	if hint_up_exits:
+		UpExitHint.add_hints(rooms, _room_at)
+	SeamWalls.add_to_rooms(rooms, _room_at) # zdi sousedních místností vyčnívají do obrazu
+	var missing := start_items.filter(func(id): return not player.grid_inventory.has_item(id))
+	if not missing.is_empty():
+		var chest := ChestScene.instantiate()
+		chest.name = "SupplyChest" # stálá cesta = uložený obsah truhly
+		chest.initial_items.assign(missing)
+		rooms[0].add_child(chest)
+		var spawn := rooms[0].nearest_respawn(player.global_position)
+		chest.global_position = spawn.global_position if spawn else player.global_position
 	camera.chapter = self
 	camera.process_mode = Node.PROCESS_MODE_ALWAYS # kamera klouže i během zmrazení přechodu
 	var start := _room_at(player.global_position)
@@ -51,13 +64,41 @@ func _ready():
 			teleport_to.call_deferred(arg.trim_prefix("--room="))
 
 func _physics_process(_delta):
-	if transitioning or player.is_dying or current.bounds().has_point(player.global_position):
+	if transitioning or player.is_dying:
 		return
-	var target := _room_at(player.global_position)
-	if target == null:
-		player.die() # odešel z místnosti tam, kde žádná nepokračuje
-	else:
-		_transition(target)
+	var b := current.bounds()
+	var pos: Vector2 = player.global_position
+	if not b.has_point(pos):
+		var target := _room_at(pos)
+		if target:
+			_transition(target)
+			return
+		var g: float = player.gravity_dir
+		if (g > 0.0 and pos.y >= b.end.y) or (g < 0.0 and pos.y < b.position.y):
+			player.die() # propad dnem tam, kde žádná místnost nepokračuje
+			return
+	_hold_inside(b, pos)
+
+## Celeste: otevřený bok nebo strop bez sousední místnosti je neviditelná stěna (místnost nemusí být
+## uzavřená krabice). Nad strop (proti gravitaci) smí hráč vyskočit o TOP_OVERSHOOT mimo obraz.
+func _hold_inside(b: Rect2, pos: Vector2):
+	var held := pos
+	var y := clampf(pos.y, b.position.y, b.end.y - 1.0)
+	if pos.x < b.position.x + EDGE_HALF_WIDTH and _room_at(Vector2(b.position.x - 1.0, y)) == null:
+		held.x = b.position.x + EDGE_HALF_WIDTH
+		player.velocity.x = maxf(player.velocity.x, 0.0)
+	elif pos.x > b.end.x - EDGE_HALF_WIDTH and _room_at(Vector2(b.end.x + 1.0, y)) == null:
+		held.x = b.end.x - EDGE_HALF_WIDTH
+		player.velocity.x = minf(player.velocity.x, 0.0)
+	var x := clampf(held.x, b.position.x, b.end.x - 1.0)
+	if player.gravity_dir > 0.0 and pos.y < b.position.y - TOP_OVERSHOOT and _room_at(Vector2(x, b.position.y - 1.0)) == null:
+		held.y = b.position.y - TOP_OVERSHOOT
+		player.velocity.y = maxf(player.velocity.y, 0.0)
+	elif player.gravity_dir < 0.0 and pos.y > b.end.y + TOP_OVERSHOOT and _room_at(Vector2(x, b.end.y + 1.0)) == null:
+		held.y = b.end.y + TOP_OVERSHOOT
+		player.velocity.y = minf(player.velocity.y, 0.0)
+	if held != pos:
+		player.global_position = held
 
 func _transition(target: Room):
 	transitioning = true

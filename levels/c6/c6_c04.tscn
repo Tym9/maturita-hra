@@ -1,0 +1,66 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_uqkb0"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_exq38"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_8kgmr"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_01i3e"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="5_iyomn"]
+[ext_resource type="Texture2D" path="res://assets/npc/vesper_portrait.png" id="6_1qlq5"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="7_xguxw"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="8_biv0v"]
+
+[node name="c6_c04" type="Node2D" unique_id=274317787]
+script = ExtResource("1_uqkb0")
+room_id = "c6_c04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=795997410]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=437232046]
+script = ExtResource("2_exq38")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=506377885]
+z_index = -2
+tile_map_data = PackedByteArray("AAACAAMAAAABAAEAAAADAAMAAAABAAEAAAAEAAMAAAABAAEAAAAFAAMAAAABAAEAAAAGAAMAAAABAAEAAAAHAAMAAAABAAEAAAACAAQAAAABAAEAAAADAAQAAAABAAEAAAAEAAQAAAACAAEAAAAFAAQAAAABAAEAAAAGAAQAAAABAAEAAAAHAAQAAAABAAEAAAACAAUAAAABAAEAAAADAAUAAAABAAEAAAAEAAUAAAABAAEAAAAFAAUAAAABAAEAAAAGAAUAAAABAAEAAAAHAAUAAAABAAEAAAADAAYAAAABAAEAAAAGAAYAAAABAAEAAAA=")
+tile_set = ExtResource("3_8kgmr")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1309932955]
+tile_map_data = PackedByteArray("AAAPAAAAAAACAAIAAAAQAAAAAAACAAIAAAARAAAAAAACAAIAAAAPAAEAAAACAAIAAAAQAAEAAAACAAIAAAARAAEAAAACAAIAAAABAAIAAAADAAAAAAACAAIAAAADAAAAAAADAAIAAAADAAAAAAAEAAIAAAADAAAAAAAFAAIAAAADAAAAAAAGAAIAAAADAAAAAAAHAAIAAAADAAAAAAAIAAIAAAADAAAAAAAQAAIAAAACAAIAAAABAAMAAAADAAAAAAABAAQAAAADAAAAAAABAAUAAAADAAAAAAABAAYAAAADAAAAAAAAAAcAAAACAAIAAAABAAcAAAACAAIAAAACAAcAAAACAAIAAAADAAcAAAACAAIAAAAEAAcAAAACAAIAAAAFAAcAAAACAAIAAAAGAAcAAAACAAIAAAAHAAcAAAACAAIAAAAIAAcAAAACAAIAAAAJAAcAAAACAAIAAAAKAAcAAAACAAIAAAALAAcAAAACAAIAAAAMAAcAAAACAAIAAAANAAcAAAACAAIAAAAOAAcAAAACAAIAAAAPAAcAAAACAAIAAAAQAAcAAAACAAIAAAARAAcAAAACAAIAAAASAAcAAAACAAIAAAATAAcAAAACAAIAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAEAAgAAAACAAIAAAAFAAgAAAACAAIAAAAGAAgAAAACAAIAAAAHAAgAAAACAAIAAAAIAAgAAAACAAIAAAAJAAgAAAACAAIAAAAKAAgAAAACAAIAAAALAAgAAAACAAIAAAAMAAgAAAACAAIAAAANAAgAAAACAAIAAAAOAAgAAAACAAIAAAAPAAgAAAACAAIAAAAQAAgAAAACAAIAAAARAAgAAAACAAIAAAASAAgAAAACAAIAAAATAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAAOAAkAAAACAAIAAAAPAAkAAAACAAIAAAAQAAkAAAACAAIAAAARAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_8kgmr")
+
+[node name="Antenna" type="Node2D" parent="." unique_id=1135348007]
+position = Vector2(56, 32)
+script = ExtResource("4_01i3e")
+kind = 2
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1127069848]
+position = Vector2(72, 64)
+script = ExtResource("4_01i3e")
+
+[node name="Event" parent="." unique_id=482632999 instance=ExtResource("5_iyomn")]
+position = Vector2(56, 80)
+speaker_name = "Vesper (vysílačka)"
+portrait_texture = ExtResource("6_1qlq5")
+dialogue_pages = Array[String](["Matěji, slyšíš mě? Jsi hluboko, signál se láme o krystal.", "Pod doly je těžební komplex a pod ním reaktor. Korporace o tobě ví. Chystají odstřel hlubokých šachet, pospěš si."])
+
+[node name="HealthPack" parent="." unique_id=1008298640 instance=ExtResource("7_xguxw")]
+position = Vector2(104, 104)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1657768698]
+position = Vector2(200, 103)
+script = ExtResource("8_biv0v")
+
+[node name="Blight" type="Node2D" parent="." unique_id=925991145]
+position = Vector2(248, 112)
+script = ExtResource("4_01i3e")
+kind = 4
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=2055253891]
+position = Vector2(280, 112)
+script = ExtResource("4_01i3e")

@@ -1,0 +1,86 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_afe63"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_ywghs"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_uppqb"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="4_cip4x"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_mt0ma"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_6px4b"]
+[ext_resource type="PackedScene" path="res://enemies/pressure_mine.tscn" id="7_wnvv5"]
+[ext_resource type="PackedScene" path="res://enemies/cave_crawler.tscn" id="8_ckmhk"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="9_45brd"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="10_f7i8p"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="11_q5x3f"]
+
+[node name="c6_b02" type="Node2D" unique_id=544402115]
+script = ExtResource("1_afe63")
+room_id = "c6_b02"
+screens = Vector2i(1, 2)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1908353700]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=2077989393]
+script = ExtResource("2_ywghs")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=684588253]
+z_index = -2
+tile_set = ExtResource("3_uppqb")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=570099972]
+tile_map_data = PackedByteArray("AAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAASAAEAAAAAAAAAAAATAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAQAAIAAAAAAAAAAAARAAIAAAAAAAAAAAASAAIAAAAAAAAAAAATAAIAAAAAAAAAAAAQAAMAAAAAAAAAAAARAAMAAAAAAAAAAAASAAMAAAAAAAAAAAATAAMAAAAAAAAAAAAAAAQAAAACAAAAAAABAAQAAAACAAAAAAACAAQAAAACAAAAAAADAAQAAAACAAAAAAAHAAUAAAACAAAAAAAIAAUAAAACAAAAAAAJAAUAAAACAAAAAAAKAAUAAAACAAAAAAALAAUAAAACAAAAAAAMAAUAAAACAAAAAAANAAUAAAACAAAAAAAOAAUAAAACAAAAAAAQAAYAAAAAAAAAAAARAAYAAAAAAAAAAAASAAYAAAAAAAAAAAATAAYAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAQAAgAAAAAAAAAAAARAAgAAAAAAAAAAAASAAgAAAAAAAAAAAATAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAAQAAsAAAAAAAAAAAARAAsAAAAAAAAAAAASAAsAAAAAAAAAAAATAAsAAAAAAAAAAAAQAAwAAAAAAAAAAAARAAwAAAAAAAAAAAASAAwAAAAAAAAAAAATAAwAAAAAAAAAAAAQAA0AAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAATAA0AAAAAAAAAAAAIAA4AAAADAAAAAAAJAA4AAAADAAAAAAAKAA4AAAADAAAAAAALAA4AAAADAAAAAAAMAA4AAAADAAAAAAAQAA4AAAAAAAAAAAARAA4AAAAAAAAAAAATAA4AAAAAAAAAAAAIAA8AAAADAAAAAAAJAA8AAAADAAAAAAAKAA8AAAADAAAAAAALAA8AAAADAAAAAAAMAA8AAAADAAAAAAAQAA8AAAAAAAAAAAARAA8AAAAAAAAAAAATAA8AAAAAAAAAAAAIABAAAAADAAAAAAAJABAAAAADAAAAAAAKABAAAAADAAAAAAALABAAAAADAAAAAAAMABAAAAADAAAAAAANABMAAAAAAAAAAAAOABMAAAAAAAAAAAAPABMAAAAAAAAAAAAQABMAAAAAAAAAAAARABMAAAAAAAAAAAASABMAAAAAAAAAAAATABMAAAAAAAAAAAAAABQAAAAAAAAAAAABABQAAAAAAAAAAAACABQAAAAAAAAAAAADABQAAAAAAAAAAAAEABQAAAAAAAAAAAAFABQAAAAAAAAAAAAGABQAAAAAAAAAAAAHABQAAAAAAAAAAAAIABQAAAAAAAAAAAAJABQAAAAAAAAAAAAKABQAAAAAAAAAAAALABQAAAAAAAAAAAAMABQAAAAAAAAAAAANABQAAAAAAAAAAAAOABQAAAAAAAAAAAAPABQAAAAAAAAAAAAQABQAAAAAAAAAAAARABQAAAAAAAAAAAASABQAAAAAAAAAAAATABQAAAAAAAAAAAAAABUAAAAAAAAAAAABABUAAAAAAAAAAAACABUAAAAAAAAAAAADABUAAAAAAAAAAAAEABUAAAAAAAAAAAAFABUAAAAAAAAAAAAGABUAAAAAAAAAAAAHABUAAAAAAAAAAAAIABUAAAAAAAAAAAAJABUAAAAAAAAAAAAKABUAAAAAAAAAAAALABUAAAAAAAAAAAAMABUAAAAAAAAAAAANABUAAAAAAAAAAAAOABUAAAAAAAAAAAAPABUAAAAAAAAAAAAQABUAAAAAAAAAAAARABUAAAAAAAAAAAASABUAAAAAAAAAAAATABUAAAAAAAAAAAA=")
+tile_set = ExtResource("3_uppqb")
+
+[node name="Key" parent="." unique_id=1770332873 instance=ExtResource("4_cip4x")]
+position = Vector2(24, 56)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1856694836]
+position = Vector2(152, 80)
+script = ExtResource("5_mt0ma")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1893353641]
+position = Vector2(184, 71)
+script = ExtResource("6_6px4b")
+
+[node name="Mine" parent="." unique_id=1719496318 instance=ExtResource("7_wnvv5")]
+position = Vector2(88, 104)
+
+[node name="RespawnPoint2" type="Marker2D" parent="." unique_id=1877844425]
+position = Vector2(56, 135)
+script = ExtResource("6_6px4b")
+
+[node name="Blight" type="Node2D" parent="." unique_id=179154385]
+position = Vector2(88, 144)
+script = ExtResource("5_mt0ma")
+kind = 4
+
+[node name="Crawler" parent="." unique_id=864509479 instance=ExtResource("8_ckmhk")]
+position = Vector2(168, 218)
+
+[node name="Crystal" parent="." unique_id=592150043 instance=ExtResource("9_45brd")]
+position = Vector2(296, 232)
+
+[node name="KeyBlock" parent="." unique_id=695833937 instance=ExtResource("10_f7i8p")]
+position = Vector2(296, 248)
+block_height = 16.0
+
+[node name="Blight2" type="Node2D" parent="." unique_id=1880035595]
+position = Vector2(232, 304)
+script = ExtResource("5_mt0ma")
+kind = 4
+
+[node name="Blight3" type="Node2D" parent="." unique_id=227123679]
+position = Vector2(248, 304)
+script = ExtResource("5_mt0ma")
+kind = 4
+
+[node name="Spikes" type="Area2D" parent="." unique_id=2082766167]
+position = Vector2(16, 320)
+script = ExtResource("11_q5x3f")
+count = 12

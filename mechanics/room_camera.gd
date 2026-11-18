@@ -25,6 +25,7 @@ var reset_entries: Array[Dictionary] = [] # výchozí stav nepřátel a uzlů ze
 var reset_snapshot_taken: bool = false
 var chapter: Node = null # Chapter, pokud scénu tvoří místnosti Room; jinak mřížka RoomBackdrop
 var room_rect: Rect2 = Rect2() # hranice aktuální místnosti v režimu kapitoly
+var autosave_pending: bool = false # staré levely: uložit, až bude checkpoint nové místnosti jistý
 
 func _ready():
 	top_level = true
@@ -152,6 +153,10 @@ func _process(delta):
 
 		if player_room != current_room:
 			_transition_to_room(player_room)
+		# Jako checkpoint místnosti v kapitolách: vstup do nové místnosti uloží hru (po prvním bezpečném přistání)
+		if autosave_pending and not player.awaiting_room_spawn and not player.is_dying 				and Global.stage_active and player.get_parent() == get_tree().current_scene: # hraná kapitola, ne test
+			autosave_pending = false
+			SaveManager.save_game(player)
 
 	target_pos = _target_for(player.global_position)
 	if global_position.distance_to(target_pos) > 0.5:
@@ -169,6 +174,7 @@ func _transition_to_room(new_room: Vector2i):
 		return # Pohyb uvnitř velké místnosti - žádný přechod ani nový checkpoint
 	current_group = new_group
 	is_transitioning = true
+	autosave_pending = true
 
 	# Checkpoint = vchod do nové místnosti: nejbližší spawn marker (Marker2D ve skupině "spawn_points"),
 	# jinak bod vstupu uvnitř místnosti, který hráč upřesní prvním bezpečným přistáním

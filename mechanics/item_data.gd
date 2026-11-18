@@ -31,11 +31,11 @@ static func create(item_id: String) -> RefCounted:
 		"gravity_coil":
 			return new("gravity_coil", "Gravitační cívka", 2, 2, Color(0.65, 0.35, 0.95), "Gravity Coil [Mezerník]: bleskový výpad (Dash), který prorazí nepřátele (2 poškození).", "⚡")
 		"health_pack":
-			return new("health_pack", "Lékárnička", 1, 1, Color(0.25, 0.85, 0.45), "Opravná sada: doplní 1 ztracené srdíčko.", "✚")
+			return new("health_pack", "Lékárnička", 1, 1, Color(0.25, 0.85, 0.45), "Lékárnička [Q]: doplní 1 ztracené srdíčko. Stačí ji mít v batohu.", "✚")
 		"mine_key":
 			return new("mine_key", "Klíč od šachty", 1, 2, Color(1.0, 0.85, 0.35), "Mosazný klíč: otevírá bezpečnostní zábrany.", "🗝")
 		"drill":
-			return new("drill", "Důlní vrták", 2, 1, Color(0.6, 0.62, 0.68), "Vrták (pasivní): dash prorazí popraskanou skálu.", "🔩")
+			return new("drill", "Důlní vrták", 2, 1, Color(0.6, 0.62, 0.68), "Vrták [LMB, ve slotu]: zastaví tě na místě (i ve vzduchu) a za 2 s provrtá popraskanou skálu směrem k myši.", "🔩")
 		"gravity_crystal":
 			return new("gravity_crystal", "Gravitační krystal", 1, 1, Color(0.25, 0.92, 1.0), "Sběratelský krystal (jahoda z Celeste): v batohu se jen počítá, nezabírá místo.", "💎")
 		"steam_crystal":

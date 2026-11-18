@@ -1,0 +1,45 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_auslj"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_rmha0"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_jeo02"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_oa3pa"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_5qntg"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="6_o8uxe"]
+
+[node name="c5_d05" type="Node2D" unique_id=338656528]
+script = ExtResource("1_auslj")
+room_id = "c5_d05"
+
+[node name="Background" type="ColorRect" parent="." unique_id=512497160]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1318372110]
+script = ExtResource("2_rmha0")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=140359883]
+z_index = -2
+tile_set = ExtResource("3_jeo02")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1573143527]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAADAAAAAAACAAIAAAAEAAAAAAACAAIAAAAFAAAAAAACAAIAAAAGAAAAAAACAAIAAAAHAAAAAAACAAIAAAAIAAAAAAACAAIAAAAJAAAAAAACAAIAAAAKAAAAAAACAAIAAAALAAAAAAACAAIAAAAMAAAAAAACAAIAAAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAADAAEAAAACAAIAAAAEAAEAAAACAAIAAAAFAAEAAAACAAIAAAAGAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAACAAIAAAACAAIAAAARAAIAAAACAAIAAAASAAIAAAACAAIAAAATAAIAAAACAAIAAAAAAAMAAAACAAIAAAARAAMAAAACAAIAAAASAAMAAAACAAIAAAATAAMAAAACAAIAAAARAAQAAAACAAIAAAASAAQAAAACAAIAAAATAAQAAAACAAIAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAARAAUAAAADAAIAAAASAAUAAAACAAIAAAATAAUAAAACAAIAAAAIAAYAAAACAAIAAAAJAAYAAAACAAIAAAARAAYAAAADAAIAAAASAAYAAAACAAIAAAATAAYAAAACAAIAAAAGAAcAAAACAAIAAAAHAAcAAAACAAIAAAAIAAcAAAACAAIAAAAJAAcAAAACAAIAAAARAAcAAAADAAIAAAASAAcAAAACAAIAAAATAAcAAAACAAIAAAAGAAgAAAACAAIAAAAHAAgAAAACAAIAAAAIAAgAAAACAAIAAAAJAAgAAAACAAIAAAARAAgAAAADAAIAAAASAAgAAAACAAIAAAATAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAARAAkAAAADAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAARAAoAAAADAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_jeo02")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=2079751895]
+position = Vector2(152, 80)
+script = ExtResource("4_oa3pa")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1678266041]
+position = Vector2(40, 135)
+script = ExtResource("5_5qntg")
+
+[node name="Event" parent="." unique_id=1293768548 instance=ExtResource("6_o8uxe")]
+position = Vector2(72, 112)
+speaker_name = "Siréna"
+dialogue_pages = Array[String](["STAVIDLO OTEVŘENO. Struska padá šachtou. Všem pracovníkům: opustit spodní patra!"])

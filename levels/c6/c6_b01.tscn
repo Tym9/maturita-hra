@@ -1,0 +1,77 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_h0k3n"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_t7737"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_tl6hw"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4_ull1k"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="5_iqshv"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="6_uxpfb"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_0jwxy"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="8_jumtl"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="9_exmxe"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal_spikes.tscn" id="10_ytxlr"]
+
+[node name="c6_b01" type="Node2D" unique_id=1005192301]
+script = ExtResource("1_h0k3n")
+room_id = "c6_b01"
+screens = Vector2i(2, 1)
+checkpoint = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=41775690]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=303771086]
+script = ExtResource("2_t7737")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1761186663]
+z_index = -2
+tile_set = ExtResource("3_tl6hw")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=261322517]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAYAAEAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAMAAIAAAACAAAAAAANAAIAAAACAAAAAAAOAAIAAAACAAAAAAAPAAIAAAACAAAAAAAQAAIAAAACAAAAAAAkAAUAAAADAAAAAAAlAAUAAAADAAAAAAAmAAUAAAADAAAAAAAnAAUAAAADAAAAAAAWAAYAAAADAAAAAAAXAAYAAAADAAAAAAAYAAYAAAADAAAAAAAZAAYAAAADAAAAAAAaAAYAAAADAAAAAAAbAAYAAAADAAAAAAAcAAYAAAADAAAAAAAdAAYAAAADAAAAAAAnAAYAAAADAAAAAAAWAAcAAAADAAAAAAAdAAcAAAADAAAAAAAnAAcAAAADAAAAAAAWAAgAAAADAAAAAAAdAAgAAAADAAAAAAAnAAgAAAADAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAATAAkAAAADAAAAAAAUAAkAAAADAAAAAAAVAAkAAAADAAAAAAAWAAkAAAADAAAAAAAXAAkAAAADAAAAAAAYAAkAAAADAAAAAAAZAAkAAAADAAAAAAAaAAkAAAADAAAAAAAbAAkAAAADAAAAAAAcAAkAAAADAAAAAAAdAAkAAAADAAAAAAAiAAkAAAADAAAAAAAjAAkAAAADAAAAAAAkAAkAAAADAAAAAAAlAAkAAAADAAAAAAAmAAkAAAADAAAAAAAnAAkAAAADAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAATAAoAAAADAAAAAAAUAAoAAAADAAAAAAAVAAoAAAADAAAAAAAWAAoAAAADAAAAAAAXAAoAAAADAAAAAAAYAAoAAAADAAAAAAAZAAoAAAADAAAAAAAaAAoAAAADAAAAAAAbAAoAAAADAAAAAAAcAAoAAAADAAAAAAAdAAoAAAADAAAAAAAiAAoAAAADAAAAAAAjAAoAAAADAAAAAAAkAAoAAAADAAAAAAAlAAoAAAADAAAAAAAmAAoAAAADAAAAAAAnAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_tl6hw")
+
+[node name="Anchor" parent="." unique_id=182607202 instance=ExtResource("4_ull1k")]
+position = Vector2(184, 72)
+
+[node name="Anchor2" parent="." unique_id=489762677 instance=ExtResource("4_ull1k")]
+position = Vector2(280, 72)
+
+[node name="Turret" parent="." unique_id=1438649762 instance=ExtResource("5_iqshv")]
+position = Vector2(584, 72)
+
+[node name="Guard" parent="." unique_id=1625630162 instance=ExtResource("6_uxpfb")]
+position = Vector2(424, 84)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1507126622]
+position = Vector2(40, 135)
+script = ExtResource("7_0jwxy")
+
+[node name="Event" parent="." unique_id=83393064 instance=ExtResource("8_jumtl")]
+position = Vector2(88, 112)
+speaker_name = "Hlas Korporace"
+dialogue_pages = Array[String](["Těžební úsek B. Výskyt nestabilních žil. Pracovníci se žádají, aby se nedotýkali rostoucích krystalů.", "Ztráty na životech budou odečteny z výplaty směny."])
+
+[node name="Blight" type="Node2D" parent="." unique_id=678865363]
+position = Vector2(120, 144)
+script = ExtResource("9_exmxe")
+kind = 4
+
+[node name="Lantern" type="Node2D" parent="." unique_id=460602356]
+position = Vector2(328, 144)
+script = ExtResource("9_exmxe")
+
+[node name="CrystalSpikes" parent="." unique_id=1405982650 instance=ExtResource("10_ytxlr")]
+position = Vector2(408, 144)
+count = 3
+
+[node name="Blight2" type="Node2D" parent="." unique_id=2138091924]
+position = Vector2(552, 144)
+script = ExtResource("9_exmxe")
+kind = 4

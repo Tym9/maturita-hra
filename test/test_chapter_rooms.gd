@@ -38,6 +38,20 @@ func _ready():
 	_ok(cam.global_position == a1.bounds().get_center(), "Kamera stojí ve středu 1-obrazovkové místnosti")
 	_ok(a2.process_mode == PROCESS_MODE_INHERIT and a3.process_mode == PROCESS_MODE_DISABLED, "Zpracovává se jen aktuální místnost a sousedé")
 
+	# 1b. Otevřený bok / strop bez sousední místnosti = neviditelná stěna (Celeste), žádná smrt
+	# (volá se přímo: levý sloupec tc_a01 je zeď a fyzika by hráče z ní vytlačila ven)
+	var start_pos: Vector2 = player.global_position
+	player.global_position = Vector2(-4, 100)
+	player.velocity = Vector2(-150, 0)
+	chapter._physics_process(0.0)
+	_ok(not player.is_dying and player.global_position.x == 7.0 and player.velocity.x == 0.0 and chapter.current == a1, "Levý okraj bez sousedů hráče drží v místnosti")
+	player.global_position = Vector2(160, -40)
+	player.velocity = Vector2(0, -200)
+	chapter._physics_process(0.0)
+	_ok(not player.is_dying and player.global_position.y == -24.0 and player.velocity.y == 0.0, "Nad otevřený strop jen kousek mimo obraz, pak zpátky")
+	player.global_position = start_pos
+	player.velocity = Vector2.ZERO
+
 	# 2. Přechod doprava: zmrazení, nejbližší RespawnPoint, zachovaná rychlost
 	Input.action_press("move_right")
 	player.global_position = Vector2(322, 135)
@@ -72,7 +86,7 @@ func _ready():
 		if player.is_dying:
 			break
 		await get_tree().physics_frame
-	_ok(player.is_dying, "Opuštění místnosti tam, kde žádná nepokračuje, zabije hráče")
+	_ok(player.is_dying, "Propad dnem tam, kde žádná místnost nepokračuje, zabije hráče")
 	var t0: int = Time.get_ticks_msec()
 	await Global.room_reset
 	var dt: int = Time.get_ticks_msec() - t0

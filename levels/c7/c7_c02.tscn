@@ -1,0 +1,83 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_edkmm"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_vjn3g"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_vrf8g"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="4_xflmj"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_d8h2l"]
+[ext_resource type="PackedScene" path="res://mechanics/rhythm_block.tscn" id="6_uy6tr"]
+[ext_resource type="PackedScene" path="res://mechanics/celeste_key.tscn" id="7_uxqf2"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="8_37tqb"]
+[ext_resource type="PackedScene" path="res://mechanics/anomaly_wall.tscn" id="9_dbq4h"]
+[ext_resource type="PackedScene" path="res://mechanics/key_block.tscn" id="10_pxqxi"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="11_u7grc"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="12_l200h"]
+
+[node name="c7_c02" type="Node2D" unique_id=1788045543]
+script = ExtResource("1_edkmm")
+room_id = "c7_c02"
+screens = Vector2i(1, 2)
+
+[node name="Background" type="ColorRect" parent="." unique_id=663263856]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=36299852]
+script = ExtResource("2_vjn3g")
+style = 6
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=434817968]
+z_index = -2
+tile_set = ExtResource("3_vrf8g")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1087611354]
+tile_map_data = PackedByteArray("AAAAAAAAAAAHAAAAAAABAAAAAAAHAAAAAAACAAAAAAAHAAAAAAADAAAAAAAHAAAAAAAEAAAAAAAHAAAAAAAAAAEAAAAHAAAAAAABAAEAAAAHAAAAAAACAAEAAAAHAAAAAAADAAEAAAAHAAAAAAAEAAEAAAAHAAAAAAAAAAIAAAAHAAAAAAABAAIAAAAHAAAAAAACAAIAAAAHAAAAAAADAAIAAAAHAAAAAAAEAAIAAAAHAAAAAAAAAAMAAAAHAAAAAAABAAMAAAAHAAAAAAACAAMAAAAHAAAAAAADAAMAAAAHAAAAAAAEAAMAAAAHAAAAAAACAAQAAAAHAAAAAAADAAQAAAAHAAAAAAACAAUAAAAHAAAAAAADAAUAAAAHAAAAAAAMAAYAAAADAAAAAAANAAYAAAADAAAAAAAOAAYAAAADAAAAAAAPAAYAAAADAAAAAAAQAAYAAAADAAAAAAARAAYAAAADAAAAAAASAAYAAAADAAAAAAATAAYAAAADAAAAAAAMAAcAAAADAAAAAAANAAcAAAADAAAAAAAOAAcAAAADAAAAAAAPAAcAAAADAAAAAAAQAAcAAAADAAAAAAARAAcAAAADAAAAAAASAAcAAAADAAAAAAATAAcAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAAAAsAAAADAAAAAAAFAAsAAAADAAAAAAAGAAsAAAADAAAAAAALAAsAAAADAAAAAAAMAAsAAAADAAAAAAANAAsAAAADAAAAAAAOAAsAAAADAAAAAAAPAAsAAAADAAAAAAAQAAsAAAADAAAAAAAAAAwAAAADAAAAAAAFAAwAAAADAAAAAAAGAAwAAAADAAAAAAALAAwAAAADAAAAAAAMAAwAAAADAAAAAAANAAwAAAADAAAAAAAOAAwAAAADAAAAAAAPAAwAAAADAAAAAAAQAAwAAAADAAAAAAAAAA0AAAADAAAAAAAFAA0AAAADAAAAAAAGAA0AAAADAAAAAAAAAA4AAAADAAAAAAAEAA4AAAADAAAAAAAFAA4AAAADAAAAAAAGAA4AAAADAAAAAAAAAA8AAAADAAAAAAAEAA8AAAADAAAAAAAFAA8AAAADAAAAAAAGAA8AAAADAAAAAAAPAA8AAAADAAAAAAAQAA8AAAADAAAAAAARAA8AAAADAAAAAAATAA8AAAADAAAAAAAAABAAAAADAAAAAAAEABAAAAADAAAAAAAFABAAAAADAAAAAAAGABAAAAADAAAAAAAPABAAAAADAAAAAAAQABAAAAADAAAAAAARABAAAAADAAAAAAATABAAAAADAAAAAAAPABEAAAADAAAAAAAQABEAAAADAAAAAAARABEAAAADAAAAAAASABEAAAADAAAAAAATABEAAAADAAAAAAAPABIAAAADAAAAAAAQABIAAAADAAAAAAARABIAAAADAAAAAAASABIAAAADAAAAAAATABIAAAADAAAAAAAPABMAAAADAAAAAAAQABMAAAADAAAAAAARABMAAAADAAAAAAASABMAAAADAAAAAAATABMAAAADAAAAAAAAABQAAAADAAAAAAABABQAAAADAAAAAAACABQAAAADAAAAAAADABQAAAADAAAAAAAEABQAAAADAAAAAAAFABQAAAADAAAAAAAGABQAAAADAAAAAAAHABQAAAADAAAAAAAIABQAAAADAAAAAAAJABQAAAADAAAAAAAKABQAAAADAAAAAAALABQAAAADAAAAAAAMABQAAAADAAAAAAANABQAAAADAAAAAAAOABQAAAADAAAAAAAPABQAAAADAAAAAAAQABQAAAADAAAAAAARABQAAAADAAAAAAASABQAAAADAAAAAAATABQAAAADAAAAAAAAABUAAAADAAAAAAABABUAAAADAAAAAAACABUAAAADAAAAAAADABUAAAADAAAAAAAEABUAAAADAAAAAAAFABUAAAADAAAAAAAGABUAAAADAAAAAAAHABUAAAADAAAAAAAIABUAAAADAAAAAAAJABUAAAADAAAAAAAKABUAAAADAAAAAAALABUAAAADAAAAAAAMABUAAAADAAAAAAANABUAAAADAAAAAAAOABUAAAADAAAAAAAPABUAAAADAAAAAAAQABUAAAADAAAAAAARABUAAAADAAAAAAASABUAAAADAAAAAAATABUAAAADAAAAAAA=")
+tile_set = ExtResource("3_vrf8g")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=372120661]
+position = Vector2(280, 87)
+script = ExtResource("4_xflmj")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1684291562]
+position = Vector2(312, 96)
+script = ExtResource("5_d8h2l")
+
+[node name="RhythmB" parent="." unique_id=1356894979 instance=ExtResource("6_uy6tr")]
+position = Vector2(128, 112)
+size = Vector2i(3, 1)
+set_b = true
+
+[node name="Key" parent="." unique_id=2015348695 instance=ExtResource("7_uxqf2")]
+position = Vector2(40, 216)
+
+[node name="RhythmA" parent="." unique_id=1380166165 instance=ExtResource("6_uy6tr")]
+position = Vector2(128, 208)
+size = Vector2i(3, 1)
+
+[node name="GravityField" parent="." unique_id=1127685017 instance=ExtResource("8_37tqb")]
+position = Vector2(192, 208)
+size = Vector2(48, 112)
+
+[node name="AnomalyWall" parent="." unique_id=1295389073 instance=ExtResource("9_dbq4h")]
+position = Vector2(16, 224)
+size = Vector2(48, 48)
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=761501179]
+position = Vector2(280, 240)
+script = ExtResource("5_d8h2l")
+
+[node name="KeyBlock" parent="." unique_id=753699489 instance=ExtResource("10_pxqxi")]
+position = Vector2(296, 248)
+block_height = 16.0
+
+[node name="Crystal" parent="." unique_id=1349626038 instance=ExtResource("11_u7grc")]
+position = Vector2(296, 264)
+
+[node name="Spikes" type="Area2D" parent="." unique_id=229708556]
+position = Vector2(64, 320)
+script = ExtResource("12_l200h")
+count = 3

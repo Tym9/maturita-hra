@@ -191,7 +191,7 @@ func _physics_process(delta):
 		_ok(level_end != null, "LevelEnd must exist")
 		_ok(level_end.position == Vector2(2800, 70), "LevelEnd should be at (2800, 70), got: %s" % level_end.position)
 		_ok(cam.is_valid_room(Vector2i(int(level_end.position.x / 320.0), 0)), "LevelEnd leží v platné buňce")
-		_ok(level_end.next_level == "res://level2.tscn" and level_end.stage_index == 4 and level_end.max_stage_crystals == 5, "LevelEnd properties")
+		_ok(level_end.next_level == "res://level2.tscn" and level_end.stage_index == 5 and level_end.max_stage_crystals == 5, "LevelEnd properties")
 		print("[PASS] LevelEnd verified at: %s" % level_end.position)
 		if fails == 0:
 			print("=== ALL 6 BIG ROOMS (19 CELLS) IN LEVEL 1 PASSED (100% OK) ===")

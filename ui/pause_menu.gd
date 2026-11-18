@@ -36,6 +36,17 @@ func _unhandled_input(event):
 				DialogueManager.close_dialogue()
 				get_viewport().set_input_as_handled()
 				return
+			# Otevřený batoh nebo truhla se zavře jako první, pauza až dalším Esc
+			for w in get_tree().get_nodes_in_group("backpack_windows"):
+				if w.visible:
+					w.close_backpack()
+					get_viewport().set_input_as_handled()
+					return
+			for c in get_tree().get_nodes_in_group("chests"):
+				if c.is_window_active:
+					c.chest_window.close_window()
+					get_viewport().set_input_as_handled()
+					return
 			toggle_pause()
 			get_viewport().set_input_as_handled()
 

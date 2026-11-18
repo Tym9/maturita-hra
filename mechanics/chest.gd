@@ -19,6 +19,7 @@ var is_window_active: bool = false
 
 func _ready():
 	z_index = 2
+	add_to_group("chests")
 	inventory = GridInventory.new(6, 4)
 	for item_id in initial_items:
 		var item = ItemData.create(item_id)

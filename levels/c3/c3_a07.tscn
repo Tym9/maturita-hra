@@ -46,7 +46,7 @@ kind = 1
 
 [node name="Vesper" parent="." unique_id=2064830335 instance=ExtResource("5_h11t5")]
 position = Vector2(136, 152)
-dialogue_pages = Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Na vrcholu hory je ústí velké šachty — vede až k jádru. Lez přes továrny a Horní město, Otis tě čeká ve starých dílnách u šachty. Já tě najdu dole u reaktoru."])
+dialogue_pages = Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Hlavní sídlo korporace je vytesané do skály pod vrcholem hory a z něj vede velká šachta až k jádru. Lez přes továrny a Horní město, za citadelou začíná horská stezka. Otis tě čeká ve starých dílnách za branou sídla. Já tě najdu dole u reaktoru."])
 repeat_dialogue_pages = Array[String](["Lisy bijí v rytmu. Počkej, až se zvednou, a pak běž."])
 
 [node name="HealthPack" parent="." unique_id=1657875003 instance=ExtResource("6_bbipv")]

@@ -9,6 +9,7 @@ func _ready():
 	assert(SaveManager != null, "SaveManager autoload musí existovat")
 	print("[PASS] TEST 1: SaveManager autoload načten")
 	
+	var save_backup: String = FileAccess.get_file_as_string(SaveManager.SAVE_PATH) if SaveManager.has_save_file() else ""
 	# Test 2: Vytvoření testovacího hráče a uložení
 	var player = PlayerScene.instantiate()
 	add_child(player)
@@ -59,7 +60,10 @@ func _ready():
 	assert(pause_menu.visible == false, "PauseMenu musí být skryté")
 	print("[PASS] TEST 5: PauseMenu funguje (toggling get_tree().paused)")
 	
-	# Úklid testovacího souboru
-	SaveManager.delete_save()
+	# Úklid: vrátit hráčovo skutečné uložení (user:// sdílí test i hra)
+	if save_backup.is_empty():
+		SaveManager.delete_save()
+	else:
+		FileAccess.open(SaveManager.SAVE_PATH, FileAccess.WRITE).store_string(save_backup)
 	print("=== VŠECHNY TESTY SAVE/PAUZA ÚSPĚŠNĚ PROŠLY (100% OK) ===")
 	get_tree().quit(0)

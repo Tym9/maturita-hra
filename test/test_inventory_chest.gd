@@ -18,6 +18,7 @@ func _ready():
 	test_gravity_coil_dash_damage()
 	test_inventory_save_load()
 	test_equip_hotbar_slots_and_hook_range()
+	test_escape_closes_chest_first()
 	
 	print("==================================================")
 	if failed:
@@ -165,6 +166,7 @@ func test_inventory_save_load():
 	var save_data = player1.get_inventory_save_data()
 	assert_true(save_data.size() == 2, "Inventář exportoval 2 položky pro uložení")
 	
+	var save_backup: String = FileAccess.get_file_as_string(SaveManager.SAVE_PATH) if SaveManager.has_save_file() else ""
 	var ok = SaveManager.save_game(player1, "res://level1.tscn")
 	assert_true(ok, "SaveManager.save_game proběhl úspěšně")
 	
@@ -176,9 +178,36 @@ func test_inventory_save_load():
 	assert_true(player2.grid_inventory.has_item("wrench"), "Načtený hráč má hasák v inventáři")
 	assert_true(player2.grid_inventory.has_item("gravity_coil"), "Načtený hráč má Gravity Coil v inventáři")
 	assert_true(player2.health == 2, "Načtený hráč má správný počet HP (2)")
+	# Vrátit hráčovo skutečné uložení (user:// sdílí test i hra)
+	if save_backup.is_empty():
+		SaveManager.delete_save()
+	else:
+		FileAccess.open(SaveManager.SAVE_PATH, FileAccess.WRITE).store_string(save_backup)
+		SaveManager.load_game_data()
 	
 	player1.queue_free()
 	player2.queue_free()
+
+func test_escape_closes_chest_first():
+	print("
+--- 7. Esc zavře otevřenou truhlu dřív, než otevře pauzu ---")
+	var chest = preload("res://mechanics/chest.tscn").instantiate()
+	add_child(chest)
+	var player = preload("res://player.tscn").instantiate()
+	add_child(player) # hráč je ve scéně až za truhlou jako v levelech (Esc dostane první pauza)
+	chest.player_in_range = player
+	chest.open_chest()
+	var esc := InputEventKey.new()
+	esc.keycode = KEY_ESCAPE
+	esc.pressed = true
+	get_viewport().push_input(esc)
+	assert_true(not chest.is_window_active and not chest.chest_window.visible, "Esc zavřel truhlu")
+	assert_true(not get_tree().paused, "Esc s otevřenou truhlou neotevřel pauzu")
+	get_viewport().push_input(esc)
+	assert_true(get_tree().paused, "Další Esc otevře pauzu")
+	get_tree().paused = false
+	chest.queue_free()
+	player.queue_free()
 
 func test_equip_hotbar_slots_and_hook_range():
 	print("\n--- 6. Test Equip Slotů (Hotbar ve výzbroji) a dosahu háku ---")
@@ -195,13 +224,38 @@ func test_equip_hotbar_slots_and_hook_range():
 	var hook = ItemData.create("grapple_hook")
 	var coil = ItemData.create("gravity_coil")
 	
+	# Dva sloty, do každého jde kterýkoli nástroj; třetí nástroj se nevejde, dokud jeden nevyměníš
+	player.grid_inventory.clear()
+	player.grid_inventory.equip_item(hook, 0)
+	player.grid_inventory.equip_item(wrench, 1)
+	assert_true(player.grid_inventory.slot_of("grapple_hook") == 0 and player.grid_inventory.slot_of("wrench") == 1, "Hák jde do slotu 1 a hasák do slotu 2 (sloty nejsou vázané na druh nástroje)")
+	assert_true(not player.grid_inventory.equip_item(coil), "Třetí nástroj se bez volného slotu nevybaví")
+	player.grid_inventory.add_item_auto(coil)
+	assert_true(player.grid_inventory.has_item("gravity_coil") and not player.grid_inventory.is_equipped("gravity_coil"), "Cívka zůstane v batohu")
+	player.can_dash = true
+	player.dash_cooldown = 0.0
+	player.perform_dash()
+	assert_true(not player.is_dashing, "Cívka v batohu nefunguje (naráz jen dva nástroje)")
+	assert_true(not player.grid_inventory.equip_item(ItemData.create("health_pack"), 0) and player.grid_inventory.slot_of("grapple_hook") == 0, "Lékárnička do slotu nepatří")
 	player.grid_inventory.equip_item(wrench, 0)
 	player.grid_inventory.equip_item(hook, 1)
-	player.grid_inventory.equip_item(coil, 2)
-	
+	player.select_hotbar_slot(0)
+
+	# Lékárnička z batohu [Q]
+	player.grid_inventory.add_item_auto(ItemData.create("health_pack"))
+	player.health = player.max_health
+	assert_true(not player.use_health_pack() and player.grid_inventory.has_item("health_pack"), "Při plném zdraví se lékárnička nespotřebuje")
+	player.health = 1
+	assert_true(player.use_health_pack() and player.health == 2 and not player.grid_inventory.has_item("health_pack"), "Lékárnička z batohu [Q] doplní srdíčko a spotřebuje se")
+	player.health = player.max_health
+
+	# Staré uložení se třemi sloty: třetí nástroj se neztratí, skončí v batohu
+	var old_inv := GridInventory.new(6, 4, true)
+	old_inv.load_save_data([{"id": "wrench", "x": -1, "y": -1, "equipped_slot": 0}, {"id": "grapple_hook", "x": -1, "y": -1, "equipped_slot": 1}, {"id": "gravity_coil", "x": -1, "y": -1, "equipped_slot": 2}])
+	assert_true(old_inv.is_equipped("wrench") and old_inv.is_equipped("grapple_hook") and old_inv.has_item("gravity_coil") and not old_inv.is_equipped("gravity_coil"), "Staré uložení: nástroj ze 3. slotu je v batohu")
+
 	assert_true(player.grid_inventory.is_equipped("wrench"), "Hasák je vybaven v Hotbaru (Slot 1)")
 	assert_true(player.grid_inventory.is_equipped("grapple_hook"), "Hák je vybaven v Hotbaru (Slot 2)")
-	assert_true(player.grid_inventory.is_equipped("gravity_coil"), "Gravity Coil je vybavena v Hotbaru (Slot 3)")
 	assert_true(player.grid_inventory.has_item("wrench"), "has_item('wrench') vrací true i pro vybavené sloty")
 	
 	# Test 6C: Útok funguje s vybaveným hasákem
@@ -228,5 +282,20 @@ func test_equip_hotbar_slots_and_hook_range():
 	# Test 6F: Ověření přítomnosti komponenty EquipHotbarView v BackpackWindow
 	assert_true(player.backpack_window != null, "BackpackWindow přítomno")
 	assert_true(player.backpack_window.equip_view != null, "EquipHotbarView nalezeno v BackpackWindow")
+
+	# Test 6G: Tab otevře a zavře batoh kdekoli; s otevřeným batohem se neútočí
+	var tab := InputEventKey.new()
+	tab.keycode = KEY_TAB
+	tab.pressed = true
+	player._unhandled_input(tab)
+	assert_true(player.backpack_window.visible, "Tab otevře batoh")
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	player.melee_cooldown = 0.0
+	player._unhandled_input(click)
+	assert_true(player.melee_cooldown == 0.0, "S otevřeným batohem klik neútočí")
+	player._unhandled_input(tab)
+	assert_true(not player.backpack_window.visible, "Tab batoh zase zavře")
 	
 	player.queue_free()

@@ -695,8 +695,8 @@ D patrol_distance = 24.0
  8 ....###..........###
  7 .....O...x.II.l..###
  6 ........############
- 5 ..@.....############
- 4 #####...############
+ 5 ........############
+ 4 ..@.....############
  3 #####...############
  2 #####...############
  1 #####.II############
@@ -705,7 +705,7 @@ D patrol_distance = 24.0
 ```props
 D patrol_distance = 12.0
 ```
-- Entry from d04 at h5 (plate cols 0-4, `@` col 2; rows 5-8 open at col 0, left wall of the top screen closed). Zigzag of scree stones, rises 2: heap R1 (h7, cols 8-16, crystal spikes cols 11-12, wall spikes cols 16 h10-15), L2 h9, A h11, B h13, C h15, D h17 (stones cols 4-6 / 9-11), then the top slab S (h19, cols 7-12) under the 3-wide hole (cols 8-10). Falls end on the trench (h1, spikes cols 6-7) or an earlier stone; rocks hang under L2 (col 5) and S (col 10) and shake when you stand below.
+- Entry from d04 at h4, flush with d04's floor (plate cols 0-4, `@` col 2; rows 5-8 open at col 0, left wall of the top screen closed). Zigzag of scree stones, rises 2: heap R1 (h7, cols 8-16, crystal spikes cols 11-12, wall spikes cols 16 h10-15), L2 h9, A h11, B h13, C h15, D h17 (stones cols 4-6 / 9-11), then the top slab S (h19, cols 7-12) under the 3-wide hole (cols 8-10). Falls end on the trench (h1, spikes cols 6-7) or an earlier stone; rocks hang under L2 (col 5) and S (col 10) and shake when you stand below.
 - Trick crystal (col 15, h12, visible): the drone hovers over the heap (col 13, h11, +-12 px). Easy way: let it charge, stomp it for a bounce + refill and reach the crystal. Hard line without it: run along the heap past the spikes and double jump from its right end or a long jump from stone A. Wall climbing to it is blocked by the spike strip on the right wall.
 
 ### c2_d06 — corp checkpoint
@@ -718,16 +718,16 @@ D patrol_distance = 12.0
  6 Z..........kkkkkkkkkkkkkkkkkkkkkkT.....B
  5 Z..........kkkkkkkkkkkkkkkkkkkkkkBBBBBBB
  4 ZZZ........kkkkkkkkkkkkkkkWWkkkkk.......
- 3 Z.L........kkkkkkkkkkkkkkkWWkkkkk....K..
- 2 ZCL........kkkkZZkkkkkkkkWWWWkkkk....WW.
- 1 Z.L.l@.....kgpkZZkkkGkxkWWWWWWkVk..V.WW.
+ 3 Z.L........kkkkkkkkkkkkkkkWWkkkkk.......
+ 2 ZCL........kkkkZZkkkkkkkkWWWWkkkk.......
+ 1 Z.L.l@.....kgpkZZkkkGkxkWWWWWWkVk..V.K..
  0 ZZZ_____..._____________________________
 ```
 ```props
 V2 offset = 1.0
 ```
 - Arrive up through the floor hole (cols 8-10 from d05), ledge cols 3-7 with `@` (col 5). Corp container (cols 0-2) with the crystal behind a single key block `L` (col 2, h2-h4): visible at once, locked. Road east: scrap barricade (h3, cols 15-16), guard on cols 17-23, crate hump (peak h5, cols 26-27) = cover.
-- Turret on the brass catwalk (col 33, h6, standing on the slab, sees 13 tiles): from the hump shadow run cols 28-32 (vent at col 31, `V2 offset = 1.0`), then you are under the catwalk out of its sight. Key `K` on the crate stack (h3, cols 37-38) under the catwalk, vent at col 35; take it, backtrack west to the container (the block touched first frees the crystal), come back for the exit. Exit R at h1 (rows 1-4 open).
+- Turret on the brass catwalk (col 33, h6, standing on the slab, sees 13 tiles): from the hump shadow run cols 28-32 (vent at col 31, `V2 offset = 1.0`), then you are under the catwalk out of its sight. Key `K` on the floor by the exit (h1, col 37) under the catwalk, vent at col 35; walk through it, backtrack west to the container (the block touched first frees the crystal), come back for the exit. Exit R at h1 (rows 1-4 open).
 
 ### c2_d07 — old mountain road
 ```

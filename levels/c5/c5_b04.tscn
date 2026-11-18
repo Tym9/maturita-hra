@@ -1,0 +1,53 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_0b38k"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_65nvp"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_m5e4l"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_mu60b"]
+[ext_resource type="PackedScene" path="res://npc/hron.tscn" id="5_2klck"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="6_wp78h"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_4m5pl"]
+
+[node name="c5_b04" type="Node2D" unique_id=709185890]
+script = ExtResource("1_0b38k")
+room_id = "c5_b04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1636302160]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=219692878]
+script = ExtResource("2_65nvp")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1337647109]
+z_index = -2
+tile_set = ExtResource("3_m5e4l")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=603131240]
+tile_map_data = PackedByteArray("AAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAACAAIAAAACAAIAAAAAAAMAAAACAAIAAAABAAMAAAACAAIAAAACAAMAAAACAAIAAAADAAMAAAADAAAAAAAEAAMAAAADAAAAAAAFAAMAAAADAAAAAAAGAAMAAAADAAAAAAAHAAMAAAADAAAAAAAIAAMAAAADAAAAAAAJAAMAAAADAAAAAAAAAAQAAAACAAIAAAABAAQAAAACAAIAAAACAAQAAAACAAIAAAADAAQAAAADAAAAAAAJAAQAAAADAAAAAAALAAQAAAABAAAAAAAMAAQAAAABAAAAAAAAAAUAAAACAAIAAAABAAUAAAACAAIAAAACAAUAAAACAAIAAAADAAUAAAADAAAAAAALAAUAAAABAAAAAAAMAAUAAAABAAAAAAAAAAYAAAACAAIAAAABAAYAAAACAAIAAAACAAYAAAACAAIAAAADAAYAAAADAAAAAAALAAYAAAABAAAAAAAMAAYAAAABAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAPAAgAAAAAAAAAAAAQAAgAAAAAAAAAAAARAAgAAAAAAAAAAAASAAgAAAAAAAAAAAATAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_m5e4l")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=893460662]
+position = Vector2(88, 80)
+script = ExtResource("4_mu60b")
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=329982476]
+position = Vector2(232, 80)
+script = ExtResource("4_mu60b")
+
+[node name="Hron" parent="." unique_id=364331811 instance=ExtResource("5_2klck")]
+position = Vector2(104, 104)
+dialogue_pages = Array[String](["Ty? Tady dole? Mě přeložili z lisovny. Prý za flákání.", "Ty modré úlomky, co odletují od pecí, chytni ve vzduchu a cívka se ti nabije znovu. Sbíráme je, aby nepropálily pásy.", "A na strusku nešlapej. Nikdy."])
+repeat_dialogue_pages = Array[String](["Úlomky nabíjejí cívku. Struska zabíjí. Víc ti neřeknu."])
+
+[node name="HealthPack" parent="." unique_id=147846809 instance=ExtResource("6_wp78h")]
+position = Vector2(136, 104)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1960210929]
+position = Vector2(280, 103)
+script = ExtResource("7_4m5pl")

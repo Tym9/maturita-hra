@@ -1,0 +1,64 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_48kbr"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_w88mx"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_xh607"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_ae7ya"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_x5rmo"]
+[ext_resource type="PackedScene" path="res://mechanics/falling_rock.tscn" id="6_ourje"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal_spikes.tscn" id="7_70jir"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="8_r8e1g"]
+
+[node name="c6_d02" type="Node2D" unique_id=2049701879]
+script = ExtResource("1_48kbr")
+room_id = "c6_d02"
+screens = Vector2i(1, 2)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1441659767]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=678197391]
+script = ExtResource("2_w88mx")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1814635522]
+z_index = -2
+tile_set = ExtResource("3_xh607")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1053548450]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAASAAAAAAACAAIAAAATAAAAAAACAAIAAAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAASAAEAAAACAAIAAAATAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAASAAIAAAACAAIAAAATAAIAAAACAAIAAAAAAAMAAAACAAIAAAASAAMAAAACAAIAAAATAAMAAAACAAIAAAAAAAUAAAACAAIAAAABAAUAAAACAAIAAAACAAUAAAACAAIAAAADAAUAAAACAAIAAAAEAAUAAAACAAIAAAAFAAUAAAACAAIAAAAGAAUAAAACAAIAAAAHAAUAAAACAAIAAAAIAAUAAAACAAIAAAAJAAUAAAACAAIAAAAKAAUAAAACAAIAAAALAAUAAAACAAIAAAAMAAUAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAAAABAAAAACAAIAAAABABAAAAACAAIAAAACABAAAAACAAIAAAADABAAAAACAAIAAAAEABAAAAACAAIAAAAFABAAAAACAAIAAAAGABAAAAACAAIAAAAHABAAAAACAAIAAAAIABAAAAACAAIAAAAJABAAAAACAAIAAAAKABAAAAACAAIAAAAAABEAAAACAAIAAAABABEAAAACAAIAAAACABEAAAACAAIAAAADABEAAAACAAIAAAAEABEAAAACAAIAAAAFABEAAAACAAIAAAAGABEAAAACAAIAAAAHABEAAAACAAIAAAAIABEAAAACAAIAAAAJABEAAAACAAIAAAAAABIAAAACAAIAAAABABIAAAACAAIAAAACABIAAAACAAIAAAADABIAAAACAAIAAAAEABIAAAACAAIAAAAFABIAAAACAAIAAAAGABIAAAACAAIAAAAHABIAAAACAAIAAAAAABMAAAACAAIAAAABABMAAAACAAIAAAACABMAAAACAAIAAAADABMAAAACAAIAAAAEABMAAAACAAIAAAAFABMAAAACAAIAAAAAABQAAAACAAIAAAABABQAAAACAAIAAAACABQAAAACAAIAAAADABQAAAACAAIAAAAEABQAAAACAAIAAAAPABQAAAACAAIAAAAQABQAAAACAAIAAAARABQAAAACAAIAAAASABQAAAACAAIAAAATABQAAAACAAIAAAAAABUAAAACAAIAAAABABUAAAACAAIAAAACABUAAAACAAIAAAADABUAAAACAAIAAAAEABUAAAACAAIAAAAPABUAAAACAAIAAAAQABUAAAACAAIAAAARABUAAAACAAIAAAASABUAAAACAAIAAAATABUAAAACAAIAAAA=")
+tile_set = ExtResource("3_xh607")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=2002862022]
+position = Vector2(88, 80)
+script = ExtResource("4_ae7ya")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1542523541]
+position = Vector2(136, 71)
+script = ExtResource("5_x5rmo")
+
+[node name="Rock" parent="." unique_id=890588413 instance=ExtResource("6_ourje")]
+position = Vector2(120, 96)
+
+[node name="Rock2" parent="." unique_id=1722277597 instance=ExtResource("6_ourje")]
+position = Vector2(152, 96)
+
+[node name="CrystalSpikes" parent="." unique_id=2122355490 instance=ExtResource("7_70jir")]
+position = Vector2(176, 160)
+
+[node name="Rock3" parent="." unique_id=103870187 instance=ExtResource("6_ourje")]
+position = Vector2(88, 176)
+
+[node name="Rock4" parent="." unique_id=1910618030 instance=ExtResource("6_ourje")]
+position = Vector2(152, 176)
+
+[node name="Anchor" parent="." unique_id=2029380996 instance=ExtResource("8_r8e1g")]
+position = Vector2(200, 232)
+
+[node name="CrystalSpikes2" parent="." unique_id=2005158193 instance=ExtResource("7_70jir")]
+position = Vector2(128, 256)

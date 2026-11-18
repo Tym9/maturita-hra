@@ -38,7 +38,7 @@ const MELEE_COOLDOWN_TIME: float = 0.28
 const MELEE_RANGE: float = 40.0
 const MELEE_DAMAGE: int = 2
 
-# Aktivní předmět v hotbaru: 0 = Hasák (LMB útok), 1 = Hák (LMB hák), 2 = Prázdný
+# Vybraný slot hotbaru (0 / 1): LMB použije nástroj, který v něm je
 var active_slot: int = 0
 var is_hook_equipped: bool = false
 var is_grappling: bool = false
@@ -58,8 +58,18 @@ var can_dash = true
 var dash_hit_enemies: Array = []
 const DASH_DAMAGE: int = 2
 
+# Vrták: hráč visí na místě (i ve vzduchu), obrazovka se třese, po DRILL_TIME se skála rozpadne
+const DRILL_TIME: float = 2.0
+const DRILL_RANGE: float = 28.0 # od středu hráče = skála do ~1 dlaždice od jeho okraje
+var is_drilling: bool = false
+var drill_timer: float = 0.0
+var drill_target: DrillableRock = null
+
 var coyote_timer = 0.0
 const COYOTE_TIME = 0.1
+# Místnosti mají 11 řad (176 px) na 180px obrazovku: na švu místností různé výšky vznikne schod 4-12 px.
+# Takový schod (menší než dlaždice) se přejde chůzí, skutečné zdi a schody od 16 px dál blokují.
+const STEP_HEIGHT: int = 12
 
 var air_jumps_left = MAX_AIR_JUMPS
 var is_crouching = false
@@ -157,18 +167,26 @@ func _init_ui():
 func _unhandled_input(event):
 	if is_talking or is_dying:
 		return
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_TAB:
+		if backpack_window: # batoh a oba sloty jdou spravovat kdekoli; otevřená truhla si Tab vezme dřív
+			backpack_window.toggle_backpack()
+			get_viewport().set_input_as_handled()
+		return
+	if backpack_window and backpack_window.visible:
+		return # s otevřeným batohem se neútočí ani nepřepíná
+	if is_drilling:
+		return # během vrtání je hráč zamčený
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			cycle_hotbar(-1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			cycle_hotbar(1)
 		elif event.button_index == MOUSE_BUTTON_LEFT:
-			if active_slot == 0:
-				perform_melee_attack()
-			elif active_slot == 1:
-				fire_hook()
-			elif active_slot == 2:
-				perform_dash()
+			match active_item_id():
+				"wrench": perform_melee_attack()
+				"grapple_hook": fire_hook()
+				"gravity_coil": perform_dash()
+				"drill": start_drill()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			# Pravé tlačítko myši vždy vystřelí přitahovací hák
 			fire_hook()
@@ -177,68 +195,71 @@ func _unhandled_input(event):
 			select_hotbar_slot(0)
 		elif event.keycode == KEY_2:
 			select_hotbar_slot(1)
-		elif event.keycode == KEY_3:
-			select_hotbar_slot(2)
 		elif event.keycode == KEY_F:
 			perform_melee_attack()
-		elif event.keycode in [KEY_I, KEY_TAB]:
-			if backpack_window:
-				backpack_window.toggle_backpack()
-				get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_Q:
+			use_health_pack()
 
-func cycle_hotbar(delta_idx: int):
-	# Přepínání mezi dostupnými předměty: 0 (Hasák), 1 (Hák), 2 (Cívka)
-	var next_slot = (active_slot + delta_idx) % 3
-	if next_slot < 0:
-		next_slot += 3
-	select_hotbar_slot(next_slot)
+func cycle_hotbar(_delta_idx: int):
+	select_hotbar_slot(1 - active_slot) # dva sloty: kolečko přepíná mezi nimi
 
 func select_hotbar_slot(idx: int):
-	if idx < 0 or idx > 2:
+	if idx < 0 or idx >= grid_inventory.SLOT_COUNT:
 		return
 	active_slot = idx
-	is_hook_equipped = (active_slot == 1)
-	if not is_hook_equipped and is_grappling:
-		_end_grapple(false)
+	is_hook_equipped = active_item_id() == "grapple_hook"
 	if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
 		inventory_ui.update_ui()
 
-func is_item_ready(item_id: String, default_slot: int = -1) -> bool:
+## Id nástroje ve vybraném slotu ("" = prázdný slot).
+func active_item_id() -> String:
+	var item = grid_inventory.get_equipped(active_slot) if grid_inventory else null
+	return item.id if item else ""
+
+## Nástroj funguje, jen když je v jednom ze dvou slotů. Když ho hráč má jen v batohu a slot je volný, nasadí se sám.
+func is_item_ready(item_id: String) -> bool:
 	if not grid_inventory:
 		return false
 	if grid_inventory.is_equipped(item_id):
 		return true
-	# Pokud hráč item vlastní v batohu a hotbar slot je volný, automaticky se nasadí
-	if grid_inventory.has_item(item_id):
-		var target_slot = default_slot if default_slot >= 0 else grid_inventory.get_default_slot_for(item_id)
-		if target_slot >= 0 and grid_inventory.get_equipped(target_slot) == null:
-			for item in grid_inventory.items:
-				if item["data"].id == item_id:
-					grid_inventory.equip_item(item["data"], target_slot)
-					grid_inventory.remove_item(item)
-					if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
-						inventory_ui.update_ui()
-					return true
+	if grid_inventory.free_slot() != -1:
+		for item in grid_inventory.items:
+			if item["data"].id == item_id:
+				grid_inventory.remove_item(item)
+				grid_inventory.equip_item(item["data"])
+				if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
+					inventory_ui.update_ui()
+				return true
+	return false
+
+## Lékárnička z batohu [Q]: doplní 1 srdíčko a spotřebuje se.
+func use_health_pack() -> bool:
+	for item in grid_inventory.items:
+		if item["data"].id == "health_pack":
+			if not heal(1):
+				_show_missing_item_popup("Zdraví je plné")
+				return false
+			grid_inventory.remove_item(item)
+			if is_instance_valid(inventory_ui) and inventory_ui.has_method("update_ui"):
+				inventory_ui.update_ui()
+			return true
+	_show_missing_item_popup("Chybí lékárnička!")
 	return false
 
 func toggle_hook_equip():
-	if active_slot == 1:
-		select_hotbar_slot(0)
-	else:
-		select_hotbar_slot(1)
+	select_hotbar_slot(1 - active_slot)
 
 func set_hook_equipped(value: bool):
-	if value:
-		select_hotbar_slot(1)
-	else:
-		select_hotbar_slot(0)
+	var slot: int = grid_inventory.slot_of("grapple_hook")
+	if slot != -1:
+		select_hotbar_slot(slot if value else 1 - slot)
 
 func perform_melee_attack():
 	if not grid_inventory.has_item("wrench"):
 		_show_missing_item_popup("Chybí Hasák!")
 		return
-	if not is_item_ready("wrench", 0):
-		_show_missing_item_popup("Hasák není vybaven v Hotbaru [1]!")
+	if not is_item_ready("wrench"):
+		_show_missing_item_popup("Hasák není ve slotu! Batoh: [Tab]")
 		return
 	if melee_cooldown > 0:
 		return
@@ -339,6 +360,10 @@ func _physics_process(delta):
 			sprite.modulate.a = 0.35 if fmod(invulnerable_timer, 0.16) > 0.08 else 0.95
 		if invulnerable_timer <= 0 and sprite:
 			sprite.modulate = Color.WHITE
+
+	if is_drilling:
+		_process_drill(delta)
+		return
 
 	# Kontrola vstupu pro hák přes Input map (pokud už nebyl zachycen v _unhandled_input)
 	if Input.is_action_just_pressed("grapple"):
@@ -490,7 +515,9 @@ func _physics_process(delta):
 			else:
 				sprite.play("idle")
 
+	var vx := velocity.x
 	move_and_slide()
+	_step_up(direction, vx)
 	if wind_frame == Engine.get_physics_frames() and wind != Vector2.ZERO:
 		move_and_collide(wind * delta) # vítr hráče posune, rychlost ani ovládání nemění
 	
@@ -519,6 +546,20 @@ func _physics_process(delta):
 		die()
 
 ## Stojí na pevné geometrii levelu (GridPlatform) - ne na drolící se plošině, bráně ani pohyblivém bloku.
+## Chůze do schodu nižšího než STEP_HEIGHT hráče vysadí nahoru a zachová rychlost (bez skoku).
+func _step_up(direction: float, vx: float):
+	if direction == 0.0 or not is_on_floor() or not is_on_wall():
+		return
+	var forward := Vector2(signf(direction) * 2.0, 0.0)
+	for h in range(1, STEP_HEIGHT + 1):
+		var lift: Vector2 = up_direction * h
+		if test_move(global_transform, lift):
+			return # nad hlavou strop
+		if not test_move(global_transform.translated(lift), forward):
+			global_position += lift
+			velocity.x = vx
+			return
+
 func is_on_safe_floor() -> bool:
 	if not is_on_floor() or is_dashing or is_grappling:
 		return false
@@ -541,6 +582,7 @@ func refill_dash() -> bool:
 ## `lock_time` = jak dlouho vstup neubírá vodorovnou rychlost. Puštění skoku výskok nezkrátí.
 func launch(v: Vector2, lock_time: float = 0.0):
 	_end_grapple(false)
+	_stop_drill()
 	is_dashing = false
 	velocity = v
 	momentum_lock = lock_time
@@ -576,6 +618,7 @@ func _ability_blocked(ability: StringName) -> bool:
 ## Anomální zeď: hráč letí rychlostí `v` rovně skrz těleso `through` (bez gravitace a ovládání).
 func start_glide(v: Vector2, through: PhysicsBody2D):
 	_end_grapple(false)
+	_stop_drill()
 	is_dashing = false
 	is_gliding = true
 	glide_velocity = v
@@ -628,8 +671,8 @@ func perform_dash():
 	if not grid_inventory.has_item("gravity_coil"):
 		_show_missing_item_popup("Chybí Gravity Coil!")
 		return
-	if not is_item_ready("gravity_coil", 2):
-		_show_missing_item_popup("Gravity Coil není vybavena v Hotbaru [3]!")
+	if not is_item_ready("gravity_coil"):
+		_show_missing_item_popup("Cívka není ve slotu! Batoh: [Tab]")
 		return
 	if can_dash and dash_cooldown <= 0 and not is_crouching:
 		is_dashing = true
@@ -653,6 +696,50 @@ func perform_dash():
 			
 		velocity = dash_vec * DASH_SPEED
 
+## Vrták ze slotu [LMB]: najde vrtatelnou skálu ve směru `aim_pos` (výchozí = myš) do DRILL_RANGE,
+## zastaví hráče na místě (i ve vzduchu) a po DRILL_TIME ji rozbije. Bez skály v dosahu jen hláška.
+func start_drill(aim_pos: Vector2 = Vector2.INF):
+	if not grid_inventory.has_item("drill"):
+		_show_missing_item_popup("Chybí vrták!")
+		return
+	if not is_item_ready("drill"):
+		_show_missing_item_popup("Vrták není ve slotu! Batoh: [Tab]")
+		return
+	if is_drilling or is_dashing:
+		return
+	if aim_pos == Vector2.INF:
+		aim_pos = get_global_mouse_position()
+	var aim_dir := (aim_pos - global_position).normalized()
+	# Paprsek s maskou hráče: zeď mezi hráčem a skálou vrtání zablokuje
+	var query := PhysicsRayQueryParameters2D.create(global_position, global_position + aim_dir * DRILL_RANGE, collision_mask, [get_rid()])
+	var rock = get_world_2d().direct_space_state.intersect_ray(query).get("collider")
+	if not rock is DrillableRock:
+		_show_missing_item_popup("Tady není co vrtat")
+		return
+	_end_grapple(false)
+	is_drilling = true
+	drill_target = rock
+	drill_timer = DRILL_TIME
+	velocity = Vector2.ZERO
+	if sprite and aim_dir.x != 0.0:
+		sprite.flip_h = aim_dir.x < 0.0
+
+func _process_drill(delta):
+	velocity = Vector2.ZERO
+	drill_timer -= delta
+	if camera:
+		camera.offset = Vector2(randf_range(-2.0, 2.0), randf_range(-2.0, 2.0))
+	if drill_timer <= 0.0:
+		if is_instance_valid(drill_target):
+			drill_target.shatter()
+		_stop_drill()
+
+func _stop_drill():
+	is_drilling = false
+	drill_target = null
+	if camera:
+		camera.offset = Vector2.ZERO
+
 func die():
 	if is_dying:
 		return
@@ -661,6 +748,7 @@ func die():
 	player_died.emit()
 	get_tree().call_group("celeste_keys", "on_player_died")
 	_end_grapple(false)
+	_stop_drill()
 	velocity = Vector2.ZERO
 	var tw = create_tween()
 	if sprite:
@@ -700,7 +788,8 @@ func take_damage(amount: int = 1, from_pos: Vector2 = Vector2.ZERO):
 		return
 	health -= amount
 	invulnerable_timer = INVULNERABILITY_TIME
-	
+	_stop_drill() # zásah vrtání přeruší
+
 	if hearts_ui and hearts_ui.has_method("set_hearts"):
 		hearts_ui.set_hearts(health, max_health)
 		
@@ -891,8 +980,8 @@ func fire_hook(custom_target_pos: Vector2 = Vector2.INF):
 	if not grid_inventory.has_item("grapple_hook"):
 		_show_missing_item_popup("Chybí Hák!")
 		return
-	if not is_item_ready("grapple_hook", 1):
-		_show_missing_item_popup("Hák není vybaven v Hotbaru [2]!")
+	if not is_item_ready("grapple_hook"):
+		_show_missing_item_popup("Hák není ve slotu! Batoh: [Tab]")
 		return
 		
 	var info = get_hook_aim_info(custom_target_pos)

@@ -104,18 +104,30 @@ func _on_scene_changed(path: String):
 			start_stage(2, "KAPITOLA 2: SMALLVILLE", 12)
 		"res://levels/c3/chapter3.tscn":
 			start_stage(3, "KAPITOLA 3: PARNÍ MĚSTO", 12)
-		"res://level1.tscn":
-			start_stage(4, "KAPITOLA 4: STARÉ DÍLNY", 5)
+		"res://levels/c4/chapter4.tscn":
+			start_stage(4, "KAPITOLA 4: SEVERNÍ STĚNA", 12)
+		"res://levels/c5/chapter5.tscn":
+			start_stage(5, "KAPITOLA 5: SLÉVÁRNA", 12)
+		"res://levels/c6/chapter6.tscn":
+			start_stage(6, "KAPITOLA 6: KRYSTALOVÉ DOLY", 12)
+		"res://levels/c7/chapter7.tscn":
+			start_stage(7, "KAPITOLA 7: TĚŽEBNÍ KOMPLEX", 12)
+		"res://level1.tscn": # staré úrovně 1-3 mimo kampaň (testy je používají jako přípravek)
+			start_stage(5, "KAPITOLA 5: STARÉ DÍLNY", 5)
 		"res://level2.tscn":
-			start_stage(5, "KAPITOLA 5: KRYSTALOVÉ DOLY", 3)
+			start_stage(6, "KAPITOLA 6: KRYSTALOVÉ DOLY", 3)
 		"res://level3.tscn":
-			start_stage(6, "KAPITOLA 6: PŘEDPOLÍ REAKTORU", 3)
+			start_stage(7, "KAPITOLA 7: PŘEDPOLÍ REAKTORU", 3)
 		"res://boss_room.tscn":
-			stage_active = false
+			start_stage(8, "SÁL REAKTORU: SPRÁVCE", 0)
 		"res://ui/stage_clear_screen.tscn":
 			stage_active = false
 		"res://main_menu.tscn":
 			stage_active = false
+		_:
+			return # jiná scéna (test) nic neukládá
+	if stage_active:
+		SaveManager.save_game() # příchod do kapitoly = checkpoint (i po Pokračovat, uloží totéž)
 
 func start_stage(stage_idx: int, title: String = "", max_crystals: int = 5):
 	current_stage_index = stage_idx

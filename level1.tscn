@@ -750,8 +750,8 @@ position = Vector2(1100, 140)
 [node name="LevelEnd" parent="." instance=ExtResource("2")]
 position = Vector2(2800, 70)
 next_level = "res://level2.tscn"
-stage_title = "KAPITOLA 4: STARÉ DÍLNY"
-stage_index = 4
+stage_title = "KAPITOLA 5: STARÉ DÍLNY"
+stage_index = 5
 max_stage_crystals = 5
 
 [node name="Player" parent="." instance=ExtResource("1")]

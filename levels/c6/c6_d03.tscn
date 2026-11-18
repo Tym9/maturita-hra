@@ -1,0 +1,73 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_r2ttt"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_gt5o2"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_t0kpf"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="4_006wv"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="5_xglf1"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6_uw7wt"]
+[ext_resource type="PackedScene" path="res://mechanics/drillable_rock.tscn" id="7_8soao"]
+[ext_resource type="PackedScene" path="res://enemies/pressure_mine.tscn" id="8_ffwd5"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="9_af7da"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="10_sh7si"]
+
+[node name="c6_d03" type="Node2D" unique_id=500128]
+script = ExtResource("1_r2ttt")
+room_id = "c6_d03"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=165649491]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=2022658836]
+script = ExtResource("2_gt5o2")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1438937680]
+z_index = -2
+tile_set = ExtResource("3_t0kpf")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=2115065580]
+tile_map_data = PackedByteArray("AAADAAAAAAACAAIAAAAEAAAAAAACAAIAAAAFAAAAAAACAAIAAAAGAAAAAAACAAIAAAAHAAAAAAACAAIAAAAaAAAAAAACAAIAAAAbAAAAAAACAAIAAAAcAAAAAAACAAIAAAAdAAAAAAACAAIAAAAeAAAAAAACAAIAAAAfAAAAAAACAAIAAAAEAAEAAAACAAIAAAAFAAEAAAACAAIAAAAGAAEAAAACAAIAAAAaAAEAAAACAAIAAAAbAAEAAAACAAIAAAAcAAEAAAACAAIAAAAdAAEAAAACAAIAAAAeAAEAAAACAAIAAAAfAAEAAAACAAIAAAAaAAIAAAACAAIAAAAbAAIAAAACAAIAAAAcAAIAAAACAAIAAAAdAAIAAAACAAIAAAAeAAIAAAACAAIAAAAfAAIAAAACAAIAAAAaAAMAAAACAAIAAAAbAAMAAAACAAIAAAAcAAMAAAACAAIAAAAdAAMAAAACAAIAAAAeAAMAAAACAAIAAAAfAAMAAAACAAIAAAAaAAQAAAACAAIAAAAbAAQAAAACAAIAAAAcAAQAAAACAAIAAAAdAAQAAAACAAIAAAAeAAQAAAACAAIAAAAfAAQAAAACAAIAAAAaAAUAAAACAAIAAAAbAAUAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAAOAAkAAAACAAIAAAAPAAkAAAACAAIAAAAQAAkAAAACAAIAAAARAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAUAAkAAAACAAIAAAAVAAkAAAACAAIAAAAWAAkAAAACAAIAAAAXAAkAAAACAAIAAAAYAAkAAAACAAIAAAAZAAkAAAACAAIAAAAaAAkAAAACAAIAAAAbAAkAAAACAAIAAAAcAAkAAAACAAIAAAAdAAkAAAACAAIAAAAeAAkAAAACAAIAAAAfAAkAAAACAAIAAAAmAAkAAAACAAIAAAAnAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAAUAAoAAAACAAIAAAAVAAoAAAACAAIAAAAWAAoAAAACAAIAAAAXAAoAAAACAAIAAAAYAAoAAAACAAIAAAAZAAoAAAACAAIAAAAaAAoAAAACAAIAAAAbAAoAAAACAAIAAAAcAAoAAAACAAIAAAAdAAoAAAACAAIAAAAeAAoAAAACAAIAAAAfAAoAAAACAAIAAAAmAAoAAAACAAIAAAAnAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_t0kpf")
+
+[node name="Crystal" parent="." unique_id=464422974 instance=ExtResource("4_006wv")]
+position = Vector2(232, 56)
+variant = 1
+
+[node name="Drone" parent="." unique_id=377905660 instance=ExtResource("5_xglf1")]
+position = Vector2(360, 56)
+
+[node name="Anchor" parent="." unique_id=796535518 instance=ExtResource("6_uw7wt")]
+position = Vector2(184, 88)
+
+[node name="Anchor2" parent="." unique_id=1119097497 instance=ExtResource("6_uw7wt")]
+position = Vector2(296, 88)
+
+[node name="DrillRock" parent="." unique_id=527051261 instance=ExtResource("7_8soao")]
+position = Vector2(448, 80)
+size = Vector2i(1, 4)
+
+[node name="DrillRock2" parent="." unique_id=851431800 instance=ExtResource("7_8soao")]
+position = Vector2(464, 80)
+size = Vector2i(1, 4)
+
+[node name="Mine" parent="." unique_id=1190175486 instance=ExtResource("8_ffwd5")]
+position = Vector2(248, 104)
+
+[node name="Mine2" parent="." unique_id=1900076085 instance=ExtResource("8_ffwd5")]
+position = Vector2(344, 104)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1151332896]
+position = Vector2(40, 135)
+script = ExtResource("9_af7da")
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1136648364]
+position = Vector2(160, 144)
+script = ExtResource("10_sh7si")
+count = 13

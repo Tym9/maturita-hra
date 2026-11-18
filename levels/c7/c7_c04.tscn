@@ -1,0 +1,59 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_pvyuu"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_qf41i"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_qm4cj"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_bs5s5"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_87g5d"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="6_g6xfd"]
+[ext_resource type="PackedScene" path="res://npc/vesper.tscn" id="7_k8dla"]
+
+[node name="c7_c04" type="Node2D" unique_id=1069098311]
+script = ExtResource("1_pvyuu")
+room_id = "c7_c04"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1051216214]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=43944736]
+script = ExtResource("2_qf41i")
+style = 6
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=2031590845]
+z_index = -2
+tile_map_data = PackedByteArray("AAAHAAcAAAABAAEAAAAIAAcAAAABAAEAAAAHAAgAAAABAAEAAAAIAAgAAAABAAEAAAA=")
+tile_set = ExtResource("3_qm4cj")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=551640250]
+tile_map_data = PackedByteArray("AAAAAAMAAAADAAAAAAABAAMAAAADAAAAAAACAAMAAAADAAAAAAADAAMAAAADAAAAAAAEAAMAAAADAAAAAAAFAAMAAAADAAAAAAAGAAMAAAADAAAAAAAHAAMAAAADAAAAAAAIAAMAAAADAAAAAAAAAAQAAAADAAAAAAABAAQAAAADAAAAAAACAAQAAAADAAAAAAADAAQAAAADAAAAAAAEAAQAAAADAAAAAAAFAAQAAAADAAAAAAAGAAQAAAADAAAAAAAHAAQAAAADAAAAAAAIAAQAAAADAAAAAAAHAAUAAAADAAAAAAAIAAUAAAADAAAAAAAHAAYAAAADAAAAAAAIAAYAAAADAAAAAAALAAYAAAADAAAAAAAMAAYAAAADAAAAAAANAAYAAAADAAAAAAAOAAYAAAADAAAAAAAPAAYAAAADAAAAAAAQAAYAAAADAAAAAAARAAYAAAADAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAFAAkAAAADAAAAAAAGAAkAAAADAAAAAAAHAAkAAAADAAAAAAAIAAkAAAADAAAAAAAJAAkAAAADAAAAAAAKAAkAAAADAAAAAAALAAkAAAADAAAAAAAMAAkAAAADAAAAAAANAAkAAAADAAAAAAAOAAkAAAADAAAAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAADAAAAAAANAAoAAAADAAAAAAAOAAoAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_qm4cj")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1727122238]
+position = Vector2(88, 96)
+script = ExtResource("4_bs5s5")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1578550754]
+position = Vector2(264, 87)
+script = ExtResource("5_87g5d")
+
+[node name="HealthPack" parent="." unique_id=1165689868 instance=ExtResource("6_g6xfd")]
+position = Vector2(40, 136)
+
+[node name="Vesper" parent="." unique_id=467395182 instance=ExtResource("7_k8dla")]
+position = Vector2(72, 136)
+dialogue_pages = Array[String](["Matěji! Tak jsi to dokázal až sem. Jsem tu tři dny jako technik údržby.", "Reaktor je přímo pod námi. Jádro už se neudrží, anomálie se šíří celým komplexem.", "Dál tě bude pronásledovat tvoje vlastní ozvěna. Stín z anomálie, opakuje každý tvůj krok. Nezastavuj se a nevracej se.", "Dole u reaktoru hlídá Strážce. Sabotážní ventil je za ním. Hodně štěstí."])
+repeat_dialogue_pages = Array[String](["Ozvěna jde po tvých stopách. Nezastavuj se."])
+
+[node name="Pylon" type="Node2D" parent="." unique_id=1933631534]
+position = Vector2(200, 144)
+script = ExtResource("4_bs5s5")
+kind = 5
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=1184754082]
+position = Vector2(312, 144)
+script = ExtResource("4_bs5s5")

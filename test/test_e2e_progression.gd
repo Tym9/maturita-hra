@@ -1,5 +1,14 @@
 extends SceneTree
 
+# Hra i testy sdílí user://save.json: příchod do kapitoly ukládá, po testu vrátit hráčovo uložení
+var _save_backup := FileAccess.get_file_as_string("user://save.json")
+
+func _finalize():
+	if _save_backup.is_empty():
+		DirAccess.remove_absolute("user://save.json")
+	else:
+		FileAccess.open("user://save.json", FileAccess.WRITE).store_string(_save_backup)
+
 func _init():
 	print("==================================================")
 	print("[E2E TEST] Spoustim kompletni test pruchodu etap...")
@@ -47,14 +56,19 @@ func _start_test():
 	await process_frame
 	await process_frame
 	
-	# 5. Pribehove kapitoly 1 (Zakladna), 2 (Smallville) a 3 (Parni mesto): LevelEnd v posledni mistnosti, stav hrace se prenasi
-	for chapter_name in ["Chapter1", "Chapter2", "Chapter3"]:
+	# 5. Pribehove kapitoly 1 (Zakladna), 2 (Smallville), 3 (Parni mesto), 4 (Severni stena), 5 (Slevarna), 6 (Doly) a 7 (Komplex):
+	# LevelEnd v posledni mistnosti, stav hrace se prenasi
+	for chapter_name in ["Chapter1", "Chapter2", "Chapter3", "Chapter4", "Chapter5", "Chapter6", "Chapter7"]:
 		assert(current_scene != null and current_scene.name == chapter_name, "Musi se nacist " + chapter_name)
 		var ch_player = current_scene.get_node_or_null("Player")
 		assert(ch_player != null and ch_player.crystals == 2, chapter_name + ": hrac s krystaly z tutorialu")
+		assert(ch_player.collected_crystal_ids.has("crystal_tut_1"), chapter_name + ": hrac ma ID sebranych krystalu")
 		var ch_end = current_scene.find_child("LevelEnd", true, false)
 		assert(ch_end != null, chapter_name + ": LevelEnd musi existovat")
 		print("  ✓ PASS: ", chapter_name, " nactena, hrac prevzal stav")
+		if chapter_name == "Chapter5": # hasak ve vyzbroji se musi prenest dal az k bossovi
+			var wrench = load("res://mechanics/item_data.gd").create("wrench")
+			ch_player.grid_inventory.equip_item(wrench, 0)
 		ch_end._on_body_entered(ch_player)
 		await process_frame
 		await process_frame
@@ -65,80 +79,14 @@ func _start_test():
 		await process_frame
 		await process_frame
 
-	# 6. Zkontrolujeme, ze se nacetl Level 1 (kapitola 4) bez jakehokoliv padu!
-	assert(current_scene != null and current_scene.name == "Level1", "Musi se nacist Level1")
-	print("  ✓ PASS: Level 1 uspesne nacten (", current_scene.name, ")!")
-	
-	var lvl1_player = current_scene.get_node_or_null("Player")
-	assert(lvl1_player != null, "Hrac v Levelu 1 musi existovat")
-	assert(lvl1_player.crystals == 2, "Hrac musi mit zachovany pocet krystalu (2)")
-	assert(lvl1_player.collected_crystal_ids.has("crystal_tut_1"), "Hrac musi mit ID sebranych krystalu")
-	print("  ✓ PASS: Hrac v Levelu 1 uspesne prevzal stav z tutoriálu!")
-	
-	# 6. Nyni otestujeme pruchod z Level 1 do Level 2!
-	print(">>> 4. Hrac v Levelu 1 vstupuje do LevelEnd portalu...")
-	var lvl1_end = current_scene.get_node_or_null("LevelEnd")
-	assert(lvl1_end != null, "LevelEnd v Levelu 1 musi existovat")
-	
-	# Dejme hraci v Levelu 1 hasak
-	var item_data_script = load("res://mechanics/item_data.gd")
-	var wrench = item_data_script.create("wrench")
-	lvl1_player.grid_inventory.equip_item(wrench, 0)
-	
-	lvl1_end._on_body_entered(lvl1_player)
-	
-	await process_frame
-	await process_frame
-	await process_frame
-	
-	assert(current_scene != null and current_scene.name == "StageClearScreen", "Musi se nacist StageClearScreen po Levelu 1")
-	print("  ✓ PASS: StageClearScreen po Levelu 1 uspesne zobrazena")
-	
-	current_scene._on_continue_pressed()
-	
-	await process_frame
-	await process_frame
-	await process_frame
-	
-	assert(current_scene != null and current_scene.name == "Level2", "Musi se nacist Level2")
-	print("  ✓ PASS: Level 2 uspesne nacten (", current_scene.name, ")!")
-	
-	var lvl2_player = current_scene.get_node_or_null("Player")
-	assert(lvl2_player != null, "Hrac v Levelu 2 musi existovat")
-	assert(lvl2_player.grid_inventory.has_item("wrench"), "Hrac v Levelu 2 musi mit hasak!")
-	assert(lvl2_player.grid_inventory.get_equipped(0) != null, "Hasak musi zustat vybaven v hotbaru!")
-	print("  ✓ PASS: Hrac v Levelu 2 uspesne zdedil hasak ve vyzbroji!")
-	
-	# 7. Nyni otestujeme pruchod z Level 2 do Level 3!
-	print(">>> 5. Hrac v Levelu 2 vstupuje do LevelEnd portalu...")
-	var lvl2_end = current_scene.get_node_or_null("LevelEnd")
-	assert(lvl2_end != null, "LevelEnd v Levelu 2 musi existovat")
-	
-	lvl2_end._on_body_entered(lvl2_player)
-	
-	await process_frame
-	await process_frame
-	await process_frame
-	
-	assert(current_scene != null and current_scene.name == "StageClearScreen", "Musi se nacist StageClearScreen po Levelu 2")
-	print("  ✓ PASS: StageClearScreen po Levelu 2 uspesne zobrazena")
-	
-	current_scene._on_continue_pressed()
-	
-	await process_frame
-	await process_frame
-	await process_frame
-	
-	assert(current_scene != null and current_scene.name == "Level3", "Musi se nacist Level3")
-	print("  ✓ PASS: Level 3 uspesne nacten (", current_scene.name, ")!")
-	
-	var lvl3_player = current_scene.get_node_or_null("Player")
-	assert(lvl3_player != null, "Hrac v Levelu 3 musi existovat")
-	assert(lvl3_player.grid_inventory.has_item("wrench"), "Hrac v Levelu 3 musi mit hasak!")
-	assert(lvl3_player.grid_inventory.get_equipped(0) != null, "Hasak musi zustat vybaven v hotbaru!")
-	print("  ✓ PASS: Hrac v Levelu 3 uspesne zdedil vyzbroj z Levelu 2!")
+	assert(current_scene != null and current_scene.name == "BossRoom", "Po kapitole 7 se musi nacist BossRoom")
+	var boss_player = current_scene.get_node_or_null("Player")
+	assert(boss_player != null, "Hrac v BossRoom musi existovat")
+	assert(boss_player.grid_inventory.has_item("wrench"), "Hrac v BossRoom musi mit hasak!")
+	assert(boss_player.grid_inventory.get_equipped(0) != null, "Hasak musi zustat vybaven v hotbaru!")
+	print("  ✓ PASS: BossRoom nacten, hrac zdedil hasak ve vyzbroji!")
 	
 	print("==================================================")
-	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP (TUTORIAL -> K1 -> K2 -> K3 -> L1 -> L2 -> L3) 100% USPESNY!")
+	print("[PASS] KOMPLETNI E2E TEST PRECHODU ETAP (TUTORIAL -> K1 -> ... -> K7 -> BOSS) 100% USPESNY!")
 	print("==================================================")
 	quit(0)

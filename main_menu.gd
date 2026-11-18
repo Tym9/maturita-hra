@@ -47,6 +47,7 @@ func _on_quit_pressed():
 func _start_level(scene_path: String):
 	Global.death_count = 0
 	Global.kill_count = 0
+	Global.has_persistent_player = false # výběr kapitoly začíná s prázdným batohem, předměty jsou v truhlách
 	get_tree().change_scene_to_file(scene_path)
 
 func _on_tutorial_pressed():
@@ -61,11 +62,17 @@ func _on_smallville_pressed():
 func _on_steam_city_pressed():
 	_start_level("res://levels/c3/chapter3.tscn")
 
+func _on_north_face_pressed():
+	_start_level("res://levels/c4/chapter4.tscn")
+
 func _on_level1_pressed():
-	_start_level("res://level1.tscn")
+	_start_level("res://levels/c5/chapter5.tscn")
 
 func _on_level2_pressed():
-	_start_level("res://level2.tscn")
+	_start_level("res://levels/c6/chapter6.tscn")
 
 func _on_level3_pressed():
-	_start_level("res://level3.tscn")
+	_start_level("res://levels/c7/chapter7.tscn")
+
+func _on_boss_pressed():
+	_start_level("res://boss_room.tscn")

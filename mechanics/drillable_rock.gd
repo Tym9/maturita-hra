@@ -2,12 +2,11 @@
 class_name DrillableRock
 extends StaticBody2D
 
-## Vrtatelná skála: pevný popraskaný blok, který hráč s vrtákem (předmět "drill") prorazí dashem
-## a letí dál. Bez vrtáku je to obyčejná zeď. Počátek = levý horní roh, `size` v dlaždicích.
-## Obnoví se při room_reset (skupina "room_reset").
+## Vrtatelná skála: pevný popraskaný blok, který hráč provrtá vrtákem (nástroj "drill" ve slotu, viz
+## player.start_drill) - po 2 s vrtání se rozpadne. Bez vrtáku je to obyčejná zeď.
+## Počátek = levý horní roh, `size` v dlaždicích. Obnoví se při room_reset (skupina "room_reset").
 
 const TILE := 16.0
-const DETECT_MARGIN := 10.0 # dash urazí ~7 px za snímek - skála se rozpadne dřív, než o ni zastaví
 
 @export var size: Vector2i = Vector2i(1, 3):
 	set(val):
@@ -15,7 +14,6 @@ const DETECT_MARGIN := 10.0 # dash urazí ~7 px za snímek - skála se rozpadne 
 		queue_redraw()
 
 var col: CollisionShape2D = null
-var detect: Area2D = null
 var broken: bool = false
 
 func _ready():
@@ -29,28 +27,12 @@ func _ready():
 	col.shape.size = px
 	col.position = px / 2.0
 	add_child(col)
-	detect = Area2D.new()
-	detect.collision_layer = 0
-	detect.collision_mask = 1
-	var detect_col := CollisionShape2D.new()
-	detect_col.shape = RectangleShape2D.new()
-	detect_col.shape.size = px + Vector2.ONE * 2.0 * DETECT_MARGIN
-	detect_col.position = px / 2.0
-	detect.add_child(detect_col)
-	add_child(detect)
 
-func _physics_process(_delta):
-	if Engine.is_editor_hint() or broken:
+func shatter():
+	if broken:
 		return
-	var player = HazardKill.player_in(detect)
-	if player and player.is_dashing and player.velocity != Vector2.ZERO and player.grid_inventory.has_item("drill"):
-		var ahead: Vector2 = player.global_position + player.velocity.normalized() * 16.0
-		if Rect2(global_position, Vector2(size) * TILE).has_point(ahead):
-			_shatter()
-
-func _shatter():
 	broken = true
-	col.disabled = true # hned, ať dash v tomto snímku proletí
+	col.disabled = true
 	var debris := CPUParticles2D.new()
 	debris.one_shot = true
 	debris.explosiveness = 1.0

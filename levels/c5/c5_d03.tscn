@@ -1,0 +1,74 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_gnsnk"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_c6j3m"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_ou0vc"]
+[ext_resource type="PackedScene" path="res://mechanics/cog_saw.tscn" id="4_kmpgm"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="5_jcyaj"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="6_4xd0k"]
+[ext_resource type="PackedScene" path="res://mechanics/piston_crusher.tscn" id="7_cv5r3"]
+[ext_resource type="PackedScene" path="res://mechanics/dash_shard.tscn" id="8_8xu5b"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="9_86dpp"]
+[ext_resource type="PackedScene" path="res://mechanics/molten_slag.tscn" id="10_k6fpn"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="11_xlx1h"]
+
+[node name="c5_d03" type="Node2D" unique_id=84309576]
+script = ExtResource("1_gnsnk")
+room_id = "c5_d03"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=64153353]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=641268863]
+script = ExtResource("2_c6j3m")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1883971206]
+z_index = -2
+tile_set = ExtResource("3_ou0vc")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=531376765]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAADAAAAAAACAAIAAAATAAAAAAACAAIAAAAUAAAAAAACAAIAAAAVAAAAAAACAAIAAAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAADAAEAAAACAAIAAAATAAEAAAACAAIAAAAUAAEAAAACAAIAAAAVAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAACAAIAAAACAAIAAAADAAIAAAACAAIAAAAUAAIAAAADAAIAAAAAAAMAAAACAAIAAAABAAMAAAACAAIAAAACAAMAAAACAAIAAAADAAMAAAACAAIAAAAHAAMAAAABAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAALAAMAAAABAAAAAAAMAAMAAAABAAAAAAANAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAADAAUAAAADAAAAAAAEAAUAAAADAAAAAAAFAAUAAAADAAAAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAEAAgAAAACAAIAAAAFAAgAAAACAAIAAAAGAAgAAAACAAIAAAAHAAgAAAACAAIAAAAIAAgAAAACAAIAAAAJAAgAAAACAAIAAAAKAAgAAAACAAIAAAALAAgAAAACAAIAAAAMAAgAAAACAAIAAAANAAgAAAACAAIAAAAOAAgAAAACAAIAAAAPAAgAAAACAAIAAAAQAAgAAAADAAIAAAARAAgAAAADAAIAAAASAAgAAAACAAIAAAATAAgAAAACAAIAAAAUAAgAAAACAAIAAAAVAAgAAAACAAIAAAAWAAgAAAACAAIAAAAXAAgAAAACAAIAAAAYAAgAAAACAAIAAAAZAAgAAAACAAIAAAAaAAgAAAACAAIAAAAbAAgAAAACAAIAAAAcAAgAAAACAAIAAAAdAAgAAAACAAIAAAAeAAgAAAADAAIAAAAfAAgAAAADAAIAAAAgAAgAAAACAAIAAAAhAAgAAAACAAIAAAAiAAgAAAACAAIAAAAjAAgAAAACAAIAAAAnAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAAOAAkAAAACAAIAAAAPAAkAAAACAAIAAAAQAAkAAAACAAIAAAARAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAUAAkAAAACAAIAAAAVAAkAAAACAAIAAAAWAAkAAAACAAIAAAAXAAkAAAACAAIAAAAYAAkAAAACAAIAAAAZAAkAAAACAAIAAAAaAAkAAAACAAIAAAAbAAkAAAACAAIAAAAcAAkAAAACAAIAAAAdAAkAAAACAAIAAAAeAAkAAAACAAIAAAAfAAkAAAACAAIAAAAgAAkAAAACAAIAAAAhAAkAAAACAAIAAAAiAAkAAAACAAIAAAAjAAkAAAACAAIAAAAnAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAAUAAoAAAACAAIAAAAVAAoAAAACAAIAAAAWAAoAAAACAAIAAAAXAAoAAAACAAIAAAAYAAoAAAACAAIAAAAZAAoAAAACAAIAAAAaAAoAAAACAAIAAAAbAAoAAAACAAIAAAAcAAoAAAACAAIAAAAdAAoAAAACAAIAAAAeAAoAAAACAAIAAAAfAAoAAAACAAIAAAAgAAoAAAACAAIAAAAhAAoAAAACAAIAAAAiAAoAAAACAAIAAAAjAAoAAAACAAIAAAAnAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_ou0vc")
+
+[node name="Saw" parent="." unique_id=347813756 instance=ExtResource("4_kmpgm")]
+position = Vector2(136, 40)
+rail = PackedVector2Array(0, 0, 128, 0)
+period = 3.2
+
+[node name="Crystal" parent="." unique_id=417100363 instance=ExtResource("5_jcyaj")]
+position = Vector2(200, 40)
+variant = 1
+
+[node name="Drone" parent="." unique_id=251950211 instance=ExtResource("6_4xd0k")]
+position = Vector2(376, 40)
+
+[node name="Crusher" parent="." unique_id=2140747972 instance=ExtResource("7_cv5r3")]
+position = Vector2(168, 48)
+width = 1
+
+[node name="Crusher2" parent="." unique_id=401980230 instance=ExtResource("7_cv5r3")]
+position = Vector2(232, 48)
+offset = 0.6
+width = 1
+
+[node name="Shard" parent="." unique_id=585912321 instance=ExtResource("8_8xu5b")]
+position = Vector2(392, 72)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1236187529]
+position = Vector2(40, 119)
+script = ExtResource("9_86dpp")
+
+[node name="Slag" parent="." unique_id=1037983853 instance=ExtResource("10_k6fpn")]
+position = Vector2(384, 115)
+size = Vector2(192, 13)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=744954342]
+position = Vector2(520, 128)
+script = ExtResource("11_xlx1h")

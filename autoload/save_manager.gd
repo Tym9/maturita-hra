@@ -29,9 +29,18 @@ func has_save_file() -> bool:
 
 func save_game(player_node = null, scene_path: String = "", room_id: String = "") -> bool:
 	var current_scene_path = scene_path
-	if current_scene_path.is_empty() and get_tree().current_scene:
-		current_scene_path = get_tree().current_scene.scene_file_path
-		
+	var scene := get_tree().current_scene
+	if current_scene_path.is_empty() and scene:
+		current_scene_path = scene.scene_file_path
+	# Ruční uložení v kapitole: místnost, kde hráč je (jako checkpoint)
+	if room_id.is_empty() and scene is Chapter and scene.current:
+		room_id = scene.current.room_id
+	# Obsah truhel scény, aby se po Pokračovat znovu nenaplnily
+	var chests := {}
+	for c in get_tree().get_nodes_in_group("chests"):
+		if scene and scene.is_ancestor_of(c):
+			chests[str(scene.get_path_to(c))] = c.inventory.to_save_data()
+
 	var data = {
 		"version": 1,
 		"timestamp": Time.get_unix_time_from_system(),
@@ -41,7 +50,8 @@ func save_game(player_node = null, scene_path: String = "", room_id: String = ""
 			"deaths": Global.death_count,
 			"kills": Global.kill_count
 		},
-		"player": {}
+		"player": {},
+		"chests": chests
 	}
 	
 	if not player_node:
@@ -97,6 +107,7 @@ func continue_game():
 		return
 	var target_scene = data.get("current_scene", "res://level1.tscn")
 	pending_load = true
+	Global.has_persistent_player = false # uložená hra má přednost před stavem přeneseným z minulé kapitoly
 	get_tree().change_scene_to_file(target_scene)
 
 func apply_save_to_player(player_node) -> bool:
@@ -131,10 +142,19 @@ func apply_save_to_player(player_node) -> bool:
 			
 	if player_node.has_method("_init_ui"):
 		player_node._init_ui()
+	# Až po _ready celé scény (truhly se naplní výchozími předměty, pak je přepíše uložený obsah)
+	_restore_chests.call_deferred(current_save_data.get("chests", {}))
 		
 	pending_load = false
 	print("[SaveManager] Uložená data byla úspěšně aplikována na hráče.")
 	return true
+
+func _restore_chests(saved: Dictionary):
+	var scene := get_tree().current_scene
+	for c in get_tree().get_nodes_in_group("chests"):
+		var key := str(scene.get_path_to(c)) if scene else ""
+		if saved.get(key) is Array:
+			c.inventory.load_save_data(saved[key])
 
 func has_crystal(id: String) -> bool:
 	return progress.crystals.has(id) or progress.grand.has(id)

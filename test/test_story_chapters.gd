@@ -1,13 +1,17 @@
 extends Node2D
 
-## Test příběhových kapitol c1 Základna, c2 Smallville a c3 Parní město (scény z LEVEL_c1–c3.md):
+## Test příběhových kapitol c1 Základna, c2 Smallville, c3 Parní město, c4 Severní stěna, c5 Slévárna, c6 Krystalové doly a c7 Těžební komplex (scény z LEVEL_c1–c7.md):
 ## počet místností, respawny, překryvy, napojení LevelEnd, krystaly, checkpointy, pozadí, dialogy postav.
 ## Průchodnost řeší tools/level_check.py. Spuštění: godot --headless --path . res://test/test_story_chapters.tscn
 
 const CHAPTERS := [
 	{"path": "res://levels/c1/chapter1.tscn", "rooms": 20, "next": "res://levels/c2/chapter2.tscn", "index": 1, "style": RoomDecor.STYLE_OUTPOST, "crystals": 7, "checkpoints": 3},
 	{"path": "res://levels/c2/chapter2.tscn", "rooms": 28, "next": "res://levels/c3/chapter3.tscn", "index": 2, "style": RoomDecor.STYLE_VILLAGE, "crystals": 12, "checkpoints": 4},
-	{"path": "res://levels/c3/chapter3.tscn", "rooms": 28, "next": "res://level1.tscn", "index": 3, "style": RoomDecor.STYLE_CITY, "crystals": 12, "checkpoints": 4},
+	{"path": "res://levels/c3/chapter3.tscn", "rooms": 28, "next": "res://levels/c4/chapter4.tscn", "index": 3, "style": RoomDecor.STYLE_CITY, "crystals": 12, "checkpoints": 4},
+	{"path": "res://levels/c4/chapter4.tscn", "rooms": 28, "next": "res://levels/c5/chapter5.tscn", "index": 4, "style": RoomDecor.STYLE_MOUNTAIN, "crystals": 12, "checkpoints": 4},
+	{"path": "res://levels/c5/chapter5.tscn", "rooms": 28, "next": "res://levels/c6/chapter6.tscn", "index": 5, "style": RoomDecor.STYLE_FOUNDRY, "crystals": 12, "checkpoints": 4},
+	{"path": "res://levels/c6/chapter6.tscn", "rooms": 28, "next": "res://levels/c7/chapter7.tscn", "index": 6, "style": RoomDecor.STYLE_MINES, "crystals": 12, "checkpoints": 4},
+	{"path": "res://levels/c7/chapter7.tscn", "rooms": 28, "next": "res://boss_room.tscn", "index": 7, "style": RoomDecor.STYLE_REACTOR, "crystals": 12, "checkpoints": 4},
 ]
 
 var fails: int = 0

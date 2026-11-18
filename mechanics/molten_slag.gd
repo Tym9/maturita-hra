@@ -60,9 +60,11 @@ func _physics_process(delta):
 			risen = minf(risen + rise_speed * delta, max_rise)
 	# Smrtící oblast = celé jezírko, hladina o pár px níž a boky o pár px užší než grafika
 	var top := -risen + HITBOX_MARGIN
-	kill_col.shape.size = Vector2(size.x - 2.0 * HITBOX_MARGIN, size.y - top)
-	kill_col.position = Vector2(0.0, (top + size.y) / 2.0)
-	HazardKill.check(kill_area)
+	var depth := size.y - top
+	if depth > 0.0: # záplava (hloubka 0) nezabíjí, dokud se nerozteče
+		kill_col.shape.size = Vector2(size.x - 2.0 * HITBOX_MARGIN, depth)
+		kill_col.position = Vector2(0.0, (top + size.y) / 2.0)
+		HazardKill.check(kill_area)
 	queue_redraw()
 
 func _player_in_room() -> bool:

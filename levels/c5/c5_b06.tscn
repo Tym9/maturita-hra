@@ -1,0 +1,63 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_l6mrd"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_s15wk"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_1v4ap"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="4_j312v"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_20mcx"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="6_71wkw"]
+[ext_resource type="PackedScene" path="res://mechanics/conveyor_belt.tscn" id="7_fn7fw"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="8_u74go"]
+[ext_resource type="PackedScene" path="res://mechanics/molten_slag.tscn" id="9_3stw8"]
+
+[node name="c5_b06" type="Node2D" unique_id=1224006569]
+script = ExtResource("1_l6mrd")
+room_id = "c5_b06"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1613935650]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=2132589733]
+script = ExtResource("2_s15wk")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=167462895]
+z_index = -2
+tile_set = ExtResource("3_1v4ap")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=563798290]
+tile_map_data = PackedByteArray("AAAaAAAAAAACAAIAAAAbAAAAAAACAAIAAAAcAAAAAAACAAIAAAAdAAAAAAACAAIAAAAeAAAAAAACAAIAAAAfAAAAAAACAAIAAAAgAAAAAAACAAIAAAAhAAAAAAACAAIAAAAaAAEAAAACAAIAAAAbAAEAAAACAAIAAAAcAAEAAAACAAIAAAAdAAEAAAACAAIAAAAeAAEAAAACAAIAAAAfAAEAAAACAAIAAAAgAAEAAAACAAIAAAAhAAEAAAACAAIAAAAbAAIAAAADAAIAAAAcAAIAAAADAAIAAAAdAAIAAAADAAIAAAAeAAIAAAADAAIAAAAfAAIAAAADAAIAAAAgAAIAAAADAAIAAAAOAAMAAAADAAAAAAAPAAMAAAADAAAAAAAQAAMAAAADAAAAAAARAAMAAAADAAAAAAASAAMAAAADAAAAAAATAAMAAAADAAAAAAALAAUAAAADAAAAAAAMAAUAAAADAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAADAAIAAAALAAYAAAADAAAAAAAMAAYAAAADAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAjAAkAAAAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAnAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAAUAAoAAAAAAAAAAAAVAAoAAAAAAAAAAAAWAAoAAAAAAAAAAAAXAAoAAAAAAAAAAAAYAAoAAAAAAAAAAAAZAAoAAAAAAAAAAAAaAAoAAAAAAAAAAAAbAAoAAAAAAAAAAAAcAAoAAAAAAAAAAAAdAAoAAAAAAAAAAAAeAAoAAAAAAAAAAAAfAAoAAAAAAAAAAAAgAAoAAAAAAAAAAAAhAAoAAAAAAAAAAAAiAAoAAAAAAAAAAAAjAAoAAAAAAAAAAAAkAAoAAAAAAAAAAAAlAAoAAAAAAAAAAAAmAAoAAAAAAAAAAAAnAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_1v4ap")
+
+[node name="Turret" parent="." unique_id=971693724 instance=ExtResource("4_j312v")]
+position = Vector2(280, 40)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1615896667]
+position = Vector2(24, 87)
+script = ExtResource("5_20mcx")
+
+[node name="Guard" parent="." unique_id=1186348528 instance=ExtResource("6_71wkw")]
+position = Vector2(136, 100)
+
+[node name="Belt" parent="." unique_id=2068411903 instance=ExtResource("7_fn7fw")]
+position = Vector2(96, 112)
+width = 7
+
+[node name="Belt2" parent="." unique_id=1357431776 instance=ExtResource("7_fn7fw")]
+position = Vector2(272, 112)
+width = 5
+speed = -60.0
+
+[node name="Lantern" type="Node2D" parent="." unique_id=123858024]
+position = Vector2(600, 144)
+script = ExtResource("8_u74go")
+
+[node name="Slag" parent="." unique_id=978872533 instance=ExtResource("9_3stw8")]
+position = Vector2(320, 147)
+size = Vector2(480, 13)

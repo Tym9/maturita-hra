@@ -57,7 +57,7 @@ script = ExtResource("5_e2yd4")
 position = Vector2(264, 128)
 speaker_name = "Vesper (vysílačka)"
 portrait_texture = ExtResource("7_71k3g")
-dialogue_pages = Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a ústí velké šachty.", "Otis čeká ve starých dílnách u šachty. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])
+dialogue_pages = Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a za ní holá severní stěna.", "Sídlo korporace je vysoko ve skále nad ní. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])
 
 [node name="HealthPack" parent="." unique_id=1671188120 instance=ExtResource("8_7h572")]
 position = Vector2(280, 152)

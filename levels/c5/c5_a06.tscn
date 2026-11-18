@@ -1,0 +1,56 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_8aglg"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_bddng"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_nwfe8"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="4_b56c4"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="5_86pok"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="6_vtor8"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_a2nm5"]
+
+[node name="c5_a06" type="Node2D" unique_id=1746452801]
+script = ExtResource("1_8aglg")
+room_id = "c5_a06"
+
+[node name="Background" type="ColorRect" parent="." unique_id=190085003]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1426959068]
+script = ExtResource("2_bddng")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=126019706]
+z_index = -2
+tile_set = ExtResource("3_nwfe8")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1208394636]
+tile_map_data = PackedByteArray("AAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAHAAEAAAABAAAAAAAIAAEAAAABAAAAAAAJAAEAAAABAAAAAAAKAAEAAAABAAAAAAALAAEAAAABAAAAAAAMAAEAAAABAAAAAAANAAEAAAABAAAAAAAOAAEAAAABAAAAAAACAAIAAAACAAAAAAADAAIAAAACAAAAAAAEAAIAAAACAAAAAAAHAAIAAAABAAAAAAAIAAIAAAABAAAAAAAJAAIAAAABAAAAAAAKAAIAAAABAAAAAAALAAIAAAABAAAAAAAMAAIAAAABAAAAAAANAAIAAAABAAAAAAAOAAIAAAABAAAAAAAEAAQAAAADAAAAAAAFAAQAAAADAAAAAAAAAAcAAAACAAIAAAABAAcAAAACAAIAAAACAAcAAAACAAIAAAADAAcAAAACAAIAAAAEAAcAAAACAAIAAAAFAAcAAAACAAIAAAAGAAcAAAACAAIAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAEAAgAAAACAAIAAAAFAAgAAAACAAIAAAAGAAgAAAACAAIAAAASAAgAAAACAAIAAAATAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_nwfe8")
+
+[node name="Crystal" parent="." unique_id=673939914 instance=ExtResource("4_b56c4")]
+position = Vector2(56, 24)
+variant = 1
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1787662418]
+position = Vector2(112, 48)
+script = ExtResource("5_86pok")
+count = 8
+orientation = 1
+
+[node name="Lantern" type="Node2D" parent="." unique_id=2048366872]
+position = Vector2(296, 64)
+script = ExtResource("6_vtor8")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=631747945]
+position = Vector2(8, 103)
+script = ExtResource("7_a2nm5")
+
+[node name="Spikes2" type="Area2D" parent="." unique_id=2019315215]
+position = Vector2(112, 160)
+script = ExtResource("5_86pok")
+count = 8

@@ -5,6 +5,7 @@ extends Node2D
 ## Měchy: proud vzduchu v obdélníku `size` posouvá hráče ve směru `direction` o `strength` px/s
 ## (posun, ne rychlost - ovládání zůstává, player.apply_wind). `period` > 0 = nárazy podle sdílených
 ## hodin: 0.4 s předem se měch nafukuje (telegraf), pak fouká `on_time` s. Počátek = levý horní roh.
+## `bellows` = false: horský vítr bez měchu, telegrafem jsou první řídké poryvy sněhu.
 
 @export var size: Vector2 = Vector2(96, 64):
 	set(val):
@@ -20,6 +21,10 @@ extends Node2D
 @export var on_time: float = 1.5
 @export var offset: float = 0.0
 @export var warn_time: float = 0.4
+@export var bellows: bool = true:
+	set(val):
+		bellows = val
+		queue_redraw()
 
 var area: Area2D = null
 var blowing: bool = true
@@ -55,15 +60,19 @@ func _physics_process(delta):
 
 func _draw():
 	var dir := direction.normalized()
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.8, 0.85, 0.9, 0.06))
-	# Proudnice plují po větru; mimo foukání jen slabě
-	if blowing or Engine.is_editor_hint():
-		for i in int(size.x * size.y / 400.0) + 2:
+	if bellows or blowing:
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.8, 0.85, 0.9, 0.06))
+	# Proudnice plují po větru; při telegrafu bez měchu jen každá šestá
+	if blowing or Engine.is_editor_hint() or (warning and not bellows):
+		var every := 6 if warning and not blowing else 1
+		for i in range(0, int(size.x * size.y / 400.0) + 2, every):
 			var t := fmod(anim * strength / 60.0 + i * 0.37, 1.0)
 			var base := Vector2(fmod(i * 41.0, size.x), fmod(i * 29.0, size.y))
 			var p := base + dir * t * 40.0
 			p = Vector2(fposmod(p.x, size.x), fposmod(p.y, size.y))
 			draw_line(p, p + dir * 8.0, Color(0.9, 0.95, 1.0, 0.5 * (1.0 - t)), 1.0)
+	if not bellows:
+		return
 	# Mosazný měch na návětrné straně; při telegrafu se nafukuje
 	var mouth := size / 2.0 - dir * (size / 2.0).length() * 0.9
 	mouth = Vector2(clampf(mouth.x, 0.0, size.x), clampf(mouth.y, 0.0, size.y))

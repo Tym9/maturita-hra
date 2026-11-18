@@ -23,7 +23,7 @@ func _draw():
 	if not is_instance_valid(player):
 		return
 		
-	var active_slot: int = player.get("active_slot") if player.get("active_slot") != null else 0
+	var active_slot: int = {"wrench": 0, "grapple_hook": 1}.get(player.active_item_id(), 2) # 0 = míří hasák, 1 = hák
 	var pulse = sin(pulse_time * 6.0) * 1.5
 	var local_player = to_local(player.global_position)
 	var dist_to_player = player.global_position.distance_to(global_position)

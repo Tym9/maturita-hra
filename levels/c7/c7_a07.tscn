@@ -1,0 +1,54 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_gjth1"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_ltsp4"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_bda6q"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_bn4bg"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_7ivqd"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="6_k2usd"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="7_jqr5m"]
+
+[node name="c7_a07" type="Node2D" unique_id=239084574]
+script = ExtResource("1_gjth1")
+room_id = "c7_a07"
+
+[node name="Background" type="ColorRect" parent="." unique_id=45639482]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=512115178]
+script = ExtResource("2_ltsp4")
+style = 6
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=71671378]
+z_index = -2
+tile_map_data = PackedByteArray("AAAEAAYAAAABAAEAAAAFAAYAAAABAAEAAAAGAAYAAAABAAEAAAAHAAYAAAABAAEAAAAIAAYAAAABAAEAAAAEAAcAAAABAAEAAAAFAAcAAAABAAEAAAAGAAcAAAABAAEAAAAHAAcAAAABAAEAAAAIAAcAAAABAAEAAAAEAAgAAAABAAEAAAAFAAgAAAABAAEAAAAGAAgAAAABAAEAAAAHAAgAAAABAAEAAAAIAAgAAAABAAEAAAA=")
+tile_set = ExtResource("3_bda6q")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=695730096]
+tile_map_data = PackedByteArray("AAADAAUAAAADAAAAAAAEAAUAAAADAAAAAAAFAAUAAAADAAAAAAAGAAUAAAADAAAAAAAHAAUAAAADAAAAAAAIAAUAAAADAAAAAAAJAAUAAAADAAAAAAAMAAUAAAABAAAAAAANAAUAAAABAAAAAAAOAAUAAAABAAAAAAAPAAUAAAABAAAAAAAQAAUAAAABAAAAAAARAAUAAAABAAAAAAADAAYAAAADAAAAAAAJAAYAAAADAAAAAAAMAAYAAAABAAAAAAANAAYAAAABAAAAAAAOAAYAAAABAAAAAAAPAAYAAAABAAAAAAAQAAYAAAABAAAAAAARAAYAAAABAAAAAAADAAcAAAADAAAAAAAMAAcAAAABAAAAAAANAAcAAAABAAAAAAAOAAcAAAABAAAAAAAPAAcAAAABAAAAAAAQAAcAAAABAAAAAAARAAcAAAABAAAAAAADAAgAAAADAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAAAAAkAAAAHAAAAAAABAAkAAAAHAAAAAAACAAkAAAAHAAAAAAADAAkAAAAHAAAAAAAEAAkAAAAHAAAAAAAFAAkAAAAHAAAAAAAGAAkAAAAHAAAAAAAHAAkAAAAHAAAAAAAIAAkAAAAHAAAAAAAJAAkAAAAHAAAAAAAKAAkAAAAHAAAAAAALAAkAAAAHAAAAAAAMAAkAAAAHAAAAAAANAAkAAAAHAAAAAAAOAAkAAAAHAAAAAAAPAAkAAAAHAAAAAAAQAAkAAAAHAAAAAAARAAkAAAAHAAAAAAASAAkAAAAHAAAAAAATAAkAAAAHAAAAAAAAAAoAAAAHAAAAAAABAAoAAAAHAAAAAAACAAoAAAAHAAAAAAADAAoAAAAHAAAAAAAEAAoAAAAHAAAAAAAFAAoAAAAHAAAAAAAGAAoAAAAHAAAAAAAHAAoAAAAHAAAAAAAIAAoAAAAHAAAAAAAJAAoAAAAHAAAAAAAKAAoAAAAHAAAAAAALAAoAAAAHAAAAAAAMAAoAAAAHAAAAAAANAAoAAAAHAAAAAAAOAAoAAAAHAAAAAAAPAAoAAAAHAAAAAAAQAAoAAAAHAAAAAAARAAoAAAAHAAAAAAASAAoAAAAHAAAAAAATAAoAAAAHAAAAAAA=")
+tile_set = ExtResource("3_bda6q")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=444906194]
+position = Vector2(216, 80)
+script = ExtResource("4_bn4bg")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1267235266]
+position = Vector2(248, 71)
+script = ExtResource("5_7ivqd")
+
+[node name="HealthPack" parent="." unique_id=1526067714 instance=ExtResource("6_k2usd")]
+position = Vector2(88, 136)
+
+[node name="Event" parent="." unique_id=515727467 instance=ExtResource("7_jqr5m")]
+position = Vector2(120, 112)
+speaker_name = "Deník strážného"
+dialogue_pages = Array[String](["Třetí směna hlásí, že v docích padá nářadí ke stropu. Velení odpovědělo: pokračujte v těžbu.", "Cívky mezi sloupy jiskří v pravidelném rytmu. Kdo počká na ticho, projde."])
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=924487869]
+position = Vector2(296, 144)
+script = ExtResource("4_bn4bg")

@@ -58,6 +58,10 @@ func _physics_process(delta):
 				shadow_pos = path[0]
 		State.RECORDING, State.CHASING:
 			_record(player)
+			var own_room := Room.of(self)
+			if own_room and not own_room.bounds().has_point(player.global_position):
+				state = State.DONE # hráč odešel z místnosti: stín za ním přes šev nejde (jinak zabije toho, kdo se za švem zastaví)
+				return
 			if path.size() > delay_frames:
 				state = State.CHASING
 				shadow_pos = path.pop_front()

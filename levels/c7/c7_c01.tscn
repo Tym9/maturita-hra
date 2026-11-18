@@ -1,0 +1,71 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_0y3gw"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_187nk"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_3rbc2"]
+[ext_resource type="PackedScene" path="res://mechanics/dampener_field.tscn" id="4_83o6c"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="5_g6tnq"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_bcriq"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="7_fqct4"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="8_g76rd"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9_ye35v"]
+
+[node name="c7_c01" type="Node2D" unique_id=266549355]
+script = ExtResource("1_0y3gw")
+room_id = "c7_c01"
+screens = Vector2i(2, 1)
+checkpoint = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=575847989]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=247103329]
+script = ExtResource("2_187nk")
+style = 6
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1419046648]
+z_index = -2
+tile_set = ExtResource("3_3rbc2")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1043428556]
+tile_map_data = PackedByteArray("AAAAAAAAAAAHAAAAAAABAAAAAAAHAAAAAAACAAAAAAAHAAAAAAADAAAAAAAHAAAAAAAEAAAAAAAHAAAAAAAFAAAAAAAHAAAAAAAGAAAAAAAHAAAAAAAWAAAAAAADAAAAAAAXAAAAAAADAAAAAAAYAAAAAAADAAAAAAAZAAAAAAADAAAAAAAaAAAAAAADAAAAAAAbAAAAAAADAAAAAAAcAAAAAAADAAAAAAAdAAAAAAADAAAAAAAeAAAAAAADAAAAAAAfAAAAAAADAAAAAAAgAAAAAAADAAAAAAAhAAAAAAADAAAAAAAAAAEAAAAHAAAAAAABAAEAAAAHAAAAAAACAAEAAAAHAAAAAAADAAEAAAAHAAAAAAAEAAEAAAAHAAAAAAAFAAEAAAAHAAAAAAAGAAEAAAAHAAAAAAAWAAEAAAADAAAAAAAXAAEAAAADAAAAAAAYAAEAAAADAAAAAAAZAAEAAAADAAAAAAAaAAEAAAADAAAAAAAbAAEAAAADAAAAAAAcAAEAAAADAAAAAAAdAAEAAAADAAAAAAAeAAEAAAADAAAAAAAfAAEAAAADAAAAAAAgAAEAAAADAAAAAAAhAAEAAAADAAAAAAACAAIAAAAHAAAAAAANAAcAAAADAAAAAAAOAAcAAAADAAAAAAAPAAcAAAADAAAAAAAHAAgAAAADAAAAAAAIAAgAAAADAAAAAAAJAAgAAAADAAAAAAANAAgAAAADAAAAAAAOAAgAAAADAAAAAAAPAAgAAAADAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAANAAkAAAADAAAAAAAOAAkAAAADAAAAAAAPAAkAAAADAAAAAAAgAAkAAAADAAAAAAAhAAkAAAADAAAAAAAiAAkAAAADAAAAAAAjAAkAAAADAAAAAAAnAAkAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAANAAoAAAADAAAAAAAOAAoAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAAUAAoAAAACAAIAAAAVAAoAAAACAAIAAAAWAAoAAAACAAIAAAAXAAoAAAACAAIAAAAYAAoAAAACAAIAAAAZAAoAAAACAAIAAAAaAAoAAAACAAIAAAAbAAoAAAACAAIAAAAcAAoAAAACAAIAAAAdAAoAAAACAAIAAAAeAAoAAAACAAIAAAAfAAoAAAACAAIAAAAgAAoAAAADAAAAAAAhAAoAAAADAAAAAAAiAAoAAAADAAAAAAAjAAoAAAADAAAAAAAnAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_3rbc2")
+
+[node name="Dampener" parent="." unique_id=1097772807 instance=ExtResource("4_83o6c")]
+position = Vector2(208, 16)
+size = Vector2(144, 96)
+
+[node name="Dampener2" parent="." unique_id=1410688655 instance=ExtResource("4_83o6c")]
+position = Vector2(48, 32)
+size = Vector2(144, 112)
+
+[node name="GravityField" parent="." unique_id=1088233009 instance=ExtResource("5_g6tnq")]
+position = Vector2(352, 32)
+size = Vector2(160, 96)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1538861627]
+position = Vector2(24, 135)
+script = ExtResource("6_bcriq")
+
+[node name="Event" parent="." unique_id=1718026739 instance=ExtResource("7_fqct4")]
+position = Vector2(40, 112)
+speaker_name = "Hlas Korporace"
+dialogue_pages = Array[String](["Předpolí reaktoru. Tlumicí pole aktivní.", "Cívky a háky jsou v šedé zóně mimo provoz. Děkujeme za pochopení."])
+
+[node name="Lantern" type="Node2D" parent="." unique_id=198443239]
+position = Vector2(568, 144)
+script = ExtResource("8_g76rd")
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=9452694]
+position = Vector2(632, 144)
+script = ExtResource("8_g76rd")
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1192204469]
+position = Vector2(256, 160)
+script = ExtResource("9_ye35v")
+count = 16

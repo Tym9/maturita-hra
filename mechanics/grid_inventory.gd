@@ -12,11 +12,11 @@ var cols: int = 6
 var rows: int = 4
 var items: Array[Dictionary] = [] # Položky: {"data": RefCounted, "x": int, "y": int}
 
-# 3 Equip sloty pro Hotbar zbraní / výstroje:
-# Slot 0: [1] Zbraň na blízko (Hasák)
-# Slot 1: [2] Nástroj (Přitahovací hák)
-# Slot 2: [3] Výstroj / Speciál (Gravity Coil)
-var equipped_slots: Array = [null, null, null]
+# 2 sloty výstroje (hotbar [1] [2]): do každého jde kterýkoli nástroj (hasák, hák, cívka, vrták). Nástroj funguje,
+# jen když je ve slotu, takže hráč má naráz jen dva; mění je v batohu [Tab] nebo u truhly.
+const SLOT_COUNT := 2
+const EQUIPPABLE := ["wrench", "grapple_hook", "gravity_coil", "drill"]
+var equipped_slots: Array = [null, null]
 var has_equip_slots: bool = false
 
 func _init(p_cols: int = 6, p_rows: int = 4, p_has_equip_slots: bool = false):
@@ -24,25 +24,26 @@ func _init(p_cols: int = 6, p_rows: int = 4, p_has_equip_slots: bool = false):
 	rows = p_rows
 	has_equip_slots = p_has_equip_slots
 
-func get_default_slot_for(item_id: String) -> int:
-	match item_id:
-		"wrench":
-			return 0
-		"grapple_hook":
-			return 1
-		"gravity_coil":
-			return 2
-		_:
-			return -1
-
 func is_equippable(item_id: String) -> bool:
-	return get_default_slot_for(item_id) != -1
+	return item_id in EQUIPPABLE
 
+## První volný slot, -1 když jsou oba plné.
+func free_slot() -> int:
+	return equipped_slots.find(null)
+
+## Slot, ve kterém předmět je (-1 = není vybaven).
+func slot_of(item_id: String) -> int:
+	for i in equipped_slots.size():
+		if equipped_slots[i] != null and equipped_slots[i].id == item_id:
+			return i
+	return -1
+
+## Vybaví předmět do slotu (bez slotu = první volný); předmět, který tam byl, přepíše.
 func equip_item(data, slot_idx: int = -1) -> bool:
-	if data == null:
+	if data == null or not is_equippable(data.id):
 		return false
 	if slot_idx < 0:
-		slot_idx = get_default_slot_for(data.id)
+		slot_idx = free_slot()
 	if slot_idx < 0 or slot_idx >= equipped_slots.size():
 		return false
 	equipped_slots[slot_idx] = data
@@ -107,10 +108,8 @@ func add_item(data, at_x: int, at_y: int) -> bool:
 
 func add_item_auto(data) -> bool:
 	# Pokud má inventář equip sloty a její hotbar slot je volný, automaticky ji vybavíme!
-	if has_equip_slots:
-		var def_slot = get_default_slot_for(data.id)
-		if def_slot != -1 and equipped_slots[def_slot] == null:
-			return equip_item(data, def_slot)
+	if has_equip_slots and is_equippable(data.id) and free_slot() != -1:
+		return equip_item(data)
 
 	# Jinak najde první volné místo v mřížce pro daný tvar předmětu
 	for y in range(rows - data.height + 1):
@@ -148,7 +147,7 @@ func has_item(item_id: String) -> bool:
 
 func clear():
 	items.clear()
-	equipped_slots = [null, null, null]
+	equipped_slots = [null, null]
 	inventory_changed.emit()
 
 func to_save_data() -> Array:
@@ -191,13 +190,11 @@ func load_save_data(data: Array):
 		if entry.has("height"):
 			item_data.height = int(entry["height"])
 		var eq_slot = int(entry.get("equipped_slot", -1))
-		if eq_slot >= 0 and eq_slot < equipped_slots.size():
+		if eq_slot >= 0 and eq_slot < equipped_slots.size() and equipped_slots[eq_slot] == null and is_equippable(item_id):
 			equipped_slots[eq_slot] = item_data
 		else:
 			var x = int(entry.get("x", 0))
 			var y = int(entry.get("y", 0))
-			if x >= 0 and y >= 0:
-				add_item(item_data, x, y)
-			else:
+			if x < 0 or y < 0 or not add_item(item_data, x, y): # i předmět ze 3. slotu starého uložení
 				add_item_auto(item_data)
 	inventory_changed.emit()

@@ -7,11 +7,11 @@ extends EditorScript
 ##                          pravítko sloupců "   0123..." a čísla řádků vlevo se odříznou, popisky vpravo taky)
 ##   ```props               volitelně pod mřížkou: řádky "<cíl> <vlastnost> = <hodnota v zápisu Godotu>",
 ##                          cíl = room | decor | znak legendy (všechny jeho uzly) | znak+pořadí (N2 = druhé N)
-##   ```layout              kapitola: "chapter <res://...tscn>", "start_items <id> ...", "<room_id> <sx> <sy>"
+##   ```layout              kapitola: "chapter <res://...tscn>", "start_items <id> ...", "hint_up_exits", "<room_id> <sx> <sy>"
 ##                          (sx, sy v obrazovkách 320x180; první místnost = start hráče)
 
 ## Kapitoly k sestavení: [blueprint .md, složka místností]
-const CHAPTERS := [["res://LEVEL_c1.md", "res://levels/c1/"], ["res://LEVEL_c2.md", "res://levels/c2/"], ["res://LEVEL_c3.md", "res://levels/c3/"]]
+const CHAPTERS := [["res://LEVEL_c1.md", "res://levels/c1/"], ["res://LEVEL_c2.md", "res://levels/c2/"], ["res://LEVEL_c3.md", "res://levels/c3/"], ["res://LEVEL_c4.md", "res://levels/c4/"], ["res://LEVEL_c5.md", "res://levels/c5/"], ["res://LEVEL_c6.md", "res://levels/c6/"], ["res://LEVEL_c7.md", "res://levels/c7/"]]
 const ONLY_ROOMS := [] # prázdné = všechny místnosti v souboru, jinak např. ["c1_a02"]
 const OVERWRITE := false # true přepíše existující .tscn (ruční úpravy v nich se ztratí)
 
@@ -25,18 +25,23 @@ const FAKE_WALL_SCRIPT := preload("res://mechanics/fake_wall.gd")
 const PLAYER_SCENE := "res://player.tscn"
 const AIR := ". "
 ## Styl pozadí (RoomDecor) podle předpony room_id; přebije ho "decor style = ..." v props
-const DECOR_STYLE := {"c1": RoomDecor.STYLE_OUTPOST, "c2": RoomDecor.STYLE_VILLAGE, "c3": RoomDecor.STYLE_CITY}
-## Horské kapitoly (stoupání): pozadí s výškou (RoomDecor.altitude)
-const ALTITUDE_CHAPTERS := ["c2", "c3"]
+const DECOR_STYLE := {"c1": RoomDecor.STYLE_OUTPOST, "c2": RoomDecor.STYLE_VILLAGE, "c3": RoomDecor.STYLE_CITY, "c4": RoomDecor.STYLE_MOUNTAIN, "c5": RoomDecor.STYLE_FOUNDRY, "c6": RoomDecor.STYLE_MINES, "c7": RoomDecor.STYLE_REACTOR}
+## Horské kapitoly (stoupání): pozadí s výškou (RoomDecor.altitude); v sestupu (c5+) pozadí podle hloubky samo
+const ALTITUDE_CHAPTERS := ["c2", "c3", "c4"]
 
 ## Znak -> co vytvořit.
 ## Dlaždice: "tile" (atlas souřadnice), "layer": "back" = zadní vrstva bez kolize, volitelně "terrain"
 ## (+ "terrain_set") - použije se, jen když je tileset má. "fake_wall": buňka vrstvy FakeWall (dlaždice podle
 ## okolní zdi, aby tajná cesta nebyla vidět); "hidden" u uzlu = navíc ho zakryje falešná zeď.
 ## Uzly: "scene" (instance .tscn) nebo "type" + "script" (holý uzel se skriptem).
-##   "anchor": center | floor | top | top_left | top_right | bottom_left (bod obdélníku buňky / běhu), "offset" v px.
+##   "anchor": center | floor | top | top_left | top_right | bottom_left (bod obdélníku buňky / běhu), "offset" v px,
+##   "room_wide": uzel přes celou místnost (počátek 0,0, "size" = velikost místnosti).
+## "cap" u dlaždice: varianta pro buňku, nad kterou není pevná dlaždice (sníh na skále).
 ##   "run": "h"/"v" spojí sousední stejné znaky do jednoho uzlu ("chunk" = max délka), délka jde do
 ##   "size_prop" (px) nebo "count_prop" (kusy). "props" = další vlastnosti, "name" = jméno uzlu.
+##   "run": "hv" = běh vpravo, jinak dolů; "span_prop" = délka běhu - 1 (dlaždic mezi konci), "dir_prop" = směr běhu.
+##   "bbox": true = jeden uzel na souvislou skupinu znaku (8 sousedů), počátek = levý horní roh jejího
+##   obdélníku, "size" = jeho velikost v px ("size_tiles": true = v dlaždicích).
 const LEGEND := {
 	# pevné dlaždice
 	"#": {"tile": Vector2i(0, 0), "terrain": 0}, # kámen
@@ -47,6 +52,9 @@ const LEGEND := {
 	"%": {"tile": Vector2i(5, 0)}, # zem s krystalovou nákazou
 	"_": {"tile": Vector2i(6, 0)}, # hlína se suchou trávou
 	"&": {"tile": Vector2i(7, 0)}, # cihly
+	"J": {"tile": Vector2i(0, 2), "cap": Vector2i(1, 2)}, # horská skála, navrchu sníh
+	"U": {"tile": Vector2i(2, 2)}, # čedič stěn šachty (slévárna)
+	"Y": {"tile": Vector2i(3, 2)}, # žhavá skála se struskou v puklinách
 	# zadní vrstva bez kolize (fasády domů)
 	"w": {"tile": Vector2i(0, 1), "layer": "back"}, # dřevěná stěna
 	"z": {"tile": Vector2i(1, 1), "layer": "back"}, # plechová stěna
@@ -81,6 +89,26 @@ const LEGEND := {
 	"P": {"scene": "res://mechanics/piston_crusher.tscn", "run": "h", "count_prop": "width", "anchor": "top", "name": "Crusher"},
 	"I": {"scene": "res://mechanics/crystal_spikes.tscn", "run": "h", "count_prop": "count", "anchor": "floor", "name": "CrystalSpikes"},
 	"O": {"scene": "res://mechanics/falling_rock.tscn", "anchor": "top", "name": "Rock"},
+	# struska: řada m = jezírko (jen jeden řádek, pod ním pevná dlaždice); hladina 3 px pod horní hranou buňky
+	"m": {"scene": "res://mechanics/molten_slag.tscn", "run": "h", "size_vec": 13.0, "anchor": "top", "offset": Vector2(0, 3), "name": "Slag"},
+	# struska se valí shora přes celou šířku místnosti (finále; props "u rise_speed = 30.0", "u rise_delay = 2.0")
+	"u": {"scene": "res://mechanics/molten_slag.tscn", "flood": true, "props": {"direction": Vector2.DOWN, "rise_speed": 30.0, "rise_delay": 2.0}, "name": "SlagFlood"},
+	# ozubená pila na kolejnici (props "Q rail = PackedVector2Array(0, 0, 64, 0)", "Q period = 3.0", "Q loop = true")
+	"Q": {"scene": "res://mechanics/cog_saw.tscn", "name": "Saw"},
+	# doly (c6): kotva háku (props "+2 rail_end = Vector2(64, 0)", "+3 breakable = true"), vrtatelná skála (svislý běh r = jeden blok), lezec
+	"+": {"scene": "res://mechanics/grapple_point.tscn", "name": "Anchor"},
+	"r": {"scene": "res://mechanics/drillable_rock.tscn", "run": "v", "cells_v": true, "anchor": "top_left", "name": "DrillRock"},
+	"e": {"scene": "res://enemies/cave_crawler.tscn", "anchor": "floor", "offset": Vector2(0, -6), "name": "Crawler"},
+	# komplex (c7): gravitační pole (uvnitř gravitace vzhůru), tlumicí pole (bez dashe a háku), anomální zeď (dash proletí),
+	# rytmické bloky A / B, tesla oblouk (běh i = od cívky k cívce), ozvěna (levý horní roh startovní oblasti)
+	":": {"scene": "res://mechanics/gravity_anomaly.tscn", "bbox": true, "name": "GravityField"},
+	"-": {"scene": "res://mechanics/dampener_field.tscn", "bbox": true, "name": "Dampener"},
+	"n": {"scene": "res://mechanics/anomaly_wall.tscn", "bbox": true, "name": "AnomalyWall"},
+	"[": {"scene": "res://mechanics/rhythm_block.tscn", "bbox": true, "size_tiles": true, "name": "RhythmA"},
+	"]": {"scene": "res://mechanics/rhythm_block.tscn", "bbox": true, "size_tiles": true, "props": {"set_b": true}, "name": "RhythmB"},
+	"i": {"scene": "res://mechanics/tesla_arc.tscn", "run": "hv", "span_prop": "length", "dir_prop": "direction", "name": "Tesla"},
+	"A": {"scene": "res://enemies/reactor_warden.tscn", "name": "Warden"}, # boss: Správce reaktoru
+	"?": {"scene": "res://enemies/anomaly_echo.tscn", "anchor": "top_left", "name": "Echo"},
 	"G": {"scene": "res://enemies/patrol_guard.tscn", "anchor": "floor", "offset": Vector2(0, -12), "name": "Guard"},
 	"T": {"scene": "res://enemies/shooter.tscn", "name": "Turret"},
 	"D": {"scene": "res://enemies/drone.tscn", "name": "Drone"},
@@ -104,6 +132,8 @@ const LEGEND := {
 	"8": {"scene": "res://npc/hron.tscn", "anchor": "floor", "offset": Vector2(0, -8), "name": "Hron"},
 	"!": {"scene": "res://mechanics/event_trigger.tscn", "anchor": "floor", "offset": Vector2(0, -32), "name": "Event"},
 	"E": {"scene": "res://level_end.tscn", "name": "LevelEnd"},
+	# horský vítr v nárazech přes celou místnost (props "} direction = Vector2(1, 0)", "} offset = 1.0")
+	"}": {"type": "Node2D", "script": "res://mechanics/bellows_wind.gd", "room_wide": true, "props": {"bellows": false, "direction": Vector2.LEFT, "strength": 80.0, "period": 3.2, "on_time": 1.2}, "name": "Wind"},
 }
 
 func _run() -> void:
@@ -195,6 +225,8 @@ static func parse_layout(block: PackedStringArray) -> Dictionary:
 			layout.chapter = p[1]
 		elif p.size() >= 1 and p[0] == "start_items":
 			layout.start_items = Array(p.slice(1))
+		elif p.size() == 1 and p[0] == "hint_up_exits":
+			layout.hint_up_exits = true
 		elif p.size() == 3 and p[1].is_valid_int() and p[2].is_valid_int():
 			layout.rooms.append([p[0], Vector2i(int(p[1]), int(p[2]))])
 	return layout
@@ -259,10 +291,16 @@ static func build_room(id: String, room_data: Dictionary, path: String, overwrit
 						var cells: Array[Vector2i] = []
 						terrain_cells[key] = cells
 					terrain_cells[key].append(cell)
+				elif e.has("cap") and not _solid_tile(rows, cell + Vector2i.UP):
+					tiles.set_cell(cell, 0, e["cap"])
 				else:
 					tiles.set_cell(cell, 0, e["tile"])
 			elif e.has("fake_wall"):
 				fake_cells.append(cell)
+			elif e.get("bbox", false):
+				if not spawned.has(ch):
+					spawned[ch] = []
+				spawned[ch].append(_spawn_bbox(room, rows, cell, ch, e, used))
 			else:
 				if not spawned.has(ch):
 					spawned[ch] = []
@@ -279,7 +317,10 @@ static func build_room(id: String, room_data: Dictionary, path: String, overwrit
 				var region: Array = _fake_region(rows, cell)
 				for c in region[0]:
 					tile_of[c] = region[1]
-			fake.set_cell(cell, 0, tile_of[cell])
+			var t: Vector2i = tile_of[cell]
+			if t == LEGEND["J"]["tile"] and not _solid_tile(rows, cell + Vector2i.UP):
+				t = LEGEND["J"]["cap"] # i falešná skála má navrchu sníh jako okolí
+			fake.set_cell(cell, 0, t)
 	for key in terrain_cells:
 		tiles.set_cells_terrain_connect(terrain_cells[key], key.x, key.y)
 	if not unknown.is_empty():
@@ -302,6 +343,7 @@ static func build_chapter(layout: Dictionary, rooms: Dictionary, out_dir: String
 	var items: Array[String] = []
 	items.assign(layout.start_items)
 	chapter.set("start_items", items)
+	chapter.set("hint_up_exits", layout.get("hint_up_exits", false))
 	var start := Vector2.ZERO
 	for entry in layout.rooms:
 		var room_path := out_dir.path_join(entry[0] + ".tscn")
@@ -404,6 +446,7 @@ static func _spawn(room: Node2D, rows: PackedStringArray, cell: Vector2i, ch: St
 	match e.get("run", ""):
 		"h": dir = Vector2i.RIGHT
 		"v": dir = Vector2i.DOWN
+		"hv": dir = Vector2i.RIGHT if _at(rows, cell + Vector2i.RIGHT) == ch else Vector2i.DOWN
 	var chunk: int = e.get("chunk", 0)
 	var n := 1
 	while dir != Vector2i.ZERO and _at(rows, cell + dir * n) == ch and (chunk == 0 or n < chunk):
@@ -425,7 +468,54 @@ static func _spawn(room: Node2D, rows: PackedStringArray, cell: Vector2i, ch: St
 		node.set(e["size_prop"], float(n * TILE))
 	if e.has("count_prop"):
 		node.set(e["count_prop"], n)
+	if e.has("span_prop"):
+		node.set(e["span_prop"], n - 1)
+		node.set(e["dir_prop"], Vector2(dir))
+	if e.get("cells_v", false): # blok 1 x n dlaždic (vrtatelná skála)
+		node.set("size", Vector2i(1, n))
+	if e.has("size_vec"): # šířka z běhu, hloubka pevná (struska)
+		node.set("size", Vector2(n * TILE, e["size_vec"]))
 	node.position = _anchor(rect, e.get("anchor", "center")) + e.get("offset", Vector2.ZERO)
+	if e.get("room_wide", false):
+		node.position = Vector2.ZERO
+		node.set("size", Vector2(room.get("screens")) * Room.SCREEN)
+	if e.get("flood", false): # hladina na horní hraně místnosti, padá dolů až ke dnu
+		var room_size := Vector2(room.get("screens")) * Room.SCREEN
+		node.position = Vector2(room_size.x / 2.0, 0.0)
+		node.set("size", Vector2(room_size.x, 0.0)) # žádná hloubka nad hladinou: jinak by zabíjela už ve vstupním otvoru místnosti nad ní
+		node.set("max_rise", room_size.y)
+	node.name = e.get("name", node.name)
+	_add(room, node)
+	return node
+
+## Jeden uzel na souvislou skupinu znaku: obdélník kolem ní (pole, anomální zeď, rytmický blok).
+static func _spawn_bbox(room: Node2D, rows: PackedStringArray, start: Vector2i, ch: String, e: Dictionary, used: Dictionary) -> Node2D:
+	var box := Rect2i(start, Vector2i.ONE)
+	var todo: Array[Vector2i] = [start]
+	used[start] = true
+	while not todo.is_empty():
+		var c: Vector2i = todo.pop_back()
+		box = box.merge(Rect2i(c, Vector2i.ONE))
+		for dy in [-1, 0, 1]:
+			for dx in [-1, 0, 1]:
+				var n := c + Vector2i(dx, dy)
+				if not used.has(n) and _at(rows, n) == ch:
+					used[n] = true
+					todo.append(n)
+	var node: Node2D
+	if e.has("scene"):
+		node = (load(e["scene"]) as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+	else:
+		node = ClassDB.instantiate(e["type"]) as Node2D
+		node.set_script(load(e["script"]))
+	var props: Dictionary = e.get("props", {})
+	for p in props:
+		node.set(p, props[p])
+	if e.get("size_tiles", false):
+		node.set("size", box.size)
+	else:
+		node.set("size", Vector2(box.size * TILE))
+	node.position = Vector2(box.position * TILE)
 	node.name = e.get("name", node.name)
 	_add(room, node)
 	return node
@@ -438,6 +528,10 @@ static func _anchor(r: Rect2, anchor: String) -> Vector2:
 		"top_right": return Vector2(r.end.x, r.position.y)
 		"bottom_left": return Vector2(r.position.x, r.end.y)
 	return r.get_center()
+
+static func _solid_tile(rows: PackedStringArray, c: Vector2i) -> bool:
+	var e: Dictionary = LEGEND.get(_at(rows, c), {})
+	return (e.has("tile") and e.get("layer", "") != "back") or e.has("fake_wall") or e.get("hidden", false)
 
 static func _at(rows: PackedStringArray, c: Vector2i) -> String:
 	if c.y < 0 or c.y >= rows.size() or c.x < 0 or c.x >= rows[c.y].length():
@@ -457,3 +551,4 @@ static func _self_check() -> void:
 	assert(doc.layout.chapter == "res://c.tscn" and doc.layout.start_items == ["wrench"] and doc.layout.rooms == [["r1", Vector2i(0, -1)]], "parse_layout")
 	assert(_anchor(Rect2(16, 0, 32, 16), "floor") == Vector2(32, 16))
 	assert(_fake_region(PackedStringArray(["&&&&", "&Fc&", "&&#&"]), Vector2i(1, 1)) == [[Vector2i(1, 1), Vector2i(2, 1)], Vector2i(7, 0)], "_fake_region: oblast F/c a dlaždice okolních cihel")
+	assert(not _solid_tile(PackedStringArray([".J"]), Vector2i(0, 0)) and _solid_tile(PackedStringArray(["FJ"]), Vector2i(0, 0)), "_solid_tile: falešná zeď kryje sníh pod sebou")

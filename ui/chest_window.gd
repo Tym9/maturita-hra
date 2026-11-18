@@ -42,13 +42,18 @@ func open_window(player_node, chest_node):
 		chest_grid_view.setup(current_chest.inventory, "Truhla")
 		
 	if info_label:
-		info_label.text = "Klikněte na předmět pro přenesení mezi batohem a truhlou."
+		info_label.text = "Klikni na předmět a polož ho do batohu, truhly nebo slotu. Fungují jen nástroje ve slotech [1] [2]."
 
 func close_window():
 	if player_grid_view:
 		player_grid_view.return_held_item()
 	if chest_grid_view:
 		chest_grid_view.return_held_item()
+	var held = player_grid_view.held_item_data if player_grid_view else null
+	if held != null: # nástroj vyjmutý ze slotu a nepoložený: zpět k hráči (jinak by zmizel), při plném batohu do truhly
+		if not (current_player and current_player.grid_inventory.add_item_auto(held)) and current_chest:
+			current_chest.inventory.add_item_auto(held)
+		player_grid_view.held_item_data = null
 	visible = false
 	if current_chest and current_chest.has_method("on_window_closed"):
 		current_chest.on_window_closed()

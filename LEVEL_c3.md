@@ -1,6 +1,6 @@
 # LEVEL c3 — Steam City (the climb)
 
-High above Smallville the mountain trail ends at the lowest wall of Steam City, the corporation's seat. The city climbs the upper slopes of the mountain tier upon tier: slums and freight yards against the walls, factory tiers of presses and refineries, the Upper City with the Corporate Plaza and the Clock Tower, and on the very summit the corp citadel over the mouth of the great shaft that is drilled down to the planet's core. Brick, brass pipes and domes, gas lamps, corp banners and searchlights, yellow smog. The hero **climbs** the city to the summit; at the shaft mouth the descent into the core begins (→ `level1`, Otis in the old workshops above the shaft).
+High above Smallville the mountain trail ends at the lowest wall of Steam City, the corporation's seat. The city climbs the upper slopes of the mountain tier upon tier: slums and freight yards against the walls, factory tiers of presses and refineries, the Upper City with the Corporate Plaza and the Clock Tower, and at the top the corp citadel under the bare rock of the north face. Brick, brass pipes and domes, gas lamps, corp banners and searchlights, yellow smog. The hero **climbs** the city to the citadel and leaves it through the back workshops onto the mountain (→ c4 The North Face, the climb to the corp HQ in the cliff).
 
 - **Kit:** run, jump, double jump (DJ), wall climb/jump (8 s stamina), wrench. No dash, no hook.
 - **New here:** **piston press** (`P`, a05). Develops: conveyor belts (`~`), steam vents, springs (pneumatic lifts), grates, guards, turrets, drones (introduced in Smallville), crystal spikes (refinery spills).
@@ -31,15 +31,15 @@ High above Smallville the mountain trail ends at the lowest wall of Steam City, 
 
 ## Dialogue (place via props, text verbatim)
 
-- **a01** `!` speaker_name `"Parní město"`, dialogue_pages `Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře, na samém vrcholu, citadela korporace.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])`
-- **a07** `7` Vesper dialogue_pages `Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Na vrcholu hory je ústí velké šachty — vede až k jádru. Lez přes továrny a Horní město, Otis tě čeká ve starých dílnách u šachty. Já tě najdu dole u reaktoru."])`, repeat_dialogue_pages `Array[String](["Lisy bijí v rytmu. Počkej, až se zvednou, a pak běž."])`
+- **a01** `!` speaker_name `"Parní město"`, dialogue_pages `Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře citadela korporace. Nad ní už je jen holá skála.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])`
+- **a07** `7` Vesper dialogue_pages `Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Hlavní sídlo korporace je vytesané do skály pod vrcholem hory a z něj vede velká šachta až k jádru. Lez přes továrny a Horní město, za citadelou začíná horská stezka. Otis tě čeká ve starých dílnách za branou sídla. Já tě najdu dole u reaktoru."])`, repeat_dialogue_pages `Array[String](["Lisy bijí v rytmu. Počkej, až se zvednou, a pak běž."])`
 - **b01** `!` speaker_name `"Hlas Korporace"`, dialogue_pages `Array[String](["Pracovníci! Týdenní kvóta byla navýšena o třicet procent. Korporace děkuje za vaši oddanost.", "Hlaste každou podezřelou osobu. Odboj je nemoc. Korporace je lék."])`
 - **b04** `8` Hron dialogue_pages `Array[String](["Nový? Neboj, křičet nebudu. Dvanáct hodin u lisu a za to talíř polévky.", "Ty krystaly, co tu lisujeme, v noci svítí. A lidi z rafinerie kašlou fialově.", "Jestli jdeš proti nim, jdi přes rafinerii a výtahovou šachtou nahoru na střechy."])`, repeat_dialogue_pages `Array[String](["Já tě neviděl. Nikdo tě tu neviděl."])`
 - **c01** `!` speaker_name `"Poplach"`, dialogue_pages `Array[String](["Sirény! Nad Náměstím Korporace se rozblikaly rudé majáky — někdo tě nahlásil.", "Nahoru k citadele vede jediná cesta: Hodinovou věží a po vnitřní hradbě."])`
-- **c04** `!` speaker_name `"Vesper (vysílačka)"`, portrait_texture `"res://assets/npc/vesper_portrait.png"`, dialogue_pages `Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a ústí velké šachty.", "Otis čeká ve starých dílnách u šachty. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])`
+- **c04** `!` speaker_name `"Vesper (vysílačka)"`, portrait_texture `"res://assets/npc/vesper_portrait.png"`, dialogue_pages `Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a za ní holá severní stěna.", "Sídlo korporace je vysoko ve skále nad ní. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])`
 - **d04** `!` speaker_name `"Deník vrtu"`, dialogue_pages `Array[String](["Vrt 7: hloubka 11 400 m. Gravitační anomálie v okolí jádra rostou o dvanáct procent denně.", "Rozkaz vedení: těžbu nezastavovat. Evakuaci Smallville urychlit."])`
-- **d06** `!` speaker_name `"Vrchol hory"`, dialogue_pages `Array[String](["Pod tebou leží celá hora — rokle, Smallville, Parní město v páře. Před tebou zeje černé ústí šachty, která vede až k jádru planety.", "Odtud už vede cesta jen dolů."])`
-- **d07** `E` next_level `"res://level1.tscn"`, stage_title `"KAPITOLA 3: PARNÍ MĚSTO"`, stage_index `3`, max_stage_crystals `12`
+- **d06** `!` speaker_name `"Nad městem"`, dialogue_pages `Array[String](["Pod tebou leží Parní město v páře, za ním Smallville a rokle. Nad tebou se zvedá holá severní stěna hory.", "Vysoko ve skále blikají rudá světla — Hlavní sídlo korporace. Tam vede cesta dál."])`
+- **d07** `E` next_level `"res://levels/c4/chapter4.tscn"`, stage_title `"KAPITOLA 3: PARNÍ MĚSTO"`, stage_index `3`, max_stage_crystals `12`
 - **a01, b01, c01, d01**: `room checkpoint = true`
 
 ## Layout
@@ -49,6 +49,7 @@ Fixed positions (screens, top-left; y grows downward, so the climb goes to negat
 ```layout
 chapter res://levels/c3/chapter3.tscn
 start_items wrench
+hint_up_exits
 c3_a01 0 0
 c3_a02 1 -2
 c3_a03 2 -2
@@ -111,12 +112,12 @@ Fixed section boundaries: **a07 → b01**, **b07 → c01** and **c06 → d01** a
 | c3_d03 | 1×2 | d02 (floor hole) → d04 (R, top screen) | Press shaft: climb a narrow shaft past presses that slam over every ledge; faster rhythm (period 1.6–1.8), wave offsets. | presses, wall jumps | 3 | **Skill detour** | — |
 | c3_d04 | 1×1 | d03 (L) → d05 (top) | Breather: an abandoned control room, the drill log terminal (`!` Deník vrtu), health pack. | `!`, `H` | 1 | — | — |
 | c3_d05 | 1×2 | d04 (floor hole) → d06 (R, top screen) | Steam elevator: springs and vents up the citadel tower, a turret on a balcony. | springs, vents, turret | 3 | **Mechanic trick**: an angled spring or a press housing launches you to a high crystal (must also be reachable by the checker). | — |
-| c3_d06 | 1×1 | d05 (L) → d07 (R) | Summit terrace: the whole mountain below (`!` Vrchol hory); short and safe; open air under a solid top row. | `!` | 1 | — | — |
-| c3_d07 | 2×1 | d06 (L) → E (R) | The old workshops above the great shaft: last presses and belts, a guard; `E` at the shaft mouth on the right. | presses, belts, guard | 3 | **Key/backtrack** | — |
+| c3_d06 | 1×1 | d05 (L) → d07 (R) | Terrace above the city: the city below, the bare north face and the HQ lights above (`!` Nad městem); short and safe; open air under a solid top row. | `!` | 1 | — | — |
+| c3_d07 | 2×1 | d06 (L) → E (R) | The citadel's back workshops: last presses and belts, a guard; `E` at the back gate on the right (→ c4). | presses, belts, guard | 3 | **Key/backtrack** | — |
 
 Crystal route order: skill (a03) → secret (a04) → key (a06) → trick (b02) → gauntlet (b05b) → secret (b06) → skill (c03) → key (c05) → secret (d02) → skill (d03) → trick (d05) → key (d07).
 Enemies: guards a03, b01, b07, c01 ×2, c06, d02, d07 = 8; turrets a02, b05, c02, d01, d05 = 5; drones b03, c01, d02 ×2 = 4 → 17.
-Travel: ↑ and → only; the chapter climbs 21 screens to the summit.
+Travel: ↑ and → only; the chapter climbs 21 screens to the citadel.
 
 ## Sketches
 
@@ -138,7 +139,7 @@ Travel: ↑ and → only; the chapter climbs 21 screens to the summit.
 ```props
 room checkpoint = true
 ! speaker_name = "Parní město"
-! dialogue_pages = Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře, na samém vrcholu, citadela korporace.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])
+! dialogue_pages = Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře citadela korporace. Nad ní už je jen holá skála.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])
 ```
 - Start ledge cols 1-5 h1 (`@` col 2). Rubble ramp h2 (cols 7-9) and h3 (cols 10-12), scaffold h5 (cols 15-17) and h6 (cols 21-24), wall-walk ledge h7 (cols 28-38): every rise is 1-2, every gap 2-3, a fall only drops to the ground.
 - Exit: top-row hole cols 35-37 above the h7 ledge (a02 floor hole cols 15-17), flanked by lamps; corp banners and pylon on the verge, blight patches in the ground.
@@ -299,7 +300,7 @@ P4 offset = 1.2
  0 &ZZZZZZZZZZZZZ...ZZZ
 ```
 ```props
-7 dialogue_pages = Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Na vrcholu hory je ústí velké šachty — vede až k jádru. Lez přes továrny a Horní město, Otis tě čeká ve starých dílnách u šachty. Já tě najdu dole u reaktoru."])
+7 dialogue_pages = Array[String](["Pst! Sem, než tě chytí reflektor. Ty jsi ten kluk z odboje? Mira hlásila, že přijdeš.", "Jsem Vesper. Dřív jsem korporaci stavěla lisy, teď je rozebírám. Krystaly ze Smallville jedou po pásech do rafinerií a odtud nahoru do citadely.", "Hlavní sídlo korporace je vytesané do skály pod vrcholem hory a z něj vede velká šachta až k jádru. Lez přes továrny a Horní město, za citadelou začíná horská stezka. Otis tě čeká ve starých dílnách za branou sídla. Já tě najdu dole u reaktoru."])
 7 repeat_dialogue_pages = Array[String](["Lisy bijí v rytmu. Počkej, až se zvednou, a pak běž."])
 ```
 - Entry: floor hole cols 14-16 (a06 cols 14-16), ledge cols 17-19 h1 (`@` col 18) and floor cols 1-13. Vesper (col 8) in the tarp shack (roof h6, cols 3-12), health pack col 10, resistance banner col 6, blight col 2, corp banner col 17, lit windows, pipes under the ceiling. No hazards.
@@ -614,7 +615,7 @@ P4 offset = 0.5
 ```props
 ! speaker_name = "Vesper (vysílačka)"
 ! portrait_texture = "res://assets/npc/vesper_portrait.png"
-! dialogue_pages = Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a ústí velké šachty.", "Otis čeká ve starých dílnách u šachty. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])
+! dialogue_pages = Array[String](["Vidím tě z rafinerie! Nad tebou je už jen citadela a za ní holá severní stěna.", "Sídlo korporace je vysoko ve skále nad ní. A Matěji... v citadele tě korporace nebude jen hledat. Bude tě lovit."])
 ```
 - Breather on the tower gallery: arrive through the floor hole (cols 7-11), ledge right of it with `@` col 14, Vesper's radio `!` col 16, health pack col 17, exit right at h1. The citadel is the dark silhouette beyond the open balustrade; no hazards.
 
@@ -807,7 +808,7 @@ V2 offset = 1.0
 - Arrive through the floor hole (cols 14-17), ledge cols 2-13 with `@` (col 10). Steam elevator in 3 beats: spring S4 (col 3) -> brass deck E1 (h5, cols 5-13) with a vent (col 8, 2 s idle / 0.5 warn / 1 s blast) -> spring S2 (col 11) -> deck E2 (h10, cols 2-9) with a vent (col 6, offset 1.0) -> spring S1 (col 3) -> the top deck E3 (h15, cols 5-19) = d06's floor. Safe tiles: 3 before each vent. Springs are numbered in reading order (S1 top, S4 bottom).
 - Turret on the balcony (cols 7-9, h18, floor under it): the balcony blinds it for the left half of E3, the 2x2 crate stack (cols 12-13) covers the run to the exit. Exit R at h15 (rows 16-19 open at cols 18-19). Trick crystal (col 18, h8, visible from E1): the angled spring S3 (`Vector2(1, -1)`, col 13) flings you across the shaft into the wall niche; the checker reaches it with the spring sim.
 
-### c3_d06 — summit terrace
+### c3_d06 — terrace above the city
 ```
    01234567890123456789
 10 ####################
@@ -823,12 +824,12 @@ V2 offset = 1.0
  0 ####################
 ```
 ```props
-! speaker_name = "Vrchol hory"
-! dialogue_pages = Array[String](["Pod tebou leží celá hora — rokle, Smallville, Parní město v páře. Před tebou zeje černé ústí šachty, která vede až k jádru planety.", "Odtud už vede cesta jen dolů."])
+! speaker_name = "Nad městem"
+! dialogue_pages = Array[String](["Pod tebou leží Parní město v páře, za ním Smallville a rokle. Nad tebou se zvedá holá severní stěna hory.", "Vysoko ve skále blikají rudá světla — Hlavní sídlo korporace. Tam vede cesta dál."])
 ```
-- Summit terrace, short and safe: open sky under a solid top row, `!` Vrchol hory at col 6, lamps, a corp pylon and banners. Entry h5 from d05 (plate cols 0-11, `@` col 2, rows 1-5 open at col 0), then two small steps down (h4, h3) to the exit R at h3 (rows 3-9 open at col 19) into d07.
+- Terrace above the city, short and safe: open sky under a solid top row, `!` Nad městem at col 6, lamps, a corp pylon and banners. Entry h5 from d05 (plate cols 0-11, `@` col 2, rows 1-5 open at col 0), then two small steps down (h4, h3) to the exit R at h3 (rows 3-9 open at col 19) into d07.
 
-### c3_d07 — old workshops at the shaft mouth
+### c3_d07 — the citadel's back workshops
 ```
    0123456789012345678901234567890123456789
 10 ########################################
@@ -847,10 +848,10 @@ V2 offset = 1.0
 P reach = 4
 P2 reach = 4
 P2 offset = 0.6
-E next_level = "res://level1.tscn"
+E next_level = "res://levels/c4/chapter4.tscn"
 E stage_title = "KAPITOLA 3: PARNÍ MĚSTO"
 E stage_index = 3
 E max_stage_crystals = 12
 ```
-- Entry h2 (hall floor cols 0-10, `@` col 2). The old workshops: workshop corridor (cols 11-31, 4 high) with the last two presses (cols 15-16 and 22-23, reach 4, period 2.0, P2 offset 0.6; safe: 4 tiles before P1, 5 between, 8 after), a belt along the travel direction (cols 27-32), a guard patrolling from the belt to the shaft mouth. `E` at col 37 (lamps frame it), right wall closed.
+- Entry h2 (hall floor cols 0-10, `@` col 2). The back workshops: workshop corridor (cols 11-31, 4 high) with the last two presses (cols 15-16 and 22-23, reach 4, period 2.0, P2 offset 0.6; safe: 4 tiles before P1, 5 between, 8 after), a belt along the travel direction (cols 27-32), a guard patrolling from the belt to the shaft mouth. `E` at col 37 (lamps frame it), right wall closed.
 - Key/backtrack: the key `K` sits on a shelf at col 34 (h5, a double jump from the floor, visible from the corridor). The caged crystal is in the hall: mezzanine (cols 1-6, h6) reached by the steps (cols 9-10, then up-left), the single block `L` (col 4) in front of it. Take the key, run back through the presses to the hall (the block touched first frees the crystal), then return to `E`.

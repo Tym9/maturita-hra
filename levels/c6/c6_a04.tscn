@@ -1,0 +1,92 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_b0ykm"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_jwjq0"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_lh5ke"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4_gp86s"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_b7dog"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="6_t81yd"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_l77x0"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="8_7j1qq"]
+[ext_resource type="PackedScene" path="res://mechanics/crumbling_platform.tscn" id="9_asop1"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="10_xuhqe"]
+[ext_resource type="Script" path="res://mechanics/fake_wall.gd" id="11_e53tv"]
+
+[node name="c6_a04" type="Node2D" unique_id=557340551]
+script = ExtResource("1_b0ykm")
+room_id = "c6_a04"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=936395708]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1848815481]
+script = ExtResource("2_jwjq0")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1561510594]
+z_index = -2
+tile_set = ExtResource("3_lh5ke")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1937038468]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAXAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAlAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAnAAAAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAASAAEAAAAAAAAAAAATAAEAAAAAAAAAAAAUAAEAAAAAAAAAAAAVAAEAAAAAAAAAAAAWAAEAAAAAAAAAAAAXAAEAAAAAAAAAAAAYAAEAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAgAAEAAAAAAAAAAAAlAAEAAAAAAAAAAAAmAAEAAAAAAAAAAAAnAAEAAAAAAAAAAAAnAAIAAAAAAAAAAAAnAAMAAAAAAAAAAAAiAAQAAAAAAAAAAAAjAAQAAAAAAAAAAAAkAAQAAAAAAAAAAAAlAAQAAAAAAAAAAAAmAAQAAAAAAAAAAAAnAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAIAAUAAAACAAAAAAAJAAUAAAACAAAAAAAKAAUAAAACAAAAAAALAAUAAAACAAAAAAAiAAUAAAAAAAAAAAAjAAUAAAAAAAAAAAAkAAUAAAAAAAAAAAAlAAUAAAAAAAAAAAAmAAUAAAAAAAAAAAAnAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAiAAYAAAAAAAAAAAAjAAYAAAAAAAAAAAAkAAYAAAAAAAAAAAAlAAYAAAAAAAAAAAAmAAYAAAAAAAAAAAAnAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAiAAcAAAAAAAAAAAAjAAcAAAAAAAAAAAAkAAcAAAAAAAAAAAAlAAcAAAAAAAAAAAAmAAcAAAAAAAAAAAAnAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAiAAgAAAAAAAAAAAAjAAgAAAAAAAAAAAAkAAgAAAAAAAAAAAAlAAgAAAAAAAAAAAAmAAgAAAAAAAAAAAAnAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAiAAkAAAAAAAAAAAAjAAkAAAAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAnAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAUAAoAAAAAAAAAAAAVAAoAAAAAAAAAAAAWAAoAAAAAAAAAAAAXAAoAAAAAAAAAAAAYAAoAAAAAAAAAAAAZAAoAAAAAAAAAAAAaAAoAAAAAAAAAAAAbAAoAAAAAAAAAAAAcAAoAAAAAAAAAAAAdAAoAAAAAAAAAAAAeAAoAAAAAAAAAAAAiAAoAAAAAAAAAAAAjAAoAAAAAAAAAAAAkAAoAAAAAAAAAAAAlAAoAAAAAAAAAAAAmAAoAAAAAAAAAAAAnAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_lh5ke")
+
+[node name="Anchor" parent="." unique_id=936334138 instance=ExtResource("4_gp86s")]
+position = Vector2(248, 56)
+
+[node name="Anchor2" parent="." unique_id=2133569760 instance=ExtResource("4_gp86s")]
+position = Vector2(360, 56)
+
+[node name="Anchor3" parent="." unique_id=138471821 instance=ExtResource("4_gp86s")]
+position = Vector2(472, 56)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1707730359]
+position = Vector2(568, 64)
+script = ExtResource("5_b7dog")
+
+[node name="Crystal" parent="." unique_id=250650658 instance=ExtResource("6_t81yd")]
+z_index = -1
+position = Vector2(616, 56)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=990401724]
+position = Vector2(40, 71)
+script = ExtResource("7_l77x0")
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=2119302090]
+position = Vector2(136, 80)
+script = ExtResource("5_b7dog")
+
+[node name="Guard" parent="." unique_id=292372197 instance=ExtResource("8_7j1qq")]
+position = Vector2(152, 68)
+
+[node name="Grate" parent="." unique_id=430739881 instance=ExtResource("9_asop1")]
+position = Vector2(80, 85)
+
+[node name="Grate2" parent="." unique_id=295303168 instance=ExtResource("9_asop1")]
+position = Vector2(112, 85)
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1583035236]
+position = Vector2(320, 128)
+script = ExtResource("10_xuhqe")
+count = 11
+
+[node name="Spikes2" type="Area2D" parent="." unique_id=1621096218]
+position = Vector2(320, 144)
+script = ExtResource("10_xuhqe")
+count = 11
+
+[node name="Spikes3" type="Area2D" parent="." unique_id=2094888902]
+position = Vector2(320, 160)
+script = ExtResource("10_xuhqe")
+count = 11
+
+[node name="FakeWall" type="TileMapLayer" parent="." unique_id=243592717]
+tile_map_data = PackedByteArray("AAAlAAIAAAAAAAAAAAAmAAIAAAAAAAAAAAAlAAMAAAAAAAAAAAAmAAMAAAAAAAAAAAA=")
+tile_set = ExtResource("3_lh5ke")
+script = ExtResource("11_e53tv")

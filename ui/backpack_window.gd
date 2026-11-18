@@ -1,6 +1,6 @@
 extends Control
 
-## Samostatné okno batohu hráče (otevírá se klávesou I / Tab).
+## Samostatné okno batohu hráče (otevírá se klávesou Tab, kdekoli): mřížka batohu a oba sloty nástrojů.
 ## Zobrazuje mřížku batohu, informace o předmětu a ovládání rotace.
 
 const GridInventory = preload("res://mechanics/grid_inventory.gd")
@@ -15,6 +15,7 @@ var player_inventory = null
 
 func _ready():
 	visible = false
+	add_to_group("backpack_windows") # Esc v pauze ho zavře jako první
 	if btn_close:
 		btn_close.pressed.connect(close_backpack)
 	if grid_view:
@@ -44,6 +45,9 @@ Vyberte předmět pro zobrazení detailů." % [crystal.icon_symbol, crystal.name
 func close_backpack():
 	if grid_view:
 		grid_view.return_held_item()
+		if grid_view.held_item_data != null and player_inventory: # nástroj vyjmutý ze slotu a nepoložený: zpět do batohu
+			player_inventory.add_item_auto(grid_view.held_item_data)
+			grid_view.held_item_data = null
 	visible = false
 
 func toggle_backpack():

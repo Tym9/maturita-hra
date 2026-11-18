@@ -64,7 +64,7 @@ kind = 7
 [node name="Event" parent="." unique_id=1813573795 instance=ExtResource("6_vx7vi")]
 position = Vector2(104, 128)
 speaker_name = "Parní město"
-dialogue_pages = Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře, na samém vrcholu, citadela korporace.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])
+dialogue_pages = Array[String](["Horská stezka končí pod hradbami Parního města. Město šplhá po svahu hory patro nad patrem — továrny, komíny a nahoře citadela korporace. Nad ní už je jen holá skála.", "Brána je zavřená. Dovnitř vedou jen odpadní stoky a nákladní pásy, které svážejí fialové krystaly."])
 
 [node name="Pylon" type="Node2D" parent="." unique_id=1614642372]
 position = Vector2(232, 160)

@@ -3,7 +3,7 @@ extends Control
 ## Celková souhrnná tabulka po dohrání hry (Grand Total Summary / Game Completed).
 ## Zobrazuje:
 ## - Celkový herní čas
-## - Celkový počet sebraných krystalů (X / 11)
+## - Celkový počet sebraných krystalů (X / součet dohraných kapitol)
 ## - Celkový počet úmrtí hráče
 ## - Celkový počet eliminovaných nepřátel
 ## - Detailní rozpad statistik po jednotlivých etapách (Etapa 1, 2, 3, Boss)
@@ -28,7 +28,8 @@ func _populate_grand_summary():
 	if total_time_val:
 		total_time_val.text = Global.format_time(Global.total_time)
 	if total_crystals_val:
-		total_crystals_val.text = "%d / 11 💎" % Global.total_crystals
+		var max_crystals: int = Global.completed_stages.reduce(func(sum, st): return sum + int(st.get("max_crystals", 0)), 0)
+		total_crystals_val.text = "%d / %d 💎" % [Global.total_crystals, max_crystals]
 	if total_deaths_val:
 		total_deaths_val.text = "%d 💀" % Global.death_count
 	if total_kills_val:

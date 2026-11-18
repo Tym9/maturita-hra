@@ -5,6 +5,15 @@
 ## (bez zásahu skriptu do pozice; jen vstupy A/D/W, jako hráč).
 ## Spuštění: godot --headless --path . -s res://test/test_tutorial_descent.gd
 
+# Hra i testy sdílí user://save.json: příchod do kapitoly ukládá, po testu vrátit hráčovo uložení
+var _save_backup := FileAccess.get_file_as_string("user://save.json")
+
+func _finalize():
+	if _save_backup.is_empty():
+		DirAccess.remove_absolute("user://save.json")
+	else:
+		FileAccess.open("user://save.json", FileAccess.WRITE).store_string(_save_backup)
+
 func _init():
 	call_deferred("_run")
 

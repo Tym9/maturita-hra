@@ -124,28 +124,42 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
 text = "Kap. 3: Parní město"
 
+[node name="BtnNorthFace" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Kap. 4: Severní stěna"
+
 [node name="BtnLevel1" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Kap. 4: Šachta"
+text = "Kap. 5: Slévárna"
 
 [node name="BtnLevel2" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Kap. 5: Doly"
+text = "Kap. 6: Doly"
 
 [node name="BtnLevel3" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "Kap. 6: Reaktor"
+text = "Kap. 7: Reaktor"
+
+[node name="BtnBoss" type="Button" parent="VBoxContainer/ChapterScroll/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "Boss: Správce"
 
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnTutorial" to="." method="_on_tutorial_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnOutpost" to="." method="_on_outpost_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnSmallville" to="." method="_on_smallville_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnSteamCity" to="." method="_on_steam_city_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnNorthFace" to="." method="_on_north_face_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel1" to="." method="_on_level1_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel2" to="." method="_on_level2_pressed"]
 [connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnLevel3" to="." method="_on_level3_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChapterScroll/GridContainer/BtnBoss" to="." method="_on_boss_pressed"]

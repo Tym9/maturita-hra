@@ -215,7 +215,7 @@ func _physics_process(delta):
 		_ok(level_end != null, "LevelEnd must exist")
 		_ok(level_end.position == Vector2(3806, 70), "LevelEnd should be at (3806, 70), got: %s" % level_end.position)
 		_ok(cam.is_valid_room(Vector2i(int(level_end.position.x / 320.0), 0)), "LevelEnd leží v platné buňce")
-		_ok(level_end.next_level == "res://level3.tscn" and level_end.stage_index == 5 and level_end.max_stage_crystals == 3 and level_end.stage_title == "KAPITOLA 5: KRYSTALOVÉ DOLY", "LevelEnd properties")
+		_ok(level_end.next_level == "res://level3.tscn" and level_end.stage_index == 6 and level_end.max_stage_crystals == 3 and level_end.stage_title == "KAPITOLA 6: KRYSTALOVÉ DOLY", "LevelEnd properties")
 		print("[PASS] LevelEnd verified at: %s" % level_end.position)
 
 		# Krok 14: důkaz dashe v enginu - 14 dlaždic široká propast ve vestibulu (skok + dvojskok + dash)

@@ -1,0 +1,45 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_5nxps"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_xswyq"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_cqt45"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_m5wul"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_2bcgl"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="6_luwf4"]
+
+[node name="c6_d05" type="Node2D" unique_id=639605991]
+script = ExtResource("1_5nxps")
+room_id = "c6_d05"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1780995851]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1349726937]
+script = ExtResource("2_xswyq")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=88892124]
+z_index = -2
+tile_set = ExtResource("3_cqt45")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=151717108]
+tile_map_data = PackedByteArray("AAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAAPAAQAAAADAAAAAAAQAAQAAAADAAAAAAARAAQAAAADAAAAAAASAAQAAAADAAAAAAATAAQAAAADAAAAAAAPAAUAAAADAAAAAAAQAAUAAAADAAAAAAARAAUAAAADAAAAAAASAAUAAAADAAAAAAATAAUAAAADAAAAAAAAAAYAAAACAAIAAAABAAYAAAACAAIAAAACAAYAAAACAAIAAAADAAYAAAACAAIAAAAEAAYAAAACAAIAAAAFAAYAAAACAAIAAAAGAAYAAAACAAIAAAAPAAYAAAADAAAAAAAQAAYAAAADAAAAAAARAAYAAAADAAAAAAASAAYAAAADAAAAAAATAAYAAAADAAAAAAAAAAcAAAACAAIAAAABAAcAAAACAAIAAAACAAcAAAACAAIAAAADAAcAAAACAAIAAAAEAAcAAAACAAIAAAAFAAcAAAACAAIAAAAGAAcAAAACAAIAAAAPAAcAAAADAAAAAAAQAAcAAAADAAAAAAARAAcAAAADAAAAAAASAAcAAAADAAAAAAATAAcAAAADAAAAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAEAAgAAAACAAIAAAAFAAgAAAACAAIAAAAGAAgAAAACAAIAAAAHAAgAAAACAAIAAAAIAAgAAAACAAIAAAAPAAgAAAADAAAAAAAQAAgAAAADAAAAAAARAAgAAAADAAAAAAASAAgAAAADAAAAAAATAAgAAAADAAAAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAA=")
+tile_set = ExtResource("3_cqt45")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1482206486]
+position = Vector2(312, 64)
+script = ExtResource("4_m5wul")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=425719607]
+position = Vector2(24, 87)
+script = ExtResource("5_2bcgl")
+
+[node name="Event" parent="." unique_id=1975437687 instance=ExtResource("6_luwf4")]
+position = Vector2(72, 64)
+speaker_name = "Odstřel"
+dialogue_pages = Array[String](["ODPAL. Šachta se hroutí. Dolů, dolů, dolů!"])

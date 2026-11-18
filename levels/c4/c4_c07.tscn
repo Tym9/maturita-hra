@@ -1,0 +1,41 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_yrk3w"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_ul2o2"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_bdrma"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="4_k0k63"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="5_s87lb"]
+
+[node name="c4_c07" type="Node2D" unique_id=493445871]
+script = ExtResource("1_yrk3w")
+room_id = "c4_c07"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1653987054]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=566971072]
+script = ExtResource("2_ul2o2")
+style = 3
+altitude = true
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1395542249]
+z_index = -2
+tile_set = ExtResource("3_bdrma")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=154827022]
+tile_map_data = PackedByteArray("AAAPAAYAAAABAAIAAAAQAAYAAAABAAIAAAAAAAcAAAABAAIAAAABAAcAAAABAAIAAAACAAcAAAABAAIAAAADAAcAAAABAAIAAAAEAAcAAAABAAIAAAAFAAcAAAABAAIAAAAGAAcAAAABAAIAAAAPAAcAAAAAAAIAAAAQAAcAAAAAAAIAAAAAAAgAAAAAAAIAAAABAAgAAAAAAAIAAAACAAgAAAAAAAIAAAADAAgAAAAAAAIAAAAEAAgAAAAAAAIAAAAFAAgAAAAAAAIAAAAGAAgAAAAAAAIAAAAHAAgAAAABAAIAAAAIAAgAAAABAAIAAAAJAAgAAAABAAIAAAAKAAgAAAABAAIAAAALAAgAAAABAAIAAAAMAAgAAAABAAIAAAAPAAgAAAAAAAIAAAAQAAgAAAAAAAIAAAAAAAkAAAAAAAIAAAABAAkAAAAAAAIAAAACAAkAAAAAAAIAAAADAAkAAAAAAAIAAAAEAAkAAAAAAAIAAAAFAAkAAAAAAAIAAAAGAAkAAAAAAAIAAAAHAAkAAAAAAAIAAAAIAAkAAAAAAAIAAAAJAAkAAAAAAAIAAAAKAAkAAAAAAAIAAAALAAkAAAAAAAIAAAAMAAkAAAAAAAIAAAANAAkAAAABAAIAAAAOAAkAAAABAAIAAAAPAAkAAAAAAAIAAAAQAAkAAAAAAAIAAAARAAkAAAABAAIAAAASAAkAAAABAAIAAAATAAkAAAABAAIAAAAAAAoAAAAAAAIAAAABAAoAAAAAAAIAAAACAAoAAAAAAAIAAAADAAoAAAAAAAIAAAAEAAoAAAAAAAIAAAAFAAoAAAAAAAIAAAAGAAoAAAAAAAIAAAAHAAoAAAAAAAIAAAAIAAoAAAAAAAIAAAAJAAoAAAAAAAIAAAAKAAoAAAAAAAIAAAALAAoAAAAAAAIAAAAMAAoAAAAAAAIAAAANAAoAAAAAAAIAAAAOAAoAAAAAAAIAAAAPAAoAAAAAAAIAAAAQAAoAAAAAAAIAAAARAAoAAAAAAAIAAAASAAoAAAAAAAIAAAATAAoAAAAAAAIAAAA=")
+tile_set = ExtResource("3_bdrma")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=262226953]
+position = Vector2(24, 103)
+script = ExtResource("4_k0k63")
+
+[node name="Event" parent="." unique_id=528526891 instance=ExtResource("5_s87lb")]
+position = Vector2(152, 96)
+speaker_name = "Hlavní sídlo"
+dialogue_pages = Array[String](["Za sedlem se zvedá skalní stěna a v ní, vytesané do hory, sídlo korporace: mosazné brány, reflektory, lanovka mizící ve skále.", "Někde pod tím vším bije reaktor."])

@@ -1,0 +1,59 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_8j8pv"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_8sf44"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_gcfl0"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_eidn4"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_txiys"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="6_eqvjs"]
+[ext_resource type="PackedScene" path="res://mechanics/falling_rock.tscn" id="7_d1rol"]
+
+[node name="c5_a03" type="Node2D" unique_id=1230066428]
+script = ExtResource("1_8j8pv")
+room_id = "c5_a03"
+screens = Vector2i(1, 2)
+
+[node name="Background" type="ColorRect" parent="." unique_id=2084635229]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=2108988347]
+script = ExtResource("2_8sf44")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1995724399]
+z_index = -2
+tile_set = ExtResource("3_gcfl0")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1543451977]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAADAAAAAAACAAIAAAAEAAAAAAACAAIAAAAFAAAAAAACAAIAAAAGAAAAAAACAAIAAAAHAAAAAAACAAIAAAAIAAAAAAACAAIAAAAJAAAAAAACAAIAAAAKAAAAAAACAAIAAAALAAAAAAACAAIAAAAMAAAAAAACAAIAAAANAAAAAAACAAIAAAAOAAAAAAACAAIAAAAPAAAAAAACAAIAAAAQAAAAAAACAAIAAAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAADAAEAAAACAAIAAAAEAAEAAAACAAIAAAAFAAEAAAACAAIAAAAGAAEAAAACAAIAAAAHAAEAAAACAAIAAAAIAAEAAAACAAIAAAAJAAEAAAACAAIAAAAKAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAACAAIAAAACAAIAAAADAAIAAAACAAIAAAAEAAIAAAACAAIAAAAFAAIAAAACAAIAAAAAAAMAAAACAAIAAAABAAMAAAACAAIAAAACAAMAAAACAAIAAAANAAYAAAACAAAAAAAOAAYAAAACAAAAAAAPAAYAAAACAAAAAAAQAAYAAAACAAAAAAARAAYAAAACAAAAAAASAAYAAAACAAAAAAATAAYAAAACAAAAAAAEAAoAAAACAAAAAAAFAAoAAAACAAAAAAAGAAoAAAACAAAAAAAHAAoAAAACAAAAAAAIAAoAAAACAAAAAAAJAAoAAAACAAAAAAAKAAoAAAACAAAAAAALAAoAAAACAAAAAAAMAAoAAAACAAAAAAAAABAAAAACAAIAAAABABAAAAACAAIAAAACABAAAAACAAIAAAADABAAAAACAAIAAAARABAAAAACAAIAAAASABAAAAACAAIAAAATABAAAAACAAIAAAAAABEAAAACAAIAAAABABEAAAACAAIAAAACABEAAAACAAIAAAADABEAAAACAAIAAAARABEAAAACAAIAAAASABEAAAACAAIAAAATABEAAAACAAIAAAAAABIAAAACAAIAAAABABIAAAACAAIAAAACABIAAAACAAIAAAASABIAAAACAAIAAAATABIAAAACAAIAAAAAABMAAAACAAIAAAABABMAAAACAAIAAAACABMAAAACAAIAAAASABMAAAACAAIAAAATABMAAAACAAIAAAAAABQAAAACAAIAAAABABQAAAACAAIAAAATABQAAAACAAIAAAAAABUAAAACAAIAAAABABUAAAACAAIAAAATABUAAAACAAIAAAA=")
+tile_set = ExtResource("3_gcfl0")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=413975]
+position = Vector2(248, 96)
+script = ExtResource("4_eidn4")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=96627600]
+position = Vector2(280, 87)
+script = ExtResource("5_txiys")
+
+[node name="Guard" parent="." unique_id=62510751 instance=ExtResource("6_eqvjs")]
+position = Vector2(136, 148)
+
+[node name="Rock" parent="." unique_id=224417126 instance=ExtResource("7_d1rol")]
+position = Vector2(88, 176)
+
+[node name="Rock2" parent="." unique_id=551509655 instance=ExtResource("7_d1rol")]
+position = Vector2(184, 176)
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=72332873]
+position = Vector2(24, 256)
+script = ExtResource("4_eidn4")
+
+[node name="Lantern3" type="Node2D" parent="." unique_id=960630205]
+position = Vector2(296, 256)
+script = ExtResource("4_eidn4")

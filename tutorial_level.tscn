@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="7"]
 [ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9"]
 [ext_resource type="Script" path="res://mechanics/room_decor.gd" id="10"]
+[ext_resource type="Script" path="res://mechanics/guidepost.gd" id="guidepost"]
 
 [node name="TutorialLevel" type="Node2D"]
 
@@ -495,107 +496,77 @@ crystal_id = "crystal_tut_3"
 
 [node name="TutorialSigns" type="Node2D" parent="."]
 
-[node name="Sign_R0" type="Label" parent="TutorialSigns"]
-offset_left = 40.0
-offset_top = 62.0
-offset_right = 260.0
-offset_bottom = 102.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 9
+[node name="Sign_R0" type="Node2D" parent="TutorialSigns"]
+position = Vector2(88, 160)
+script = ExtResource("guidepost")
+key_text = "A D"
 text = "A / D : běh
-W : skok (drž W = vyšší skok)"
+W : skok (drž W = výš)"
 
-[node name="Sign_Spikes" type="Label" parent="TutorialSigns"]
-offset_left = 470.0
-offset_top = 40.0
-offset_right = 600.0
-offset_bottom = 70.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_Spikes" type="Node2D" parent="TutorialSigns"]
+position = Vector2(470, 160)
+script = ExtResource("guidepost")
+key_text = "!"
 text = "BODÁKY zabíjejí!
 Přeskoč je skokem [W]."
 
-[node name="Sign_R2" type="Label" parent="TutorialSigns"]
-offset_left = 612.0
-offset_top = 56.0
-offset_right = 790.0
-offset_bottom = 96.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R2" type="Node2D" parent="TutorialSigns"]
+position = Vector2(700, 160)
+script = ExtResource("guidepost")
+key_text = "W W"
 text = "DVOJSKOK:
-Stiskni W znovu ve vzduchu!"
+ve vzduchu stiskni W znovu"
 
-[node name="Sign_R1" type="Label" parent="TutorialSigns"]
-offset_left = 975.0
-offset_top = 70.0
-offset_right = 1082.0
-offset_bottom = 110.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R1" type="Node2D" parent="TutorialSigns"]
+position = Vector2(1000, 160)
+script = ExtResource("guidepost")
+key_text = "S"
 text = "[S] : skrčení a plazení
 (drž S pod nízkým stropem)"
 
-[node name="Sign_R3" type="Label" parent="TutorialSigns"]
-offset_left = 1196.0
-offset_top = 60.0
-offset_right = 1356.0
-offset_bottom = 120.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R3" type="Node2D" parent="TutorialSigns"]
+position = Vector2(1220, 160)
+script = ExtResource("guidepost")
+key_text = "Shift"
 text = "ŠPLHÁNÍ: u stěny drž [Shift],
-W / S = nahoru / dolů.
-Sleduj staminu! (Automatické lezení
-lze zapnout v menu Esc)"
+W / S nahoru / dolů, hlídej staminu.
+(lezení bez Shiftu: menu Esc)"
 
-[node name="Sign_R4" type="Label" parent="TutorialSigns"]
-offset_left = 1480.0
-offset_top = 98.0
-offset_right = 1646.0
-offset_bottom = 138.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
-text = "ODRAZ OD STĚNY (WALL-JUMP):
-u stěny stiskni W a drž směr OD stěny.
-Skákej střídavě ze stěny na stěnu!"
+[node name="Sign_R4" type="Node2D" parent="TutorialSigns"]
+position = Vector2(1500, 160)
+script = ExtResource("guidepost")
+key_text = "W"
+text = "ODRAZ OD STĚNY:
+u stěny W a drž směr OD stěny,
+skákej ze stěny na stěnu"
 
-[node name="Sign_R5" type="Label" parent="TutorialSigns"]
-offset_left = 1790.0
-offset_top = 26.0
-offset_right = 2010.0
-offset_bottom = 52.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R5" type="Node2D" parent="TutorialSigns"]
+position = Vector2(1800, 64)
+script = ExtResource("guidepost")
+key_text = "!"
 text = "ZCHÁTRALÝ MOST:
-Drolící se bloky se po došlapu rozpadnou!"
+bloky se po došlapu rozpadnou!"
 
-[node name="Sign_R6" type="Label" parent="TutorialSigns"]
-offset_left = 2570.0
-offset_top = 62.0
-offset_right = 2745.0
-offset_bottom = 112.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
-text = "[E] : otevřít truhlu a vzít lékárničku
-(klikni na předmět = přenos do batohu)
-[I] / [TAB] : batoh    [Esc] : pauza"
+[node name="Sign_R6" type="Node2D" parent="TutorialSigns"]
+position = Vector2(2600, 144)
+script = ExtResource("guidepost")
+key_text = "E"
+text = "[E] : otevřít truhlu, klik = do batohu
+[Tab] : batoh a dva sloty nástrojů
+[Q] : lékárnička z batohu
+[Esc] : zavřít / pauza"
 
-[node name="Sign_R7" type="Label" parent="TutorialSigns"]
-offset_left = 3206.0
-offset_top = 60.0
-offset_right = 3318.0
-offset_bottom = 100.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R7" type="Node2D" parent="TutorialSigns"]
+position = Vector2(3220, 144)
+script = ExtResource("guidepost")
+key_text = "ROKLE"
 text = "OKRAJ ROKLE
 Dole za plechovou hradbou blikají lampy..."
 
-[node name="Sign_R8" type="Label" parent="TutorialSigns"]
-offset_left = 3470.0
-offset_top = 108.0
-offset_right = 3700.0
-offset_bottom = 148.0
-theme_override_colors/font_color = Color(0.9, 0.85, 0.6, 0.9)
-theme_override_font_sizes/font_size = 8
+[node name="Sign_R8" type="Node2D" parent="TutorialSigns"]
+position = Vector2(3480, 176)
+script = ExtResource("guidepost")
+key_text = "DOLŮ"
 text = "ROKLE: seskoč dolů po starém lešení.
 Na dně si dej pozor na bodáky!"
 

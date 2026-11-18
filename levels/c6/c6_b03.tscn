@@ -1,0 +1,74 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_iph0a"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_0hk3u"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_saqkw"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="4_5gbkn"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="5_syfrf"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_pndjb"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="7_tcewb"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="8_5stjj"]
+
+[node name="c6_b03" type="Node2D" unique_id=613798460]
+script = ExtResource("1_iph0a")
+room_id = "c6_b03"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=1263928266]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1974352832]
+script = ExtResource("2_0hk3u")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=439961621]
+z_index = -2
+tile_set = ExtResource("3_saqkw")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1747803999]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAdAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAlAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAnAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAARAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAlAAEAAAAAAAAAAAAmAAEAAAAAAAAAAAAnAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAlAAIAAAAAAAAAAAAmAAIAAAAAAAAAAAAnAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAkAAgAAAAAAAAAAAAlAAgAAAAAAAAAAAAmAAgAAAAAAAAAAAAnAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAFAAAAAAAKAAkAAAAFAAAAAAALAAkAAAAFAAAAAAAMAAkAAAAFAAAAAAANAAkAAAAFAAAAAAAOAAkAAAAFAAAAAAAPAAkAAAAFAAAAAAAQAAkAAAAFAAAAAAARAAkAAAAFAAAAAAASAAkAAAAFAAAAAAATAAkAAAAFAAAAAAAUAAkAAAAFAAAAAAAVAAkAAAAFAAAAAAAWAAkAAAAFAAAAAAAXAAkAAAAFAAAAAAAYAAkAAAAFAAAAAAAZAAkAAAAFAAAAAAAaAAkAAAAFAAAAAAAbAAkAAAAFAAAAAAAcAAkAAAAFAAAAAAAdAAkAAAAFAAAAAAAeAAkAAAAFAAAAAAAfAAkAAAAFAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAnAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAFAAAAAAAKAAoAAAAFAAAAAAALAAoAAAAFAAAAAAAMAAoAAAAFAAAAAAANAAoAAAAFAAAAAAAOAAoAAAAFAAAAAAAPAAoAAAAFAAAAAAAQAAoAAAAFAAAAAAARAAoAAAAFAAAAAAASAAoAAAAFAAAAAAATAAoAAAAFAAAAAAAUAAoAAAAFAAAAAAAVAAoAAAAFAAAAAAAWAAoAAAAFAAAAAAAXAAoAAAAFAAAAAAAYAAoAAAAFAAAAAAAZAAoAAAAFAAAAAAAaAAoAAAAFAAAAAAAbAAoAAAAFAAAAAAAcAAoAAAAFAAAAAAAdAAoAAAAFAAAAAAAeAAoAAAAFAAAAAAAfAAoAAAAFAAAAAAAkAAoAAAAAAAAAAAAlAAoAAAAAAAAAAAAmAAoAAAAAAAAAAAAnAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_saqkw")
+
+[node name="Crystal" parent="." unique_id=386635696 instance=ExtResource("4_5gbkn")]
+position = Vector2(376, 24)
+
+[node name="Anchor" parent="." unique_id=1801188596 instance=ExtResource("5_syfrf")]
+position = Vector2(104, 56)
+rail_end = Vector2(48, 0)
+
+[node name="Anchor2" parent="." unique_id=500806498 instance=ExtResource("5_syfrf")]
+position = Vector2(216, 56)
+
+[node name="Anchor3" parent="." unique_id=501941016 instance=ExtResource("5_syfrf")]
+position = Vector2(328, 56)
+rail_end = Vector2(0, 32)
+period = 2.5
+
+[node name="Anchor4" parent="." unique_id=1590654748 instance=ExtResource("5_syfrf")]
+position = Vector2(440, 56)
+
+[node name="Anchor5" parent="." unique_id=1262924934 instance=ExtResource("5_syfrf")]
+position = Vector2(536, 56)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=2100557019]
+position = Vector2(40, 119)
+script = ExtResource("6_pndjb")
+
+[node name="Blight" type="Node2D" parent="." unique_id=1254437710]
+position = Vector2(120, 128)
+script = ExtResource("7_tcewb")
+kind = 4
+
+[node name="Lantern" type="Node2D" parent="." unique_id=53630298]
+position = Vector2(616, 128)
+script = ExtResource("7_tcewb")
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1084817168]
+position = Vector2(144, 144)
+script = ExtResource("8_5stjj")
+count = 23

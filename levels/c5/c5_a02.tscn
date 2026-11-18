@@ -1,0 +1,49 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_ujws3"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_u701h"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_16yiw"]
+[ext_resource type="PackedScene" path="res://mechanics/crystal.tscn" id="4_jnpkt"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_2q5kr"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="6_wr87a"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="7_w2alj"]
+
+[node name="c5_a02" type="Node2D" unique_id=1013609275]
+script = ExtResource("1_ujws3")
+room_id = "c5_a02"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1754706763]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1809549073]
+script = ExtResource("2_u701h")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1777545818]
+z_index = -2
+tile_set = ExtResource("3_16yiw")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=1532300280]
+tile_map_data = PackedByteArray("AAAIAAIAAAACAAIAAAAJAAIAAAACAAIAAAAKAAIAAAACAAIAAAAJAAMAAAACAAIAAAAAAAYAAAACAAIAAAABAAYAAAACAAIAAAACAAYAAAACAAIAAAAOAAYAAAADAAAAAAAPAAYAAAADAAAAAAAQAAYAAAADAAAAAAAAAAcAAAACAAIAAAABAAcAAAACAAIAAAACAAcAAAACAAIAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAAOAAkAAAACAAIAAAAPAAkAAAACAAIAAAAQAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_16yiw")
+
+[node name="Crystal" parent="." unique_id=1561903394 instance=ExtResource("4_jnpkt")]
+position = Vector2(152, 24)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1741352479]
+position = Vector2(8, 87)
+script = ExtResource("5_2q5kr")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=2085871399]
+position = Vector2(248, 96)
+script = ExtResource("6_wr87a")
+
+[node name="Spikes" type="Area2D" parent="." unique_id=110443592]
+position = Vector2(64, 144)
+script = ExtResource("7_w2alj")
+count = 13

@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mechanics/chapter.gd" id="1_42sfs"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a01.tscn" id="2_x22at"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a02.tscn" id="3_c70b7"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a03.tscn" id="4_64t0c"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a04.tscn" id="5_43clg"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a05.tscn" id="6_7ncej"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a06.tscn" id="7_dk2cx"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_a07.tscn" id="8_yaw7m"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b01.tscn" id="9_4pb4d"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b02.tscn" id="10_8jt4o"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b03.tscn" id="11_y2kt5"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b04.tscn" id="12_gl2aa"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b05.tscn" id="13_drh8x"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b05b.tscn" id="14_cwppf"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_b06.tscn" id="15_v4awl"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c01.tscn" id="16_tcf2o"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c02.tscn" id="17_63isj"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c03.tscn" id="18_8lk11"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c04.tscn" id="19_fvoeo"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c05.tscn" id="20_ug4uo"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c06.tscn" id="21_vjpvx"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_c07.tscn" id="22_0st0w"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d01.tscn" id="23_47qey"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d02.tscn" id="24_laqi4"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d03.tscn" id="25_fcce6"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d04.tscn" id="26_8r0md"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d05.tscn" id="27_nstcd"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d06.tscn" id="28_e3ucj"]
+[ext_resource type="PackedScene" path="res://levels/c5/c5_d07.tscn" id="29_ydt4j"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="30_rwhml"]
+
+[node name="Chapter5" type="Node2D" unique_id=1711007578]
+script = ExtResource("1_42sfs")
+start_items = Array[String](["wrench"])
+
+[node name="c5_a01" parent="." unique_id=1117206006 instance=ExtResource("2_x22at")]
+
+[node name="c5_a02" parent="." unique_id=1013609275 instance=ExtResource("3_c70b7")]
+position = Vector2(640, 0)
+
+[node name="c5_a03" parent="." unique_id=1230066428 instance=ExtResource("4_64t0c")]
+position = Vector2(640, 180)
+
+[node name="c5_a04" parent="." unique_id=2006060583 instance=ExtResource("5_43clg")]
+position = Vector2(960, 360)
+
+[node name="c5_a05" parent="." unique_id=492788476 instance=ExtResource("6_7ncej")]
+position = Vector2(1280, 540)
+
+[node name="c5_a06" parent="." unique_id=1746452801 instance=ExtResource("7_dk2cx")]
+position = Vector2(1600, 720)
+
+[node name="c5_a07" parent="." unique_id=190426893 instance=ExtResource("8_yaw7m")]
+position = Vector2(1600, 900)
+
+[node name="c5_b01" parent="." unique_id=1927467942 instance=ExtResource("9_4pb4d")]
+position = Vector2(1920, 900)
+
+[node name="c5_b02" parent="." unique_id=303619614 instance=ExtResource("10_8jt4o")]
+position = Vector2(2240, 1080)
+
+[node name="c5_b03" parent="." unique_id=21880328 instance=ExtResource("11_y2kt5")]
+position = Vector2(2560, 1260)
+
+[node name="c5_b04" parent="." unique_id=709185890 instance=ExtResource("12_gl2aa")]
+position = Vector2(2880, 1440)
+
+[node name="c5_b05" parent="." unique_id=1866985892 instance=ExtResource("13_drh8x")]
+position = Vector2(3200, 1440)
+
+[node name="c5_b05b" parent="." unique_id=1790974604 instance=ExtResource("14_cwppf")]
+position = Vector2(3520, 1440)
+
+[node name="c5_b06" parent="." unique_id=1224006569 instance=ExtResource("15_v4awl")]
+position = Vector2(3200, 1800)
+
+[node name="c5_c01" parent="." unique_id=68268778 instance=ExtResource("16_tcf2o")]
+position = Vector2(3840, 1800)
+
+[node name="c5_c02" parent="." unique_id=1975279827 instance=ExtResource("17_63isj")]
+position = Vector2(4160, 1980)
+
+[node name="c5_c03" parent="." unique_id=1509739921 instance=ExtResource("18_8lk11")]
+position = Vector2(4480, 2160)
+
+[node name="c5_c04" parent="." unique_id=665645954 instance=ExtResource("19_fvoeo")]
+position = Vector2(4800, 2340)
+
+[node name="c5_c05" parent="." unique_id=1898505813 instance=ExtResource("20_ug4uo")]
+position = Vector2(5120, 2340)
+
+[node name="c5_c06" parent="." unique_id=252354960 instance=ExtResource("21_vjpvx")]
+position = Vector2(5440, 2520)
+
+[node name="c5_c07" parent="." unique_id=597118636 instance=ExtResource("22_0st0w")]
+position = Vector2(5760, 2700)
+
+[node name="c5_d01" parent="." unique_id=517885891 instance=ExtResource("23_47qey")]
+position = Vector2(6080, 2700)
+
+[node name="c5_d02" parent="." unique_id=1611165186 instance=ExtResource("24_laqi4")]
+position = Vector2(6400, 2880)
+
+[node name="c5_d03" parent="." unique_id=84309576 instance=ExtResource("25_fcce6")]
+position = Vector2(6720, 3060)
+
+[node name="c5_d04" parent="." unique_id=1117746066 instance=ExtResource("26_8r0md")]
+position = Vector2(7040, 3240)
+
+[node name="c5_d05" parent="." unique_id=338656528 instance=ExtResource("27_nstcd")]
+position = Vector2(7360, 3240)
+
+[node name="c5_d06" parent="." unique_id=1972037624 instance=ExtResource("28_e3ucj")]
+position = Vector2(7360, 3420)
+
+[node name="c5_d07" parent="." unique_id=858626445 instance=ExtResource("29_ydt4j")]
+position = Vector2(7360, 3960)
+
+[node name="Player" parent="." unique_id=884667043 instance=ExtResource("30_rwhml")]
+position = Vector2(40, 87)

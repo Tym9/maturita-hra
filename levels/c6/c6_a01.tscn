@@ -1,0 +1,91 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_wt5ar"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_sieoc"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_xt1nm"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="4_pso2y"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_cdx15"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_4wslr"]
+[ext_resource type="PackedScene" path="res://npc/rusty.tscn" id="7_kssrb"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="8_yu8rp"]
+
+[node name="c6_a01" type="Node2D" unique_id=640683800]
+script = ExtResource("1_wt5ar")
+room_id = "c6_a01"
+screens = Vector2i(2, 1)
+checkpoint = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=360310927]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=1139813437]
+script = ExtResource("2_sieoc")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1257188609]
+z_index = -2
+tile_map_data = PackedByteArray("AAADAAMAAAAAAAEAAAAEAAMAAAAFAAEAAAAFAAMAAAAFAAEAAAAGAAMAAAAFAAEAAAAHAAMAAAAFAAEAAAAIAAMAAAAFAAEAAAAJAAMAAAAFAAEAAAAKAAMAAAAAAAEAAAADAAQAAAAAAAEAAAAEAAQAAAAFAAEAAAAFAAQAAAAFAAEAAAAGAAQAAAAFAAEAAAAHAAQAAAAFAAEAAAAIAAQAAAAFAAEAAAAJAAQAAAAFAAEAAAAKAAQAAAAAAAEAAAACAAUAAAAAAAEAAAADAAUAAAAAAAEAAAAEAAUAAAAFAAEAAAAFAAUAAAAFAAEAAAAGAAUAAAAFAAEAAAAHAAUAAAAFAAEAAAAIAAUAAAAFAAEAAAAJAAUAAAAFAAEAAAAKAAUAAAAAAAEAAAA=")
+tile_set = ExtResource("3_xt1nm")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=944568171]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAlAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAnAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAiAAEAAAAAAAAAAAAjAAEAAAAAAAAAAAAkAAEAAAAAAAAAAAAlAAEAAAAAAAAAAAAmAAEAAAAAAAAAAAAnAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAAhAAYAAAAAAAAAAAAiAAYAAAAAAAAAAAAjAAYAAAAAAAAAAAAkAAYAAAAAAAAAAAAlAAYAAAAAAAAAAAAmAAYAAAAAAAAAAAAnAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAhAAcAAAAAAAAAAAAiAAcAAAAAAAAAAAAjAAcAAAAAAAAAAAAkAAcAAAAAAAAAAAAlAAcAAAAAAAAAAAAmAAcAAAAAAAAAAAAnAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAkAAgAAAAAAAAAAAAlAAgAAAAAAAAAAAAmAAgAAAAAAAAAAAAnAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAnAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAASAAoAAAAAAAAAAAATAAoAAAAAAAAAAAAUAAoAAAAAAAAAAAAVAAoAAAAAAAAAAAAWAAoAAAAAAAAAAAAXAAoAAAAAAAAAAAAYAAoAAAAAAAAAAAAZAAoAAAAAAAAAAAAaAAoAAAAAAAAAAAAbAAoAAAAAAAAAAAAcAAoAAAAAAAAAAAAdAAoAAAAAAAAAAAAeAAoAAAAAAAAAAAAfAAoAAAAAAAAAAAAgAAoAAAAAAAAAAAAhAAoAAAAAAAAAAAAiAAoAAAAAAAAAAAAjAAoAAAAAAAAAAAAkAAoAAAAAAAAAAAAlAAoAAAAAAAAAAAAmAAoAAAAAAAAAAAAnAAoAAAAAAAAAAAA=")
+tile_set = ExtResource("3_xt1nm")
+
+[node name="Anchor" parent="." unique_id=742356790 instance=ExtResource("4_pso2y")]
+position = Vector2(344, 24)
+
+[node name="Anchor2" parent="." unique_id=45566484 instance=ExtResource("4_pso2y")]
+position = Vector2(232, 40)
+
+[node name="Anchor3" parent="." unique_id=2048788506 instance=ExtResource("4_pso2y")]
+position = Vector2(472, 40)
+
+[node name="Banner" type="Node2D" parent="." unique_id=1489877937]
+position = Vector2(120, 64)
+script = ExtResource("5_cdx15")
+kind = 1
+
+[node name="Lantern" type="Node2D" parent="." unique_id=2090244227]
+position = Vector2(104, 80)
+script = ExtResource("5_cdx15")
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=183161904]
+position = Vector2(24, 96)
+script = ExtResource("5_cdx15")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=218500035]
+position = Vector2(40, 87)
+script = ExtResource("6_4wslr")
+
+[node name="Rusty" parent="." unique_id=624408572 instance=ExtResource("7_kssrb")]
+position = Vector2(88, 88)
+dialogue_pages = Array[String](["Tak ty jsi ten, co prošel slévárnou. Vesper hlásila, že přijdeš. Vítej v dolech, Matěji.", "Tyhle štoly kopali naši dědové, než přišla Korporace. Teď tu roste krystal přímo ze skály. A skála kvůli němu praská.", "Tady máš hornický hák. Miř myší a pravým tlačítkem ho vystřel na mosazný kruh. Přitáhne tě a vrátí ti cívku i druhý skok.", "Vezmi si ho z truhly a dej ho do slotu místo hasáku. V rukou uneseš naráz jen dva nástroje, vyměníš je kdykoli v batohu klávesou Tab. Cívku si nech.", "Kruhy jsme natloukli všude, kam se dalo."])
+repeat_dialogue_pages = Array[String](["Hák: pravé tlačítko myši na mosazný kruh. Skokem se z něj odrazíš dřív."])
+
+[node name="Chest" parent="." unique_id=664314310 instance=ExtResource("8_yu8rp")]
+position = Vector2(136, 86)
+initial_items = Array[String](["grapple_hook", "health_pack"])
+
+[node name="Lantern3" type="Node2D" parent="." unique_id=1145734136]
+position = Vector2(600, 96)
+script = ExtResource("5_cdx15")
+
+[node name="Blight" type="Node2D" parent="." unique_id=797936959]
+position = Vector2(296, 160)
+script = ExtResource("5_cdx15")
+kind = 4
+
+[node name="Blight2" type="Node2D" parent="." unique_id=70903317]
+position = Vector2(424, 160)
+script = ExtResource("5_cdx15")
+kind = 4
+
+[node name="Blight3" type="Node2D" parent="." unique_id=1801835517]
+position = Vector2(536, 160)
+script = ExtResource("5_cdx15")
+kind = 4

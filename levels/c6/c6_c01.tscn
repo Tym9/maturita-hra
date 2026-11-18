@@ -1,0 +1,99 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_ewdkv"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_bb5u0"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_jnogg"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_yj1f4"]
+[ext_resource type="PackedScene" path="res://mechanics/drillable_rock.tscn" id="5_lo51p"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="6_cuqum"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="7_3prts"]
+[ext_resource type="PackedScene" path="res://mechanics/chest.tscn" id="8_d2kh5"]
+
+[node name="c6_c01" type="Node2D" unique_id=1246832658]
+script = ExtResource("1_ewdkv")
+room_id = "c6_c01"
+screens = Vector2i(2, 1)
+checkpoint = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=208374107]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=459893859]
+script = ExtResource("2_bb5u0")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=319727994]
+z_index = -2
+tile_map_data = PackedByteArray("AAAEAAUAAAABAAEAAAAFAAUAAAABAAEAAAAGAAUAAAABAAEAAAADAAYAAAABAAEAAAAEAAYAAAABAAEAAAAFAAYAAAABAAEAAAAGAAYAAAABAAEAAAADAAcAAAABAAEAAAAEAAcAAAABAAEAAAAFAAcAAAABAAEAAAAGAAcAAAABAAEAAAADAAgAAAABAAEAAAAEAAgAAAABAAEAAAAFAAgAAAABAAEAAAAGAAgAAAABAAEAAAA=")
+tile_set = ExtResource("3_jnogg")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=658763104]
+tile_map_data = PackedByteArray("AAANAAAAAAACAAIAAAAOAAAAAAACAAIAAAAPAAAAAAACAAIAAAAQAAAAAAACAAIAAAARAAAAAAACAAIAAAASAAAAAAACAAIAAAATAAAAAAACAAIAAAAUAAAAAAACAAIAAAALAAEAAAACAAIAAAAMAAEAAAACAAIAAAANAAEAAAACAAIAAAAOAAEAAAACAAIAAAAPAAEAAAACAAIAAAAQAAEAAAACAAIAAAARAAEAAAACAAIAAAASAAEAAAACAAIAAAATAAEAAAACAAIAAAAUAAEAAAACAAIAAAAVAAEAAAACAAIAAAAWAAEAAAACAAIAAAAKAAIAAAACAAIAAAALAAIAAAACAAIAAAAMAAIAAAACAAIAAAANAAIAAAACAAIAAAAOAAIAAAACAAIAAAAPAAIAAAACAAIAAAAQAAIAAAACAAIAAAARAAIAAAACAAIAAAASAAIAAAACAAIAAAATAAIAAAACAAIAAAAUAAIAAAACAAIAAAAVAAIAAAACAAIAAAAWAAIAAAACAAIAAAAXAAIAAAACAAIAAAAJAAMAAAACAAIAAAAKAAMAAAACAAIAAAALAAMAAAACAAIAAAAMAAMAAAACAAIAAAANAAMAAAACAAIAAAAOAAMAAAACAAIAAAAPAAMAAAACAAIAAAAQAAMAAAACAAIAAAARAAMAAAACAAIAAAASAAMAAAACAAIAAAATAAMAAAACAAIAAAAUAAMAAAACAAIAAAAVAAMAAAACAAIAAAAWAAMAAAACAAIAAAAXAAMAAAACAAIAAAAYAAMAAAACAAIAAAADAAQAAAABAAAAAAAEAAQAAAABAAAAAAAFAAQAAAABAAAAAAAGAAQAAAABAAAAAAAIAAQAAAACAAIAAAAJAAQAAAACAAIAAAAKAAQAAAACAAIAAAALAAQAAAACAAIAAAAMAAQAAAACAAIAAAANAAQAAAACAAIAAAAOAAQAAAACAAIAAAAPAAQAAAACAAIAAAAQAAQAAAACAAIAAAARAAQAAAACAAIAAAASAAQAAAACAAIAAAATAAQAAAACAAIAAAAUAAQAAAACAAIAAAAVAAQAAAACAAIAAAAWAAQAAAACAAIAAAAXAAQAAAACAAIAAAAYAAQAAAACAAIAAAAZAAQAAAACAAIAAAADAAUAAAADAAAAAAAmAAUAAAACAAIAAAAnAAUAAAACAAIAAAAkAAYAAAACAAIAAAAlAAYAAAACAAIAAAAmAAYAAAACAAIAAAAnAAYAAAACAAIAAAAkAAcAAAACAAIAAAAlAAcAAAACAAIAAAAmAAcAAAACAAIAAAAnAAcAAAACAAIAAAAkAAgAAAACAAIAAAAlAAgAAAACAAIAAAAmAAgAAAACAAIAAAAnAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAARAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAUAAkAAAACAAIAAAAVAAkAAAACAAIAAAAWAAkAAAACAAIAAAAXAAkAAAACAAIAAAAYAAkAAAACAAIAAAAZAAkAAAACAAIAAAAaAAkAAAACAAIAAAAbAAkAAAACAAIAAAAcAAkAAAACAAIAAAAhAAkAAAACAAIAAAAiAAkAAAACAAIAAAAjAAkAAAACAAIAAAAkAAkAAAACAAIAAAAlAAkAAAACAAIAAAAmAAkAAAACAAIAAAAnAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAAUAAoAAAACAAIAAAAVAAoAAAACAAIAAAAWAAoAAAACAAIAAAAXAAoAAAACAAIAAAAYAAoAAAACAAIAAAAZAAoAAAACAAIAAAAaAAoAAAACAAIAAAAbAAoAAAACAAIAAAAcAAoAAAACAAIAAAAhAAoAAAACAAIAAAAiAAoAAAACAAIAAAAjAAoAAAACAAIAAAAkAAoAAAACAAIAAAAlAAoAAAACAAIAAAAmAAoAAAACAAIAAAAnAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_jnogg")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=573095588]
+position = Vector2(72, 96)
+script = ExtResource("4_yj1f4")
+
+[node name="DrillRock" parent="." unique_id=1082442817 instance=ExtResource("5_lo51p")]
+position = Vector2(144, 80)
+size = Vector2i(1, 4)
+
+[node name="DrillRock2" parent="." unique_id=778913211 instance=ExtResource("5_lo51p")]
+position = Vector2(160, 80)
+size = Vector2i(1, 4)
+
+[node name="DrillRock3" parent="." unique_id=1470323720 instance=ExtResource("5_lo51p")]
+position = Vector2(352, 80)
+size = Vector2i(1, 4)
+
+[node name="DrillRock4" parent="." unique_id=1750382991 instance=ExtResource("5_lo51p")]
+position = Vector2(368, 80)
+size = Vector2i(1, 4)
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=2050072363]
+position = Vector2(552, 96)
+script = ExtResource("4_yj1f4")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=2101330030]
+position = Vector2(24, 135)
+script = ExtResource("6_cuqum")
+
+[node name="Event" parent="." unique_id=85447466 instance=ExtResource("7_3prts")]
+position = Vector2(72, 112)
+speaker_name = "Vrtná stanice 7"
+dialogue_pages = Array[String](["Opuštěná stanice. Ve skříni zůstala vrtná hlavice na gravitační cívku.", "Hlavice se nasadí na cívku sama, stačí ji mít v batohu. S ní prorazíš dashem popraskanou skálu a letíš dál."])
+
+[node name="Chest" parent="." unique_id=1552124015 instance=ExtResource("8_d2kh5")]
+position = Vector2(88, 134)
+initial_items = Array[String](["drill", "health_pack"])
+
+[node name="Blight" type="Node2D" parent="." unique_id=560025822]
+position = Vector2(200, 144)
+script = ExtResource("4_yj1f4")
+kind = 4
+
+[node name="Blight2" type="Node2D" parent="." unique_id=767097707]
+position = Vector2(312, 144)
+script = ExtResource("4_yj1f4")
+kind = 4
+
+[node name="Blight3" type="Node2D" parent="." unique_id=1757887881]
+position = Vector2(440, 144)
+script = ExtResource("4_yj1f4")
+kind = 4
+
+[node name="Blight4" type="Node2D" parent="." unique_id=1474385925]
+position = Vector2(552, 144)
+script = ExtResource("4_yj1f4")
+kind = 4
+
+[node name="Blight5" type="Node2D" parent="." unique_id=1090651047]
+position = Vector2(568, 144)
+script = ExtResource("4_yj1f4")
+kind = 4

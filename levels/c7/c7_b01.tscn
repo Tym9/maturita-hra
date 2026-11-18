@@ -1,0 +1,77 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_so3tt"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_y17xm"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_b0cky"]
+[ext_resource type="PackedScene" path="res://mechanics/gravity_anomaly.tscn" id="4_fa6tr"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="5_t5waw"]
+[ext_resource type="PackedScene" path="res://enemies/shooter.tscn" id="6_evm3w"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_nw1s4"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="8_ojnug"]
+[ext_resource type="PackedScene" path="res://enemies/patrol_guard.tscn" id="9_84qi1"]
+[ext_resource type="PackedScene" path="res://mechanics/conveyor_belt.tscn" id="10_crebm"]
+
+[node name="c7_b01" type="Node2D" unique_id=1045261913]
+script = ExtResource("1_so3tt")
+room_id = "c7_b01"
+screens = Vector2i(2, 1)
+checkpoint = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=2132394602]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=736155066]
+script = ExtResource("2_y17xm")
+style = 6
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=215857200]
+z_index = -2
+tile_set = ExtResource("3_b0cky")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=104428976]
+tile_map_data = PackedByteArray("AAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAPAAAAAAADAAAAAAAmAAAAAAADAAAAAAAnAAAAAAADAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAFAAEAAAABAAAAAAAKAAEAAAADAAAAAAALAAEAAAADAAAAAAAMAAEAAAADAAAAAAANAAEAAAADAAAAAAAOAAEAAAADAAAAAAAPAAEAAAADAAAAAAAQAAEAAAADAAAAAAARAAEAAAADAAAAAAASAAEAAAADAAAAAAATAAEAAAADAAAAAAAUAAEAAAADAAAAAAAmAAEAAAADAAAAAAAnAAEAAAADAAAAAAABAAIAAAABAAAAAAACAAIAAAABAAAAAAADAAIAAAABAAAAAAAEAAIAAAABAAAAAAAFAAIAAAABAAAAAAAKAAIAAAADAAAAAAALAAIAAAADAAAAAAAMAAIAAAADAAAAAAANAAIAAAADAAAAAAAOAAIAAAADAAAAAAAPAAIAAAADAAAAAAAQAAIAAAADAAAAAAARAAIAAAADAAAAAAASAAIAAAADAAAAAAATAAIAAAADAAAAAAAUAAIAAAADAAAAAAAmAAIAAAADAAAAAAAnAAIAAAADAAAAAAADAAMAAAADAAAAAAAmAAMAAAADAAAAAAAnAAMAAAADAAAAAAAmAAQAAAADAAAAAAAnAAQAAAADAAAAAAAiAAUAAAABAAAAAAAjAAUAAAABAAAAAAAkAAUAAAABAAAAAAAlAAUAAAABAAAAAAAmAAUAAAABAAAAAAAnAAUAAAABAAAAAAAiAAYAAAABAAAAAAAjAAYAAAABAAAAAAAkAAYAAAABAAAAAAAlAAYAAAABAAAAAAAmAAYAAAABAAAAAAAnAAYAAAABAAAAAAAZAAcAAAADAAAAAAAaAAcAAAADAAAAAAAiAAcAAAABAAAAAAAjAAcAAAABAAAAAAAkAAcAAAABAAAAAAAlAAcAAAABAAAAAAAmAAcAAAABAAAAAAAnAAcAAAABAAAAAAAZAAgAAAADAAAAAAAaAAgAAAADAAAAAAAiAAgAAAABAAAAAAAjAAgAAAABAAAAAAAkAAgAAAABAAAAAAAlAAgAAAABAAAAAAAmAAgAAAABAAAAAAAnAAgAAAABAAAAAAAAAAkAAAAHAAAAAAABAAkAAAAHAAAAAAACAAkAAAAHAAAAAAADAAkAAAAHAAAAAAAEAAkAAAAHAAAAAAAFAAkAAAAHAAAAAAAGAAkAAAAHAAAAAAAHAAkAAAAHAAAAAAAIAAkAAAAHAAAAAAAJAAkAAAAHAAAAAAAUAAkAAAAHAAAAAAAVAAkAAAAHAAAAAAAWAAkAAAAHAAAAAAAdAAkAAAAHAAAAAAAiAAkAAAABAAAAAAAjAAkAAAABAAAAAAAkAAkAAAABAAAAAAAlAAkAAAABAAAAAAAmAAkAAAABAAAAAAAnAAkAAAABAAAAAAAAAAoAAAAHAAAAAAABAAoAAAAHAAAAAAACAAoAAAAHAAAAAAADAAoAAAAHAAAAAAAEAAoAAAAHAAAAAAAFAAoAAAAHAAAAAAAGAAoAAAAHAAAAAAAHAAoAAAAHAAAAAAAIAAoAAAAHAAAAAAAJAAoAAAAHAAAAAAAUAAoAAAAHAAAAAAAVAAoAAAAHAAAAAAAWAAoAAAAHAAAAAAAXAAoAAAAHAAAAAAAYAAoAAAAHAAAAAAAZAAoAAAAHAAAAAAAaAAoAAAAHAAAAAAAbAAoAAAAHAAAAAAAcAAoAAAAHAAAAAAAdAAoAAAAHAAAAAAAiAAoAAAABAAAAAAAjAAoAAAABAAAAAAAkAAoAAAABAAAAAAAlAAoAAAABAAAAAAAmAAoAAAABAAAAAAAnAAoAAAABAAAAAAA=")
+tile_set = ExtResource("3_b0cky")
+
+[node name="GravityField" parent="." unique_id=1544544778 instance=ExtResource("4_fa6tr")]
+position = Vector2(160, 48)
+size = Vector2(160, 64)
+
+[node name="Lantern" type="Node2D" parent="." unique_id=616938651]
+position = Vector2(552, 80)
+script = ExtResource("5_t5waw")
+
+[node name="Turret" parent="." unique_id=1644265480 instance=ExtResource("6_evm3w")]
+position = Vector2(568, 72)
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=1577565350]
+position = Vector2(136, 96)
+script = ExtResource("5_t5waw")
+
+[node name="Lantern3" type="Node2D" parent="." unique_id=1968954591]
+position = Vector2(472, 112)
+script = ExtResource("5_t5waw")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=49702077]
+position = Vector2(40, 135)
+script = ExtResource("7_nw1s4")
+
+[node name="Event" parent="." unique_id=1199883804 instance=ExtResource("8_ojnug")]
+position = Vector2(104, 112)
+speaker_name = "Hlas Korporace"
+dialogue_pages = Array[String](["Úpravna krystalů. Anomální stěny jsou majetkem Korporace.", "Průchod skrz ně je zakázán. A samozřejmě nemožný."])
+
+[node name="Guard" parent="." unique_id=331822403 instance=ExtResource("9_84qi1")]
+position = Vector2(232, 148)
+
+[node name="Belt" parent="." unique_id=1425702880 instance=ExtResource("10_crebm")]
+position = Vector2(368, 144)
+width = 6
+
+[node name="Belt2" parent="." unique_id=313935167 instance=ExtResource("10_crebm")]
+position = Vector2(160, 160)
+width = 10

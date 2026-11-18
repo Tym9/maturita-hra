@@ -1,10 +1,11 @@
-"""Placeholder atlas pro místnosti: assets/placeholder/room_tiles.png (8x2 dlaždic po 16 px).
-Řádek 0 = pevné (kámen a mosaz zůstávají z původního obrázku), řádek 1 = zadní dekor bez kolize.
+"""Placeholder atlas pro místnosti: assets/placeholder/room_tiles.png (8x3 dlaždic po 16 px).
+Řádek 0 = pevné (kámen a mosaz zůstávají z původního obrázku), řádek 1 = zadní dekor bez kolize,
+řádek 2 = hory a hlubiny (skála, skála se sněhem navrchu, čedič slévárny, žhavá skála se struskou v puklinách; pevné).
 Spuštění: python tools/make_room_tiles.py"""
 import os, struct, zlib
 
 T = 16
-COLS, ROWS = 8, 2
+COLS, ROWS = 8, 3
 OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "placeholder", "room_tiles.png")
 
 
@@ -145,6 +146,34 @@ def rock_back(x, y, n):
     return shade(rgb("#1c1a22"), 0.85 + 0.35 * n)
 
 
+def rock(x, y, n):
+    if noise(x // 2, y + (x // 5) * 3, 21) > 0.88: return rgb("#2c2832") # praskliny
+    facet = 1.12 if noise(x // 5, y // 4, 22) > 0.6 else 1.0 # světlejší plošky lomu
+    return shade(rgb("#57515e"), facet * (0.85 + 0.3 * n))
+
+
+def snow(x, y, n):
+    top = 4 + int(noise(x, 0, 31) * 3)
+    if y == 0 and noise(x, 0, 33) > 0.7: return (0, 0, 0, 0)
+    if y < top - 1: return rgb("#e6ecf4") if n > 0.2 else rgb("#d4deea")
+    if y < top: return rgb("#a9b8cc") # stín pod převisem sněhu
+    return rock(x, y, n)
+
+
+def basalt(x, y, n):
+    """Čedič ve stěnách šachty: tmavé šestiboké sloupce se spárami."""
+    col = (x + (y // 8) * 3) // 5
+    if (x + (y // 8) * 3) % 5 == 0 or (y % 8 == 0 and noise(col, y // 8, 41) > 0.4): return rgb("#1a1618") # spáry
+    return shade(rgb("#3d3539"), (0.88 + 0.12 * noise(col, y // 8, 42)) * (0.9 + 0.2 * n))
+
+
+def hot_rock(x, y, n):
+    """Žhavá skála u strusky: čedič s oranžově zářícími puklinami."""
+    crack = abs(((x * 3 + y * 5 + int(noise(y // 3, 0, 43) * 6)) % 13) - 6) <= 0 or noise(x // 2, y // 2, 44) > 0.93
+    if crack: return rgb("#ff8a2a") if n > 0.4 else rgb("#d2541a")
+    return shade(rgb("#3a2a26"), 0.85 + 0.3 * n)
+
+
 def main():
     old = read_png(OUT)
     keep = [[[old[y][x + i * T] for x in range(T)] for y in range(T)] for i in range(2)] if len(old[0]) >= 2 * T else None
@@ -152,7 +181,8 @@ def main():
     back = [tile(lambda x, y, n: siding(x, y, n), 7), tile(lambda x, y, n: scrap(x, y, n, 0.55), 8), tile(window(True), 9),
             tile(window(False), 10), tile(door, 11), tile(tarp, 12), tile(lambda x, y, n: brick(x, y, n, 0.55), 13), tile(rock_back, 14)]
     px = [[(0, 0, 0, 0)] * (COLS * T) for _ in range(ROWS * T)]
-    for r, row in enumerate((solid, back)):
+    mountain = [tile(rock, 15), tile(snow, 15), tile(basalt, 16), tile(hot_rock, 17)] + [[[(0, 0, 0, 0)] * T for _ in range(T)]] * 4
+    for r, row in enumerate((solid, back, mountain)):
         for c, t in enumerate(row):
             for y in range(T):
                 for x in range(T):

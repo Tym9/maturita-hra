@@ -1,0 +1,58 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_ev5lx"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_h1ljb"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_8y8sy"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="4_mkebv"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="5_5xc2j"]
+[ext_resource type="PackedScene" path="res://mechanics/health_pack.tscn" id="6_7ejnq"]
+[ext_resource type="PackedScene" path="res://mechanics/event_trigger.tscn" id="7_a4usn"]
+
+[node name="c5_a07" type="Node2D" unique_id=190426893]
+script = ExtResource("1_ev5lx")
+room_id = "c5_a07"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1498403317]
+z_index = -10
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=12372903]
+script = ExtResource("2_h1ljb")
+style = 4
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=223175949]
+z_index = -2
+tile_map_data = PackedByteArray("AAAGAAcAAAAEAAEAAAA=")
+tile_set = ExtResource("3_8y8sy")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=2095601474]
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAIAAAACAAAAAAACAAIAAAADAAAAAAACAAIAAAAEAAAAAAACAAIAAAAFAAAAAAACAAIAAAAGAAAAAAACAAIAAAAHAAAAAAACAAIAAAAIAAAAAAACAAIAAAAJAAAAAAACAAIAAAAKAAAAAAACAAIAAAALAAAAAAACAAIAAAAMAAAAAAACAAIAAAANAAAAAAACAAIAAAAOAAAAAAACAAIAAAASAAAAAAACAAIAAAATAAAAAAACAAIAAAAAAAEAAAACAAIAAAABAAEAAAACAAIAAAACAAEAAAACAAIAAAADAAEAAAACAAIAAAAAAAIAAAACAAIAAAABAAIAAAACAAIAAAACAAIAAAACAAIAAAADAAIAAAACAAIAAAAFAAQAAAACAAAAAAAGAAQAAAACAAAAAAAHAAQAAAACAAAAAAAIAAQAAAACAAAAAAAFAAUAAAAHAAAAAAAGAAUAAAAHAAAAAAAHAAUAAAAHAAAAAAAIAAUAAAAHAAAAAAAFAAYAAAAHAAAAAAAGAAYAAAAHAAAAAAAHAAYAAAAHAAAAAAAIAAYAAAAHAAAAAAAMAAYAAAACAAAAAAANAAYAAAACAAAAAAAOAAYAAAACAAAAAAAPAAYAAAACAAAAAAAQAAYAAAACAAAAAAARAAYAAAACAAAAAAAFAAcAAAAHAAAAAAAHAAcAAAAHAAAAAAAIAAcAAAAHAAAAAAAMAAcAAAADAAAAAAAFAAgAAAAHAAAAAAAGAAgAAAAHAAAAAAAHAAgAAAAHAAAAAAAIAAgAAAAHAAAAAAAMAAgAAAADAAAAAAAFAAkAAAACAAIAAAAGAAkAAAACAAIAAAAHAAkAAAACAAIAAAAIAAkAAAACAAIAAAAJAAkAAAACAAIAAAAKAAkAAAACAAIAAAALAAkAAAACAAIAAAAMAAkAAAACAAIAAAANAAkAAAACAAIAAAAOAAkAAAACAAIAAAAPAAkAAAACAAIAAAAQAAkAAAACAAIAAAARAAkAAAACAAIAAAASAAkAAAACAAIAAAATAAkAAAACAAIAAAAFAAoAAAACAAIAAAAGAAoAAAACAAIAAAAHAAoAAAACAAIAAAAIAAoAAAACAAIAAAAJAAoAAAACAAIAAAAKAAoAAAACAAIAAAALAAoAAAACAAIAAAAMAAoAAAACAAIAAAANAAoAAAACAAIAAAAOAAoAAAACAAIAAAAPAAoAAAACAAIAAAAQAAoAAAACAAIAAAARAAoAAAACAAIAAAASAAoAAAACAAIAAAATAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_8y8sy")
+
+[node name="Lantern" type="Node2D" parent="." unique_id=1184388964]
+position = Vector2(184, 48)
+script = ExtResource("4_mkebv")
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=430820635]
+position = Vector2(264, 87)
+script = ExtResource("5_5xc2j")
+
+[node name="Lantern2" type="Node2D" parent="." unique_id=1824680329]
+position = Vector2(168, 128)
+script = ExtResource("4_mkebv")
+
+[node name="HealthPack" parent="." unique_id=1302852283 instance=ExtResource("6_7ejnq")]
+position = Vector2(232, 136)
+
+[node name="Event" parent="." unique_id=83553552 instance=ExtResource("7_a4usn")]
+position = Vector2(296, 112)
+speaker_name = "Pohled do propasti"
+dialogue_pages = Array[String](["Šachta padá stovky metrů do tmy. Ve stěnách hoří patra pecí a po skále stéká struska.", "Někde hluboko dole hučí reaktor."])
+
+[node name="Lantern3" type="Node2D" parent="." unique_id=884436731]
+position = Vector2(312, 144)
+script = ExtResource("4_mkebv")

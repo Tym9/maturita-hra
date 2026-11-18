@@ -105,7 +105,7 @@ func _ready():
 	_check("[Shift]" in s3 and "W / S" in s3 and "Esc" in s3 and "stamin" in s3, "Cedule šplhání: [Shift], W / S, stamina a menu Esc", "Sign_R3 musí zmínit Shift, W / S, staminu a menu Esc")
 	_check("W" in signs.get_node("Sign_R4").text and "OD stěny" in signs.get_node("Sign_R4").text, "Cedule wall-jump: W a směr OD stěny", "Sign_R4 musí učit wall-jump")
 	var s6 = signs.get_node("Sign_R6").text
-	_check("[E]" in s6 and "[I]" in s6 and "[TAB]" in s6, "Cedule truhly: [E], [I] / [TAB]", "Sign_R6 musí zmínit [E], [I] a [TAB]")
+	_check("[E]" in s6 and not "[I]" in s6 and not "[TAB]" in s6, "Cedule truhly: [E], batoh jen u truhel", "Sign_R6 musí zmínit [E] a ne [I] / [TAB] (batoh jen u truhel)")
 
 	print("\n--- 4. Plynulý přechod kamery přes velké místnosti ---")
 	var cam = player.get_node_or_null("Camera2D")

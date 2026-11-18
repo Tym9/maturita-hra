@@ -1,0 +1,87 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://mechanics/room.gd" id="1_dhgv4"]
+[ext_resource type="Script" path="res://mechanics/room_decor.gd" id="2_1f7ts"]
+[ext_resource type="TileSet" path="res://mechanics/room_tileset.tres" id="3_jesyo"]
+[ext_resource type="PackedScene" path="res://mechanics/drillable_rock.tscn" id="4_kv0ft"]
+[ext_resource type="PackedScene" path="res://enemies/drone.tscn" id="5_sp4uh"]
+[ext_resource type="PackedScene" path="res://mechanics/grapple_point.tscn" id="6_6qxqw"]
+[ext_resource type="Script" path="res://mechanics/respawn_point.gd" id="7_q581d"]
+[ext_resource type="Script" path="res://mechanics/decor_prop.gd" id="8_3ulsu"]
+[ext_resource type="Script" path="res://mechanics/grid_spikes.gd" id="9_htiu5"]
+
+[node name="c6_c03" type="Node2D" unique_id=371917296]
+script = ExtResource("1_dhgv4")
+room_id = "c6_c03"
+screens = Vector2i(2, 1)
+
+[node name="Background" type="ColorRect" parent="." unique_id=216529820]
+z_index = -10
+offset_right = 640.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.09, 0.08, 0.11, 1)
+
+[node name="Decor" type="Node2D" parent="." unique_id=496998220]
+script = ExtResource("2_1f7ts")
+style = 5
+
+[node name="Back" type="TileMapLayer" parent="." unique_id=1052741138]
+z_index = -2
+tile_set = ExtResource("3_jesyo")
+collision_enabled = false
+
+[node name="Tiles" type="TileMapLayer" parent="." unique_id=599461545]
+tile_map_data = PackedByteArray("AAAPAAAAAAACAAIAAAAQAAAAAAACAAIAAAARAAAAAAACAAIAAAASAAAAAAACAAIAAAATAAAAAAACAAIAAAAUAAAAAAACAAIAAAAVAAAAAAACAAIAAAAWAAAAAAACAAIAAAAZAAAAAAACAAIAAAAaAAAAAAACAAIAAAAbAAAAAAACAAIAAAAcAAAAAAACAAIAAAAdAAAAAAACAAIAAAAeAAAAAAACAAIAAAAfAAAAAAACAAIAAAAjAAAAAAACAAIAAAAkAAAAAAACAAIAAAAlAAAAAAACAAIAAAAmAAAAAAACAAIAAAAnAAAAAAACAAIAAAAPAAEAAAACAAIAAAAQAAEAAAACAAIAAAARAAEAAAACAAIAAAASAAEAAAACAAIAAAATAAEAAAACAAIAAAAUAAEAAAACAAIAAAAVAAEAAAACAAIAAAAWAAEAAAACAAIAAAAZAAEAAAACAAIAAAAaAAEAAAACAAIAAAAbAAEAAAACAAIAAAAcAAEAAAACAAIAAAAdAAEAAAACAAIAAAAeAAEAAAACAAIAAAAfAAEAAAACAAIAAAAjAAEAAAACAAIAAAAkAAEAAAACAAIAAAAlAAEAAAACAAIAAAAmAAEAAAACAAIAAAAnAAEAAAACAAIAAAAPAAIAAAACAAIAAAAQAAIAAAACAAIAAAARAAIAAAACAAIAAAASAAIAAAACAAIAAAATAAIAAAACAAIAAAAUAAIAAAACAAIAAAAVAAIAAAACAAIAAAAWAAIAAAACAAIAAAAjAAIAAAACAAIAAAAkAAIAAAACAAIAAAAlAAIAAAACAAIAAAAmAAIAAAACAAIAAAAnAAIAAAACAAIAAAAlAAQAAAACAAIAAAAmAAQAAAACAAIAAAAnAAQAAAACAAIAAAAlAAUAAAACAAIAAAAmAAUAAAACAAIAAAAnAAUAAAACAAIAAAAlAAYAAAACAAIAAAAmAAYAAAACAAIAAAAnAAYAAAACAAIAAAATAAcAAAACAAIAAAAUAAcAAAACAAIAAAAlAAcAAAACAAIAAAAmAAcAAAACAAIAAAAnAAcAAAACAAIAAAAAAAgAAAACAAIAAAABAAgAAAACAAIAAAACAAgAAAACAAIAAAADAAgAAAACAAIAAAAEAAgAAAACAAIAAAAFAAgAAAACAAIAAAATAAgAAAACAAIAAAAUAAgAAAACAAIAAAAVAAgAAAACAAIAAAAWAAgAAAACAAIAAAAXAAgAAAACAAIAAAAYAAgAAAACAAIAAAAZAAgAAAACAAIAAAAaAAgAAAACAAIAAAAbAAgAAAACAAIAAAAcAAgAAAACAAIAAAAdAAgAAAACAAIAAAAiAAgAAAACAAIAAAAjAAgAAAACAAIAAAAkAAgAAAACAAIAAAAlAAgAAAACAAIAAAAmAAgAAAACAAIAAAAnAAgAAAACAAIAAAAAAAkAAAACAAIAAAABAAkAAAACAAIAAAACAAkAAAACAAIAAAADAAkAAAACAAIAAAAEAAkAAAACAAIAAAAFAAkAAAACAAIAAAATAAkAAAACAAIAAAAUAAkAAAACAAIAAAAVAAkAAAACAAIAAAAWAAkAAAACAAIAAAAXAAkAAAACAAIAAAAYAAkAAAACAAIAAAAZAAkAAAACAAIAAAAaAAkAAAACAAIAAAAbAAkAAAACAAIAAAAcAAkAAAACAAIAAAAdAAkAAAACAAIAAAAiAAkAAAACAAIAAAAjAAkAAAACAAIAAAAkAAkAAAACAAIAAAAlAAkAAAACAAIAAAAmAAkAAAACAAIAAAAnAAkAAAACAAIAAAAAAAoAAAACAAIAAAABAAoAAAACAAIAAAACAAoAAAACAAIAAAADAAoAAAACAAIAAAAEAAoAAAACAAIAAAAFAAoAAAACAAIAAAATAAoAAAACAAIAAAAUAAoAAAACAAIAAAAVAAoAAAACAAIAAAAWAAoAAAACAAIAAAAXAAoAAAACAAIAAAAYAAoAAAACAAIAAAAZAAoAAAACAAIAAAAaAAoAAAACAAIAAAAbAAoAAAACAAIAAAAcAAoAAAACAAIAAAAdAAoAAAACAAIAAAAiAAoAAAACAAIAAAAjAAoAAAACAAIAAAAkAAoAAAACAAIAAAAlAAoAAAACAAIAAAAmAAoAAAACAAIAAAAnAAoAAAACAAIAAAA=")
+tile_set = ExtResource("3_jesyo")
+
+[node name="DrillRock" parent="." unique_id=652276905 instance=ExtResource("4_kv0ft")]
+position = Vector2(304, 48)
+size = Vector2i(1, 4)
+
+[node name="DrillRock2" parent="." unique_id=2071960523 instance=ExtResource("4_kv0ft")]
+position = Vector2(320, 48)
+size = Vector2i(1, 4)
+
+[node name="Drone" parent="." unique_id=829667632 instance=ExtResource("5_sp4uh")]
+position = Vector2(440, 56)
+patrol_distance = 24.0
+
+[node name="Anchor" parent="." unique_id=1201163661 instance=ExtResource("6_6qxqw")]
+position = Vector2(152, 72)
+
+[node name="Anchor2" parent="." unique_id=1412542595 instance=ExtResource("6_6qxqw")]
+position = Vector2(232, 72)
+
+[node name="RespawnPoint" type="Marker2D" parent="." unique_id=1433793916]
+position = Vector2(40, 119)
+script = ExtResource("7_q581d")
+
+[node name="Blight" type="Node2D" parent="." unique_id=791490654]
+position = Vector2(72, 128)
+script = ExtResource("8_3ulsu")
+kind = 4
+
+[node name="Blight2" type="Node2D" parent="." unique_id=2033266376]
+position = Vector2(88, 128)
+script = ExtResource("8_3ulsu")
+kind = 4
+
+[node name="Blight3" type="Node2D" parent="." unique_id=472388401]
+position = Vector2(360, 128)
+script = ExtResource("8_3ulsu")
+kind = 4
+
+[node name="Spikes" type="Area2D" parent="." unique_id=1264446624]
+position = Vector2(384, 128)
+script = ExtResource("9_htiu5")
+count = 3
+
+[node name="Blight4" type="Node2D" parent="." unique_id=1729649445]
+position = Vector2(472, 128)
+script = ExtResource("8_3ulsu")
+kind = 4
+
+[node name="Lantern" type="Node2D" parent="." unique_id=803814682]
+position = Vector2(568, 128)
+script = ExtResource("8_3ulsu")

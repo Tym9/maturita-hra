@@ -60,7 +60,17 @@ func _ready():
 	var c2: Room = chapter._find("tc_c02")
 	var c3: Room = chapter._find("tc_c03")
 	var c4: Room = chapter._find("tc_c04")
-	_ok(player.grid_inventory.has_item("gravity_coil") and player.grid_inventory.has_item("grapple_hook"), "Kapitola dala hráči startovní předměty (start_items)")
+	var supply = chapter.find_child("SupplyChest", true, false)
+	_ok(supply != null and not player.grid_inventory.has_item("gravity_coil"), "Startovní předměty kapitoly leží v truhle, batoh se sám nenaplní")
+	for e in supply.inventory.items.duplicate():
+		player.grid_inventory.add_item_auto(e.data) # hráč si je vezme z truhly
+	# Naráz fungují jen dva nástroje: do slotů hák a cívku, vrták a hasák do batohu
+	var inv = player.grid_inventory
+	inv.clear()
+	inv.equip_item(ItemData.create("grapple_hook"), 0)
+	inv.equip_item(ItemData.create("gravity_coil"), 1)
+	inv.add_item_auto(ItemData.create("drill"))
+	inv.add_item_auto(ItemData.create("wrench"))
 
 	# --- 1. Tlaková pružina ---
 	chapter.teleport_to("tc_c01")
@@ -242,21 +252,44 @@ func _ready():
 	chapter.teleport_to("tc_d03")
 	var d3: Room = chapter._find("tc_d03")
 	var rock = d3.get_node("DrillRock")
-	for item in player.grid_inventory.items:
+	var aim: Vector2 = rock.global_position + Vector2(8, 64) # skála x 144-160, ve vzduchu u ní hráč na (130, 80)
+	await _dash_right(d3, Vector2(110, 135))
+	await _frames(25)
+	_ok(not rock.broken, "Dash cívkou skálu neprorazí, ani s vrtákem v batohu")
+	_place(d3, Vector2(130, 80))
+	await _frames(1)
+	player.start_drill(aim)
+	_ok(not player.is_drilling, "Vrták jen v batohu nefunguje, musí být ve slotu")
+	for item in inv.items:
 		if item["data"].id == "drill":
-			player.grid_inventory.remove_item(item)
+			inv.remove_item(item)
 			break
-	await _dash_right(d3, Vector2(110, 135))
-	await _frames(25)
-	_ok(not rock.broken and player.global_position.x < d3.global_position.x + 144.0, "Bez vrtáku je skála pevná")
-	player.grid_inventory.add_item_auto(load("res://mechanics/item_data.gd").create("drill"))
-	await _dash_right(d3, Vector2(110, 135))
-	await _frames(25)
-	_ok(rock.broken and player.global_position.x > d3.global_position.x + 160.0, "Dash s vrtákem skálu prorazí a hráč letí dál")
+	inv.equip_item(ItemData.create("drill"), 1)
+	_place(d3, Vector2(60, 80))
+	await _frames(1)
+	player.start_drill(aim)
+	_ok(not player.is_drilling, "Bez skály v dosahu se vrtat nezačne")
+	_place(d3, Vector2(130, 80))
+	await _frames(1)
+	player.start_drill(aim)
+	await _frames(30)
+	_ok(player.is_drilling and not rock.broken and absf(player.global_position.y - d3.global_position.y - 80.0) < 1.0 and player.camera.offset != Vector2.ZERO,
+		"Vrták hráče zastaví ve vzduchu a třese obrazovkou")
+	await _frames(100) # celkem > 2 s
+	_ok(rock.broken and not player.is_drilling and player.camera.offset == Vector2.ZERO, "Po 2 s je skála provrtaná, třes skončí")
 	player.die()
 	await Global.room_reset
 	var rebuilt_rock = d3.get_node("DrillRock")
 	_ok(rebuilt_rock != rock and not rebuilt_rock.broken, "room_reset skálu vrátí")
+	_place(d3, Vector2(130, 80))
+	await _frames(1)
+	player.start_drill(aim)
+	await _frames(10)
+	player.take_damage(1)
+	await _frames(1)
+	_ok(not player.is_drilling and not rebuilt_rock.broken and player.camera.offset == Vector2.ZERO, "Zásah vrtání přeruší")
+	player.heal(1)
+	player.invulnerable_timer = 0.0
 
 	# --- 8. Pás dopravníku ---
 	chapter.teleport_to("tc_d04")
@@ -309,6 +342,20 @@ func _ready():
 	_place(d6, Vector2(24, 135))
 	await _frames(2)
 	_ok(a1.solid, "Po odchodu hráče blok zpevní")
+
+	# --- Gravitační pole (c7): obdélník `size`, gravitace obrácená jen uvnitř ---
+	var field: Node2D = preload("res://mechanics/gravity_anomaly.tscn").instantiate()
+	field.set("size", Vector2(48, 48))
+	field.position = Vector2(8, 60)
+	d6.add_child(field)
+	await _frames(2)
+	_place(d6, Vector2(32, 84))
+	await _frames(3)
+	_ok(player.gravity_dir == -1.0, "V gravitačním poli se padá vzhůru")
+	_place(d6, Vector2(24, 135), -1.0)
+	await _frames(3)
+	_ok(player.gravity_dir == 1.0, "Mimo pole se gravitace vrátí")
+	field.queue_free()
 
 	if save_backup.is_empty():
 		SaveManager.delete_save()

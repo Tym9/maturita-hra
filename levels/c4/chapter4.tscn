@@ -1,0 +1,123 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mechanics/chapter.gd" id="1_41ity"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a01.tscn" id="2_w8jd4"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a02.tscn" id="3_yuc1d"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a03.tscn" id="4_nvfgn"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a04.tscn" id="5_wmgit"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a05.tscn" id="6_m0bk3"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a06.tscn" id="7_35rxs"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_a07.tscn" id="8_8a557"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b01.tscn" id="9_wl2kd"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b02.tscn" id="10_taa1c"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b03.tscn" id="11_0tygq"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b04.tscn" id="12_a5gra"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b05.tscn" id="13_tk5ih"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b05b.tscn" id="14_4mo0g"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_b06.tscn" id="15_i7ghi"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c01.tscn" id="16_3ijho"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c02.tscn" id="17_yluaq"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c03.tscn" id="18_gpher"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c04.tscn" id="19_myktx"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c05.tscn" id="20_1qfo2"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c06.tscn" id="21_tm8c5"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_c07.tscn" id="22_qrr5e"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d01.tscn" id="23_lq88m"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d02.tscn" id="24_nk84t"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d03.tscn" id="25_ojfme"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d04.tscn" id="26_bg2ar"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d05.tscn" id="27_gpr5f"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d06.tscn" id="28_q3xhq"]
+[ext_resource type="PackedScene" path="res://levels/c4/c4_d07.tscn" id="29_rj43g"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="30_emdpy"]
+
+[node name="Chapter4" type="Node2D" unique_id=386030974]
+script = ExtResource("1_41ity")
+start_items = Array[String](["wrench"])
+hint_up_exits = true
+
+[node name="c4_a01" parent="." unique_id=1420390334 instance=ExtResource("2_w8jd4")]
+
+[node name="c4_a02" parent="." unique_id=1580920724 instance=ExtResource("3_yuc1d")]
+position = Vector2(640, -180)
+
+[node name="c4_a03" parent="." unique_id=514167643 instance=ExtResource("4_nvfgn")]
+position = Vector2(640, -360)
+
+[node name="c4_a04" parent="." unique_id=1096757067 instance=ExtResource("5_wmgit")]
+position = Vector2(960, -360)
+
+[node name="c4_a05" parent="." unique_id=1719174768 instance=ExtResource("6_m0bk3")]
+position = Vector2(1600, -540)
+
+[node name="c4_a06" parent="." unique_id=661428069 instance=ExtResource("7_35rxs")]
+position = Vector2(1600, -720)
+
+[node name="c4_a07" parent="." unique_id=140010502 instance=ExtResource("8_8a557")]
+position = Vector2(1920, -720)
+
+[node name="c4_b01" parent="." unique_id=1895465058 instance=ExtResource("9_wl2kd")]
+position = Vector2(2240, -720)
+
+[node name="c4_b02" parent="." unique_id=1357213400 instance=ExtResource("10_taa1c")]
+position = Vector2(2560, -1080)
+
+[node name="c4_b03" parent="." unique_id=437756287 instance=ExtResource("11_0tygq")]
+position = Vector2(2880, -1080)
+
+[node name="c4_b04" parent="." unique_id=1269601608 instance=ExtResource("12_a5gra")]
+position = Vector2(3520, -1080)
+
+[node name="c4_b05" parent="." unique_id=2052515782 instance=ExtResource("13_tk5ih")]
+position = Vector2(3520, -1440)
+
+[node name="c4_b05b" parent="." unique_id=497881560 instance=ExtResource("14_4mo0g")]
+position = Vector2(3200, -1440)
+
+[node name="c4_b06" parent="." unique_id=576647724 instance=ExtResource("15_i7ghi")]
+position = Vector2(3520, -1620)
+
+[node name="c4_c01" parent="." unique_id=1372451070 instance=ExtResource("16_3ijho")]
+position = Vector2(4160, -1620)
+
+[node name="c4_c02" parent="." unique_id=474661969 instance=ExtResource("17_yluaq")]
+position = Vector2(4800, -1620)
+
+[node name="c4_c03" parent="." unique_id=1532129768 instance=ExtResource("18_gpher")]
+position = Vector2(4800, -1980)
+
+[node name="c4_c04" parent="." unique_id=471501426 instance=ExtResource("19_myktx")]
+position = Vector2(5120, -1980)
+
+[node name="c4_c05" parent="." unique_id=975260307 instance=ExtResource("20_1qfo2")]
+position = Vector2(5440, -1980)
+
+[node name="c4_c06" parent="." unique_id=482448492 instance=ExtResource("21_tm8c5")]
+position = Vector2(5760, -2340)
+
+[node name="c4_c07" parent="." unique_id=493445871 instance=ExtResource("22_qrr5e")]
+position = Vector2(6080, -2340)
+
+[node name="c4_d01" parent="." unique_id=1021636026 instance=ExtResource("23_lq88m")]
+position = Vector2(6400, -2340)
+
+[node name="c4_d02" parent="." unique_id=1947874453 instance=ExtResource("24_nk84t")]
+position = Vector2(6720, -2700)
+
+[node name="c4_d03" parent="." unique_id=60047311 instance=ExtResource("25_ojfme")]
+position = Vector2(7040, -2700)
+
+[node name="c4_d04" parent="." unique_id=1655664058 instance=ExtResource("26_bg2ar")]
+position = Vector2(7360, -2700)
+
+[node name="c4_d05" parent="." unique_id=1476873622 instance=ExtResource("27_gpr5f")]
+position = Vector2(7360, -3060)
+
+[node name="c4_d06" parent="." unique_id=1519730588 instance=ExtResource("28_q3xhq")]
+position = Vector2(7680, -3060)
+
+[node name="c4_d07" parent="." unique_id=1334115995 instance=ExtResource("29_rj43g")]
+position = Vector2(8000, -3240)
+
+[node name="Player" parent="." unique_id=830339399 instance=ExtResource("30_emdpy")]
+position = Vector2(40, 151)

@@ -296,8 +296,8 @@ room checkpoint = true
  7 Z....qS.........l.CZ
  6 Z...RRR..........WWW
  5 ....www.............
- 4 ..W.wob.............
- 3 .@Z.www.V.WW..Vx.yp.
+ 4 ....wob.............
+ 3 .@..www.V.WW..Vx.yp.
  2 ____________________
  1 ZZZZZZZZZZZZZZZZZZZZ
  0 ZZZZZZZZZZZZZZZZZZZZ
@@ -308,7 +308,7 @@ V idle_time = 1.4
 V2 offset = 0.7
 ```
 - Vents cols 8, 14: 1 s blast / 1 s idle, 0.5 s hiss; 1 HP, not deadly. Crate refuge cols 10-11 between them.
-- Crystal: crate (col 2) -> roof cols 4-6 (h6) -> sideways spring at col 6 flings right across 10 tiles to the nook cols 17-19 (h6).
+- Crystal: double jump from the floor -> roof cols 4-6 (h6) -> sideways spring at col 6 flings right across 10 tiles to the nook cols 17-19 (h6).
 
 ### c1_b04 — freight yard
 ```

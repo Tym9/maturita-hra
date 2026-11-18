@@ -1,7 +1,7 @@
 extends Control
 
-## UI Komponenta Hotbaru / Vybavených zbraní (Equip Slots).
-## Umožňuje hráči v batohu a truhle vybavit Hasák, Hák nebo Gravity Coil do slotů [1], [2], [3].
+## Sloty výstroje v okně truhly: dva sloty [1] [2], do každého jde kterýkoli nástroj (hasák, hák, cívka).
+## Klik s drženým nástrojem ho do slotu vloží (a vezme do ruky ten, který tam byl), klik bez předmětu nástroj vyjme.
 
 signal item_selected(item_entry)
 
@@ -10,21 +10,17 @@ const ItemData = preload("res://mechanics/item_data.gd")
 
 var inventory = null
 
-@onready var slot0_btn = $HBox/Slot0
-@onready var slot1_btn = $HBox/Slot1
-@onready var slot2_btn = $HBox/Slot2
+@onready var slot_btns: Array = [$HBox/Slot0, $HBox/Slot1]
 
 func _ready():
 	custom_minimum_size = Vector2(96, 22)
-	if slot0_btn:
-		slot0_btn.pressed.connect(func(): _on_slot_pressed(0))
-		slot0_btn.mouse_entered.connect(func(): _on_slot_hovered(0))
-	if slot1_btn:
-		slot1_btn.pressed.connect(func(): _on_slot_pressed(1))
-		slot1_btn.mouse_entered.connect(func(): _on_slot_hovered(1))
-	if slot2_btn:
-		slot2_btn.pressed.connect(func(): _on_slot_pressed(2))
-		slot2_btn.mouse_entered.connect(func(): _on_slot_hovered(2))
+	$HBox/Slot2.visible = false # dřív třetí slot; hráč má naráz jen dva nástroje
+	var title := get_node_or_null("Label") as Label
+	if title:
+		title.text = "VÝSTROJ [1-2], jen dva nástroje:"
+	for i in slot_btns.size():
+		slot_btns[i].pressed.connect(_on_slot_pressed.bind(i))
+		slot_btns[i].mouse_entered.connect(_on_slot_hovered.bind(i))
 
 func setup(p_inventory):
 	inventory = p_inventory
@@ -36,61 +32,33 @@ func setup(p_inventory):
 func update_slots():
 	if not is_instance_valid(inventory):
 		return
-		
-	var eq0 = inventory.get_equipped(0)
-	var eq1 = inventory.get_equipped(1)
-	var eq2 = inventory.get_equipped(2)
-	
-	_style_slot(slot0_btn, 0, "🔧 Hasák", eq0)
-	_style_slot(slot1_btn, 1, "🪝 Hák", eq1)
-	_style_slot(slot2_btn, 2, "🌀 Cívka", eq2)
-
-func _style_slot(btn: Button, slot_idx: int, default_label: String, item: ItemData):
-	if not btn:
-		return
-	if item != null:
-		btn.text = "[%d] %s" % [slot_idx + 1, item.name]
-		btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.4, 1.0))
-		btn.modulate = Color(1.15, 1.1, 0.95, 1.0)
-	else:
-		btn.text = "[%d] --" % [slot_idx + 1]
-		btn.add_theme_color_override("font_color", Color(0.55, 0.55, 0.6, 0.8))
-		btn.modulate = Color(0.7, 0.7, 0.75, 0.9)
+	for i in slot_btns.size():
+		var btn: Button = slot_btns[i]
+		var item: ItemData = inventory.get_equipped(i)
+		if item != null:
+			btn.text = "[%d] %s" % [i + 1, item.name]
+			btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.4, 1.0))
+			btn.modulate = Color(1.15, 1.1, 0.95, 1.0)
+		else:
+			btn.text = "[%d] --" % [i + 1]
+			btn.add_theme_color_override("font_color", Color(0.55, 0.55, 0.6, 0.8))
+			btn.modulate = Color(0.7, 0.7, 0.75, 0.9)
 
 func _on_slot_pressed(slot_idx: int):
 	if not inventory:
 		return
-		
 	var held = GridInventoryView.held_item_data
-	var current_eq = inventory.get_equipped(slot_idx)
-	
+	var current = inventory.get_equipped(slot_idx)
 	if held != null:
-		var def_slot = inventory.get_default_slot_for(held.id)
-		if def_slot == slot_idx or (def_slot != -1 and inventory.get_equipped(def_slot) == null):
-			var target = slot_idx if def_slot == slot_idx else def_slot
-			inventory.equip_item(held, target)
-			GridInventoryView.held_item_data = current_eq
-			GridInventoryView.source_view = null
-			update_slots()
-		elif def_slot != -1:
-			var prev_item = inventory.get_equipped(def_slot)
-			inventory.equip_item(held, def_slot)
-			GridInventoryView.held_item_data = prev_item
-			GridInventoryView.source_view = null
-			update_slots()
-	else:
-		if current_eq != null:
-			GridInventoryView.held_item_data = inventory.unequip_item(slot_idx)
-			GridInventoryView.source_view = null
-			update_slots()
-		else:
-			for item in inventory.items:
-				if inventory.get_default_slot_for(item["data"].id) == slot_idx:
-					var data = item["data"]
-					inventory.remove_item(item)
-					inventory.equip_item(data, slot_idx)
-					update_slots()
-					break
+		if not inventory.is_equippable(held.id):
+			return # lékárnička, vrták, klíč: do slotu nepatří, fungují z batohu
+		inventory.equip_item(held, slot_idx)
+		GridInventoryView.held_item_data = current
+		GridInventoryView.source_view = null
+	elif current != null:
+		GridInventoryView.held_item_data = inventory.unequip_item(slot_idx)
+		GridInventoryView.source_view = null
+	update_slots()
 
 func _on_slot_hovered(slot_idx: int):
 	if not inventory:

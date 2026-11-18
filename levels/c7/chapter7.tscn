@@ -1,0 +1,122 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://mechanics/chapter.gd" id="1_1jgs5"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a01.tscn" id="2_32lgf"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a02.tscn" id="3_4ejov"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a03.tscn" id="4_7fxtt"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a04.tscn" id="5_4an8j"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a05.tscn" id="6_qy06r"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a06.tscn" id="7_tylrm"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_a07.tscn" id="8_rdbfr"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b01.tscn" id="9_6pc7b"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b02.tscn" id="10_oxuhf"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b03.tscn" id="11_hnkh8"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b04.tscn" id="12_5dfxq"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b05.tscn" id="13_fbdpx"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b05b.tscn" id="14_amuk4"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_b06.tscn" id="15_jk45e"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c01.tscn" id="16_xwr6e"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c02.tscn" id="17_u8d4y"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c03.tscn" id="18_4wp3c"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c04.tscn" id="19_2touv"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c05.tscn" id="20_h8yte"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c06.tscn" id="21_75r6c"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_c07.tscn" id="22_pucj3"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d01.tscn" id="23_4dchk"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d02.tscn" id="24_j2gu7"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d03.tscn" id="25_jll5o"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d04.tscn" id="26_3euwt"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d05.tscn" id="27_ys4av"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d06.tscn" id="28_njj73"]
+[ext_resource type="PackedScene" path="res://levels/c7/c7_d07.tscn" id="29_0we02"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="30_a6r2k"]
+
+[node name="Chapter7" type="Node2D" unique_id=965789669]
+script = ExtResource("1_1jgs5")
+start_items = Array[String](["wrench", "gravity_coil", "grapple_hook", "drill"])
+
+[node name="c7_a01" parent="." unique_id=1754012060 instance=ExtResource("2_32lgf")]
+
+[node name="c7_a02" parent="." unique_id=340752217 instance=ExtResource("3_4ejov")]
+position = Vector2(640, 0)
+
+[node name="c7_a03" parent="." unique_id=427223587 instance=ExtResource("4_7fxtt")]
+position = Vector2(640, 180)
+
+[node name="c7_a04" parent="." unique_id=1097535586 instance=ExtResource("5_4an8j")]
+position = Vector2(960, 360)
+
+[node name="c7_a05" parent="." unique_id=354260921 instance=ExtResource("6_qy06r")]
+position = Vector2(1280, 540)
+
+[node name="c7_a06" parent="." unique_id=1128521213 instance=ExtResource("7_tylrm")]
+position = Vector2(1600, 720)
+
+[node name="c7_a07" parent="." unique_id=239084574 instance=ExtResource("8_rdbfr")]
+position = Vector2(1600, 900)
+
+[node name="c7_b01" parent="." unique_id=1045261913 instance=ExtResource("9_6pc7b")]
+position = Vector2(1920, 900)
+
+[node name="c7_b02" parent="." unique_id=1444297613 instance=ExtResource("10_oxuhf")]
+position = Vector2(2240, 1080)
+
+[node name="c7_b03" parent="." unique_id=707030105 instance=ExtResource("11_hnkh8")]
+position = Vector2(2560, 1260)
+
+[node name="c7_b04" parent="." unique_id=635064111 instance=ExtResource("12_5dfxq")]
+position = Vector2(2880, 1440)
+
+[node name="c7_b05" parent="." unique_id=282508430 instance=ExtResource("13_fbdpx")]
+position = Vector2(3200, 1440)
+
+[node name="c7_b05b" parent="." unique_id=730847523 instance=ExtResource("14_amuk4")]
+position = Vector2(3520, 1440)
+
+[node name="c7_b06" parent="." unique_id=1659905158 instance=ExtResource("15_jk45e")]
+position = Vector2(3200, 1800)
+
+[node name="c7_c01" parent="." unique_id=266549355 instance=ExtResource("16_xwr6e")]
+position = Vector2(3840, 1800)
+
+[node name="c7_c02" parent="." unique_id=1788045543 instance=ExtResource("17_u8d4y")]
+position = Vector2(4160, 1980)
+
+[node name="c7_c03" parent="." unique_id=842528834 instance=ExtResource("18_4wp3c")]
+position = Vector2(4480, 2160)
+
+[node name="c7_c04" parent="." unique_id=1069098311 instance=ExtResource("19_2touv")]
+position = Vector2(4800, 2340)
+
+[node name="c7_c05" parent="." unique_id=531618536 instance=ExtResource("20_h8yte")]
+position = Vector2(5120, 2340)
+
+[node name="c7_c06" parent="." unique_id=1262290680 instance=ExtResource("21_75r6c")]
+position = Vector2(5440, 2520)
+
+[node name="c7_c07" parent="." unique_id=1840500296 instance=ExtResource("22_pucj3")]
+position = Vector2(5760, 2700)
+
+[node name="c7_d01" parent="." unique_id=314310816 instance=ExtResource("23_4dchk")]
+position = Vector2(6080, 2700)
+
+[node name="c7_d02" parent="." unique_id=211594643 instance=ExtResource("24_j2gu7")]
+position = Vector2(6400, 2880)
+
+[node name="c7_d03" parent="." unique_id=754493606 instance=ExtResource("25_jll5o")]
+position = Vector2(6720, 3060)
+
+[node name="c7_d04" parent="." unique_id=308301043 instance=ExtResource("26_3euwt")]
+position = Vector2(7040, 3240)
+
+[node name="c7_d05" parent="." unique_id=1489621818 instance=ExtResource("27_ys4av")]
+position = Vector2(7360, 3240)
+
+[node name="c7_d06" parent="." unique_id=332920197 instance=ExtResource("28_njj73")]
+position = Vector2(7360, 3420)
+
+[node name="c7_d07" parent="." unique_id=1246049296 instance=ExtResource("29_0we02")]
+position = Vector2(7360, 3960)
+
+[node name="Player" parent="." unique_id=1153163710 instance=ExtResource("30_a6r2k")]
+position = Vector2(72, 71)
